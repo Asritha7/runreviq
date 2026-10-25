@@ -1,6 +1,6 @@
 # Runreviq — local prototype
 
-Select applicable fictional operational guidance using explicit metadata, before adding AI generation.
+Find applicable fictional operational guidance and question-matching source passages, before adding AI generation.
 
 ## Documentation
 
@@ -12,6 +12,7 @@ Select applicable fictional operational guidance using explicit metadata, before
 - [Submission and independent review](docs/submissions.md)
 - [Metadata extraction and review](docs/metadata-proposals.md)
 - [Validated claim citations](docs/citations.md)
+- [Question search and evaluation](docs/search.md)
 - [Runbook authoring template](docs/runbook-template.md)
 - [Tests, CI, and troubleshooting](docs/testing.md)
 - [Contribution safeguards](AGENTS.md)

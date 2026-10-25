@@ -242,3 +242,20 @@ test('source viewer explicitly warns when formerly recommended evidence is withd
   h.respond(2,{document_id:'RB-042',revision:1,title:'Guide',content:'source',checksum:'abc',current_revision:1,is_current:true,revision_status:'approved',guidance_status:'withdrawn',withdrawal:{reason:'Outdated'}});await tick();
   assert.match(h.get('viewer-meta').textContent,/WITHDRAWN — do not use as guidance/);
 });
+
+test('question search shows plain-text excerpts and opens exact revision; follow-up retains question',async()=>{
+  const h=harness(); await h.login(); h.get('question').value='Compare failing replicas';
+  h.get('query-form').fire('submit');
+  assert.equal(h.pending[1].url,'/v1/search');
+  assert.equal(JSON.parse(h.pending[1].options.body).question,'Compare failing replicas');
+  h.respond(1,{...result,status:'needs_context_or_review',passages:[],questions:[{field:'key_rotation_enabled',question:'Rotation enabled?'}]}); await tick();
+  find(h.get('result'),'Yes, enabled').fire('click');
+  assert.equal(JSON.parse(h.pending[2].options.body).question,'Compare failing replicas');
+  assert.equal(JSON.parse(h.pending[2].options.body).key_rotation_enabled,true);
+  h.respond(2,{...result,passages:[{document_id:'RB-043',revision:1,title:'Replica comparison',start_line:7,end_line:7,quote:'<script>source</script>'}]}); await tick();
+  find(h.get('result'),'Open cited passage').fire('click');
+  assert.equal(h.pending[3].url,'/v1/documents/RB-043/revisions/1');
+  h.respond(3,{document_id:'RB-043',revision:1,title:'Replica comparison',content:'\n'.repeat(6)+'<script>source</script>',checksum:'abc',current_revision:1,is_current:true,revision_status:'approved'}); await tick();
+  assert.equal(h.get('document-lines').children[6].textContent,'<script>source</script>');
+  h.get('disconnect').fire('click'); assert.equal(h.get('result').children.length,0);
+});

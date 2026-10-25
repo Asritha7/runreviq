@@ -1,0 +1,511 @@
+[
+  {
+    "id": "Q01",
+    "question": "What should I check for intermittent 401 errors?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-042",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q02",
+    "question": "Compare JWKS refresh errors",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-042",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q03",
+    "question": "Do production restarts require approval?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-042",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q04",
+    "question": "Is a past incident proof of the current cause?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-042",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q05",
+    "question": "How do I compare key identifiers?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-042",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q06",
+    "question": "What requires incident lead approval?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-042",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q07",
+    "question": "Compare failing versus healthy replicas",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-043",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q08",
+    "question": "Validate JWKS propagation",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-043",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q09",
+    "question": "Which replicas are failing?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-043",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q10",
+    "question": "How to validate propagation?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-043",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q11",
+    "question": "Inspect JWKS refresh status after deployment",
+    "context": {
+      "role": "intern",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "staging",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-044",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q12",
+    "question": "What should I inspect in staging?",
+    "context": {
+      "role": "intern",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "staging",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-044",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q13",
+    "question": "Check refresh status",
+    "context": {
+      "role": "intern",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "staging",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-044",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q14",
+    "question": "Inspect the audit event marker",
+    "context": {
+      "role": "security",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "SEC-021",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q15",
+    "question": "NORTHSTAR-RESTRICTED-CANARY",
+    "context": {
+      "role": "security",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "SEC-021",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q16",
+    "question": "Restarting all identity pods",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.1.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-017",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q17",
+    "question": "Legacy recovery procedure",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.1.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-017",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "Q18",
+    "question": "NORTHSTAR-RESTRICTED-CANARY",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q19",
+    "question": "PostgreSQL vacuum bloat",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q20",
+    "question": "Redis eviction maxmemory",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q21",
+    "question": "the and or",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q22",
+    "question": "???",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q23",
+    "question": "JWKS refresh",
+    "context": {
+      "role": "intern",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q24",
+    "question": "JWKS refresh",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q25",
+    "question": "JWKS refresh",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": false
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q26",
+    "question": "JWKS refresh",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "9.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q27",
+    "question": "Should I disable key rotation?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.5.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "conflict",
+    "expected_passages": []
+  },
+  {
+    "id": "Q28",
+    "question": "Compare replicas",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.5.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "conflict",
+    "expected_passages": []
+  },
+  {
+    "id": "Q29",
+    "question": "JWKS refresh",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": null
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "Q30",
+    "question": "Future procedure",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.6.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  }
+]

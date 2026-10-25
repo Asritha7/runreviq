@@ -171,7 +171,14 @@
       }
       root.append(cards);
     }
-    if (!result.conflict_details.length && result.evidence.length) {
+    for (const passage of result.passages || []) {
+      const card = node('article', undefined, 'card');
+      card.append(node('h3', passage.title), node('blockquote', passage.quote),
+        node('p', `${passage.document_id} · revision ${passage.revision} · lines ${passage.start_line}–${passage.end_line}`, 'hint'),
+        button('Open cited passage', () => openDocument(passage, passage)));
+      root.append(card);
+    }
+    if (!result.passages?.length && !result.conflict_details.length && result.evidence.length) {
       root.append(node('h3', status === 'selected' ? 'Supporting revisions' : 'Applicable evidence — recommendation withheld'));
       const cards = node('div', undefined, 'cards'); for (const doc of result.evidence) cards.append(evidenceCard(doc)); root.append(cards);
     }
@@ -181,7 +188,7 @@
     const generation = epoch, sequence = ++querySequence; lastQuery = {...query};
     $('result').replaceChildren(); clearViewer(); $('query-status').textContent = 'Checking authorized evidence…'; $('submit-query').disabled = true;
     try {
-      const result = await request('/v1/select', {method:'POST', body:JSON.stringify(query)});
+      const result = await request(query.question ? '/v1/search' : '/v1/select', {method:'POST', body:JSON.stringify(query)});
       if (generation !== epoch || sequence !== querySequence) return;
       render(result); $('query-status').textContent = `Evaluated ${query.service} · ${query.software_version} · ${query.environment}`;
     } catch (error) { if (generation === epoch && sequence === querySequence) fail(error, 'query-status'); }
@@ -496,7 +503,7 @@
 
   $('query-form').addEventListener('submit', event => {
     event.preventDefault(); const rotation = $('rotation').value;
-    runQuery({service:$('service').value.trim(), software_version:$('version').value.trim(), environment:$('environment').value,
+    runQuery({...($('question').value.trim() ? {question:$('question').value.trim()} : {}), service:$('service').value.trim(), software_version:$('version').value.trim(), environment:$('environment').value,
       key_rotation_enabled:rotation === 'unknown' ? null : rotation === 'true'});
   });
 })();

@@ -84,3 +84,7 @@ Manual publication QA used a disposable database and fictional author, reviewer,
 Tests cover publisher authentication and revocation, withdrawal validation, stale revisions, idempotent retries, concurrent attempts, append-only grants, reader isolation, preserved source checksums, same-revision reingestion, newer approved replacements, superseded history, and paginated listings. Browser tests cover withdrawal input, clearing stale results, conflict feedback, logout races, and source warnings. Integration tests use disposable databases only.
 
 Manual lifecycle QA used two published revisions of a fictional upload in a disposable database. The browser showed revision 2 as active and revision 1 as superseded; after withdrawal with a reason, the same query returned insufficient evidence, while the withdrawn source and both revisions remained inspectable. The temporary server and database were removed. Migration 006 was checked to preserve the development database's existing source checksums and reading permissions without creating any withdrawals.
+
+## Search evaluation
+
+The database-enabled suite includes the 30-case labeled question evaluation, exact passage boundaries, authentication/input handling, revision changes, withdrawal persistence, ACL revocation and restricted-canary isolation. Browser logic covers question submission, context follow-up and source opening. Run `.venv/bin/python -m runreviq.evaluate_search` for a JSON report from a disposable database. See [metric definitions and limitations](search.md).

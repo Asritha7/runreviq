@@ -20,6 +20,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool
 
 from runreviq.database import load_authorized_documents, load_authorized_revision
 from runreviq import submissions, publications, lifecycle
+from runreviq.search import search
 from runreviq.selector import ROOT, ROLES, select
 from runreviq.oidc import GoogleSessions, install_routes
 from runreviq.drafts import create_draft, list_drafts, get_draft, owner_key, DraftLimit, DraftInputError, MAX_BYTES, save_review, ReviewConflict
@@ -68,6 +69,10 @@ class SelectionRequest(BaseModel):
     software_version: str = Field(max_length=32, pattern=r'^[0-9]+\.[0-9]+\.[0-9]+$')
     environment: Literal['production', 'staging']
     key_rotation_enabled: StrictBool | None = None
+
+
+class SearchRequest(SelectionRequest):
+    question: str = Field(min_length=1, max_length=500, pattern=r'\S')
 
 
 class ReviewMetadata(BaseModel):
@@ -119,7 +124,7 @@ class WithdrawalRequest(BaseModel):
 
 
 def create_app(*, key_file=KEY_FILE, document_loader=load_authorized_documents,
-               revision_loader=load_authorized_revision, oidc_file=OIDC_FILE, oidc_provider=None,
+               revision_loader=load_authorized_revision, searcher=search, oidc_file=OIDC_FILE, oidc_provider=None,
                draft_writer=create_draft, draft_lister=list_drafts, draft_reader=get_draft, review_writer=save_review, reviewers_file=submissions.REVIEWERS_FILE, publishers_file=publications.PUBLISHERS_FILE):
     app = FastAPI(title='Runreviq local API', docs_url=None, redoc_url=None, openapi_url=None)
     bearer = HTTPBearer(auto_error=False)
@@ -339,6 +344,13 @@ def create_app(*, key_file=KEY_FILE, document_loader=load_authorized_documents,
     @app.get('/v1/me')
     def me(principal=Depends(identity)):
         return principal
+
+    @app.post('/v1/search')
+    def passage_search(query: SearchRequest, principal=Depends(identity)):
+        try:
+            return searcher(role=principal['role'], **query.model_dump())
+        except (psycopg.Error, ValueError, OSError):
+            raise HTTPException(503, 'Evidence search unavailable') from None
 
     @app.post('/v1/select')
     def selection(query: SelectionRequest, principal=Depends(identity)):

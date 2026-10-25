@@ -65,3 +65,7 @@ Draft owners can explicitly submit a saved complete revision and check decision 
 ## Manage published guidance
 
 The publisher-only management section lists 50 documents per page, shows current reading roles and status, and opens revision history/source. Withdrawal requires a reason and explicit acknowledgment. Conflicts preserve typed input; permission loss clears protected views. Successful withdrawal clears the current browser’s old query results. The ordinary source viewer warns on withdrawn evidence and identifies superseded revisions. See [the workflow](publication-management.md).
+
+## Ask a question
+
+The context form includes an optional question. A nonblank question searches applicable source passages; blank input preserves the original selector. Search results show exact excerpts with document/revision/line labels and an **Open cited passage** button. Follow-up answers retain the question. Missing evidence, conflicts and review requirements still appear explicitly. These excerpts are not AI-generated answers. See [search limitations](search.md).

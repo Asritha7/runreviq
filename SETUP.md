@@ -242,3 +242,9 @@ Rerun the credential-generation block to add only the missing `PUBLISH_PASSWORD`
 ## Published guidance management
 
 Apply migration 006 using `.venv/bin/python -m runreviq.database bootstrap` and restart the API. No new credentials or assignments are needed. Existing publisher permission gates **Manage published guidance**. See [withdrawal behavior, retained history, and limitations](docs/publication-management.md).
+
+## Try question-based search
+
+Restart the local API, sign in, and enter an optional question above the service context. Try “Compare failing versus healthy replicas” with production, version 2.4.0 and key rotation enabled. Matching passages link to exact stored lines. Leave the question blank for the existing selector. No migration or new credentials are needed.
+
+Run `.venv/bin/python -m runreviq.evaluate_search` for the isolated 30-case evaluation. See [search behavior and limitations](docs/search.md).

@@ -112,3 +112,7 @@ Owners submit complete saved review revisions; separately authorized reviewers i
 ## Publication management
 
 Publisher-only list/history/source/withdrawal routes live under `/v1/publication-management/documents`. See [contracts and status codes](publication-management.md#api). Ordinary source responses additionally include `guidance_status` and `withdrawal`; immutable `revision_status` is unchanged. Database-backed selection excludes withdrawn current revisions, without falling back to older ones.
+
+## Passage search
+
+`POST /v1/search` uses the same authentication and strict context fields as `/v1/select`, with an additional required nonblank `question` (maximum 500 characters). It adds `passages` and `retrieval_method` to the selection response. Quotes carry exact revision, line range and full-source fingerprint. Invalid input returns 422; unavailable search returns a generic 503. See [the search contract and algorithm](search.md).

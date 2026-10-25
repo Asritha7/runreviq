@@ -65,3 +65,7 @@ An operator-owned publisher allowlist protects a separate publishing API. A rest
 ## Withdrawal and retained history
 
 A separate append-only `document_withdrawals` table records retirement of specific published revisions. Selection excludes withdrawn current revisions; source reads retain current ACL enforcement and return a warning status. Publisher management exposes history and withdrawal reasons without rewriting stored sources. The shared ingestion/publication lock serializes withdrawal against replacement. See [the lifecycle boundaries](publication-management.md).
+
+## Lexical passage retrieval
+
+Question search now filters current authorized sources and applies the existing selector before ranking exact passages with PostgreSQL English full-text search. Authorization, lifecycle and content share a read-only database snapshot. Vectors are computed per request; no separately persisted search index is maintained. This is a small-corpus baseline, not vector retrieval or answer generation. See [search and evaluation](search.md).
