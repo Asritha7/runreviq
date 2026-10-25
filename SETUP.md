@@ -252,3 +252,7 @@ Run `.venv/bin/python -m runreviq.evaluate_search` for the isolated 30-case eval
 ## Run the larger search benchmark
 
 Run `.venv/bin/python -m runreviq.evaluate_search --suite realistic --report-only` to evaluate 50 labeled questions against 13 fictional runbooks in an automatically created disposable database. No migration, model download or API restart is needed. The report includes known quality failures; omit `--report-only` to receive a nonzero exit for those failures. See [evaluation semantics](docs/search-evaluation.md).
+
+## Coverage-based search update
+
+Restart the API to load v2 ranking; no migration, new credentials or model download is needed. Existing Google sessions may require sign-in again. Run `.venv/bin/python -m runreviq.evaluate_search --suite validation --report-only` for the additional 12-question suite. See [ranking limits and comparison](docs/search-ranking.md).

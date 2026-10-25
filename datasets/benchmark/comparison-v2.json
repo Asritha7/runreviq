@@ -1,0 +1,100 @@
+{
+  "recorded_on": "2026-10-25",
+  "note": "Development-set tuning, followed by 12 same-author questions fixed before experiments. Not independent real-world validation. No ranking retuning after the additional evaluation.",
+  "development": {
+    "before": {
+      "cases": 50,
+      "passed": 36,
+      "recall_at_5": 0.875,
+      "hit_rate_at_5": 0.875,
+      "precision_at_returned_5": 0.18541666666666667,
+      "mean_reciprocal_rank": 0.5859375,
+      "refusal_accuracy": 0.4444444444444444,
+      "false_positive_rate": 0.5555555555555556,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.285,
+      "p95_latency_ms": 9.03,
+      "dataset_sha256": "03f1f2cd57b34a43a28cb2be9f71b7a0d7f25671bd4049f98430754777e70298",
+      "retrieval_method": "postgres_english_lexical_v1",
+      "failed_cases": [
+        "H21",
+        "H24",
+        "H27",
+        "H29",
+        "H33",
+        "H34",
+        "H35",
+        "H36",
+        "H37",
+        "H38",
+        "H39",
+        "H40",
+        "H41",
+        "H42"
+      ]
+    },
+    "after": {
+      "cases": 50,
+      "passed": 44,
+      "recall_at_5": 0.875,
+      "hit_rate_at_5": 0.875,
+      "precision_at_returned_5": 0.3546875,
+      "mean_reciprocal_rank": 0.6901041666666666,
+      "refusal_accuracy": 0.8888888888888888,
+      "false_positive_rate": 0.1111111111111111,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.529999999999999,
+      "p95_latency_ms": 8.8,
+      "dataset_sha256": "03f1f2cd57b34a43a28cb2be9f71b7a0d7f25671bd4049f98430754777e70298",
+      "retrieval_method": "postgres_english_coverage_v2",
+      "failed_cases": [
+        "H24",
+        "H28",
+        "H29",
+        "H30",
+        "H37",
+        "H41"
+      ]
+    }
+  },
+  "additional_validation": {
+    "before": {
+      "cases": 12,
+      "passed": 7,
+      "recall_at_5": 0.875,
+      "hit_rate_at_5": 0.875,
+      "precision_at_returned_5": 0.17500000000000002,
+      "mean_reciprocal_rank": 0.7125,
+      "refusal_accuracy": 0,
+      "false_positive_rate": 1,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.085,
+      "p95_latency_ms": 8.29,
+      "dataset_sha256": "1dc4b4f3f5b36396be256987d9b4b2838092a6a651a0250306b800eea4f016e6",
+      "retrieval_method": "postgres_english_lexical_v1",
+      "failed_cases": [
+        "V01",
+        "V09",
+        "V10",
+        "V11",
+        "V12"
+      ]
+    },
+    "after": {
+      "cases": 12,
+      "passed": 12,
+      "recall_at_5": 1.0,
+      "hit_rate_at_5": 1,
+      "precision_at_returned_5": 0.3854166666666667,
+      "mean_reciprocal_rank": 0.71875,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.795,
+      "p95_latency_ms": 8.61,
+      "dataset_sha256": "1dc4b4f3f5b36396be256987d9b4b2838092a6a651a0250306b800eea4f016e6",
+      "retrieval_method": "postgres_english_coverage_v2",
+      "failed_cases": []
+    }
+  }
+}

@@ -10,7 +10,7 @@ import uuid
 from psycopg import sql
 from runreviq.database import connect, bootstrap, ingest, prepare
 from runreviq.selector import ROOT, load_documents
-from runreviq.search import search, passages
+from runreviq.search import search, passages, RETRIEVAL_METHOD
 
 BENCHMARK = ROOT / 'datasets/benchmark'
 
@@ -18,8 +18,9 @@ BENCHMARK = ROOT / 'datasets/benchmark'
 def suite_data(suite):
     if suite == 'regression':
         return load_documents(), ROOT, ROOT / 'datasets/evaluation/questions.json'
-    if suite == 'realistic':
-        return json.loads((BENCHMARK / 'catalog.json').read_text()), BENCHMARK, BENCHMARK / 'questions.json'
+    if suite in {'realistic', 'validation'}:
+        filename = 'questions.json' if suite == 'realistic' else 'validation-questions.json'
+        return json.loads((BENCHMARK / 'catalog.json').read_text()), BENCHMARK, BENCHMARK / filename
     raise ValueError('Unknown evaluation suite')
 
 
@@ -121,7 +122,7 @@ def evaluate(dbname, suite='regression'):
                             integrity_ok=integrity_ok, citation_checks=citation_checks, withheld=withheld,
                             latency_ms=round(elapsed,2), retrieved=retrieved, **metrics))
     return dict(**aggregate(results), suite=suite, dataset_sha256=fingerprint,
-                retrieval_method='postgres_english_lexical_v1',
+                retrieval_method=RETRIEVAL_METHOD,
                 categories={category: aggregate([r for r in results if r['category']==category])
                             for category in sorted({r['category'] for r in results})}, results=results)
 
@@ -134,7 +135,7 @@ def report_exit_code(report, report_only=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--suite', choices=['regression', 'realistic'], default='regression')
+    parser.add_argument('--suite', choices=['regression', 'realistic', 'validation'], default='regression')
     parser.add_argument('--report-only', action='store_true', help='Report relevance failures without failing the command; integrity failures still fail')
     args = parser.parse_args()
     documents, root, _ = suite_data(args.suite)

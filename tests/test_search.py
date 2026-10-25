@@ -90,6 +90,9 @@ class SearchDatabaseTests(unittest.TestCase):
         ingest(docs,dbname=self.dbname,root=root)
         report=evaluate(self.dbname,'realistic')
         self.assertEqual(report['cases'],50)
+        self.assertGreaterEqual(report['recall_at_5'],.875)
+        self.assertGreaterEqual(report['precision_at_returned_5'],.30)
+        self.assertGreaterEqual(report['refusal_accuracy'],.80)
         self.assertEqual(len(report['dataset_sha256']),64)
         self.assertTrue(all(r['integrity_ok'] for r in report['results']))
         for result in report['results']:
@@ -97,9 +100,29 @@ class SearchDatabaseTests(unittest.TestCase):
             if roles[result['id']]!='security':
                 self.assertNotIn('SEC-701',json.dumps(result['retrieved']))
                 self.assertNotIn('HARBOR-AUDIT-CANARY',json.dumps(result['retrieved']))
-        # A wrong relevance decision is reported, not silently changed into a
-        # passing label. Quality has no green-CI threshold in this first baseline.
+        # Quality floors guard the measured development improvement; failures
+        # and extra irrelevant passages remain visible in the full report.
         self.assertEqual(report['passed'],sum(r['passed'] for r in report['results']))
+
+    def test_context_and_conflicts_block_ranking(self):
+        from unittest.mock import patch
+        with patch('runreviq.search.rank',side_effect=AssertionError('Ranking must not run')):
+            for change in ({'software_version':'2.5.0'}, {'key_rotation_enabled':None}):
+                result=search(role='platform',question='JWKS',dbname=self.dbname,**dict(QUERY,**change))
+                self.assertEqual(result['passages'],[])
+                self.assertEqual(result['recommended_documents'],[])
+
+    def test_additional_validation_suite(self):
+        from runreviq.database import connect, ingest
+        from runreviq.evaluate_search import evaluate, suite_data
+        with connect(dbname=self.dbname) as conn:
+            conn.execute('TRUNCATE opslens.document_withdrawals, opslens.publications, opslens.document_versions, opslens.documents')
+        docs,root,_=suite_data('validation')
+        ingest(docs,dbname=self.dbname,root=root)
+        report=evaluate(self.dbname,'validation')
+        self.assertEqual(report['cases'],12)
+        self.assertEqual(report['passed'],12)
+        self.assertTrue(all(r['integrity_ok'] for r in report['results']))
 
     def test_current_revision_withdrawal_and_acl(self):
         from runreviq.database import ingest, connect

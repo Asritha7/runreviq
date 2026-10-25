@@ -92,3 +92,7 @@ The database-enabled suite includes the 30-case labeled question evaluation, exa
 ## Larger relevance benchmark
 
 The realistic suite contains 50 questions over 13 separate fictional documents. Integration tests run it in a disposable database, verify exact-source integrity and restricted-source isolation, and validate labels. Unit tests verify precision, partial recall, reciprocal rank, empty metrics and percentile arithmetic. Known relevance failures are reported, not required to pass CI. The original 30-case suite remains a required regression. See [metric definitions](search-evaluation.md) and [the frozen baseline](../datasets/benchmark/README.md).
+
+## v2 ranking regression checks
+
+Tests cover title-only rejection, missing concepts, scope-disclaimer scoring, preserved safety text, deterministic ties, context blocking before ranking and the result cap. CI checks the unchanged Harbor corpus against recall ≥ 87.5%, precision ≥ 30% and withholding ≥ 80%, alongside exact citations and role isolation. Twelve additional same-author questions now form a regression suite. The original 30-case regression remains required. See [v2 comparison](search-ranking.md); these thresholds are not production effectiveness guarantees.

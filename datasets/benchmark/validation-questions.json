@@ -1,0 +1,238 @@
+[
+  {
+    "id": "V01",
+    "category": "validation",
+    "question": "What observations show that workers are catching up with arriving tasks?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "QUE-401",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "V02",
+    "category": "validation",
+    "question": "Do old binaries support records written by the new release?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DEP-302",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "V03",
+    "category": "validation",
+    "question": "What should I do when resolver answers differ across workloads?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "NET-601",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "V04",
+    "category": "validation",
+    "question": "Which timestamp fields help investigate token validation failures?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "AUTH-102",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "V05",
+    "category": "validation",
+    "question": "What approval is needed before quarantining poison messages?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "QUE-401",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "V06",
+    "category": "validation",
+    "question": "How should I check a suspected leaked database connection?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-201",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "V07",
+    "category": "validation",
+    "question": "What should I preserve before cancelling a database blocker?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-202",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "V08",
+    "category": "validation",
+    "question": "How do I confirm a cache change helped without overloading the backend?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "CACHE-501",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "V09",
+    "category": "validation",
+    "question": "How do I renew a service certificate automatically?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "V10",
+    "category": "validation",
+    "question": "What shell command resets a forgotten password?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "V11",
+    "category": "validation",
+    "question": "How much memory does every cache need?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "V12",
+    "category": "validation",
+    "question": "Which exact SQL statement fixes the schema migration?",
+    "rationale": "Additional same-author question fixed before v2 ranking experiments; not independent validation.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  }
+]
