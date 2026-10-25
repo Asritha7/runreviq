@@ -18,8 +18,9 @@ BENCHMARK = ROOT / 'datasets/benchmark'
 def suite_data(suite):
     if suite == 'regression':
         return load_documents(), ROOT, ROOT / 'datasets/evaluation/questions.json'
-    if suite in {'realistic', 'validation'}:
-        filename = 'questions.json' if suite == 'realistic' else 'validation-questions.json'
+    if suite in {'realistic', 'validation', 'paraphrase'}:
+        filename = {'realistic':'questions.json', 'validation':'validation-questions.json',
+                    'paraphrase':'paraphrase-questions.json'}[suite]
         return json.loads((BENCHMARK / 'catalog.json').read_text()), BENCHMARK, BENCHMARK / filename
     raise ValueError('Unknown evaluation suite')
 
@@ -135,7 +136,7 @@ def report_exit_code(report, report_only=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--suite', choices=['regression', 'realistic', 'validation'], default='regression')
+    parser.add_argument('--suite', choices=['regression', 'realistic', 'validation', 'paraphrase'], default='regression')
     parser.add_argument('--report-only', action='store_true', help='Report relevance failures without failing the command; integrity failures still fail')
     args = parser.parse_args()
     documents, root, _ = suite_data(args.suite)

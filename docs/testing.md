@@ -96,3 +96,7 @@ The realistic suite contains 50 questions over 13 separate fictional documents. 
 ## v2 ranking regression checks
 
 Tests cover title-only rejection, missing concepts, scope-disclaimer scoring, preserved safety text, deterministic ties, context blocking before ranking and the result cap. CI checks the unchanged Harbor corpus against recall ≥ 87.5%, precision ≥ 30% and withholding ≥ 80%, alongside exact citations and role isolation. Twelve additional same-author questions now form a regression suite. The original 30-case regression remains required. See [v2 comparison](search-ranking.md); these thresholds are not production effectiveness guarantees.
+
+## v3 query-matching checks
+
+Tests cover exact code/identifier boundaries (including trailing punctuation), operational vocabulary and preserved negation, scope-only withholding, numeric-code mismatch and the eight-question probe. CI floors are development recall ≥93.75%, precision ≥35%, all 18 withholding outcomes, and probe recall ≥75% with all four withholding outcomes. Original 30/30 and additional 12/12 regressions remain required. See [measured trade-offs](operational-query-matching.md).

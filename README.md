@@ -135,4 +135,8 @@ A separate fictional benchmark now tests 13 longer runbooks against 50 questions
 
 ## Search relevance improvements
 
-Coverage-based lexical ranking now reduces generic-word matches and discounts recognized scope disclaimers while preserving exact quotations. On the fixed 50-question benchmark, precision improves from 18.54% to 35.47% and correct withholding from 8/18 to 16/18 at unchanged aggregate recall. Search still misses some paraphrases and returns noisy results. See [algorithm, comparison and remaining failures](docs/search-ranking.md).
+The v2 coverage-based lexical ranking reduced generic-word matches and discounts recognized scope disclaimers while preserving exact quotations. On the fixed 50-question benchmark, precision improves from 18.54% to 35.47% and correct withholding from 8/18 to 16/18 at unchanged aggregate recall. Search still misses some paraphrases and returns noisy results. See [algorithm, comparison and remaining failures](docs/search-ranking.md).
+
+## Operational query matching
+
+The current v3 search adds a small operational vocabulary, exact numeric/code matching and withholding for terms mentioned only in scope exclusions. The fixed development benchmark improves to 48/50 outcomes and 93.75% recall, but precision remains 37.24% and some paraphrases still fail. See [current behavior and trade-offs](docs/operational-query-matching.md).

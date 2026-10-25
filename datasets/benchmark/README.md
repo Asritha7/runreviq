@@ -41,10 +41,14 @@ From the repository root, with the existing local PostgreSQL setup available:
 .venv/bin/python -m runreviq.evaluate_search --suite realistic --report-only > realistic-report.json
 ```
 
-`--report-only` permits known relevance failures so a baseline report can be collected. Broken labels, runtime failures and returned source integrity failures still fail. Without that option, the command exits 1 when any case misses its expected outcome. The recorded v1 baseline had 14 failures; current v2 ranking has six. The default command without `--suite` continues to run the original 30-case regression. Do not commit arbitrary report output; the checked-in baseline is an intentional fixture.
+`--report-only` permits known relevance failures so a baseline report can be collected. Broken labels, runtime failures and returned source integrity failures still fail. Without that option, the command exits 1 when any case misses its expected outcome. The recorded v1 baseline had 14 failures and v2 had six; current v3 matching has two. The default command without `--suite` continues to run the original 30-case regression. Do not commit arbitrary report output; the checked-in baseline is an intentional fixture.
 
 See [metric definitions](../../docs/search-evaluation.md). No paid services, downloaded models, new database migrations or live API changes are required.
 
 ## v2 comparison
 
 The original corpus, labels and `baseline.json` remain unchanged. `comparison-v2.json` records the coverage-based ranking comparison: 44/50 outcomes, unchanged 87.5% recall, 35.47% precision and 16/18 correct withholding. `validation-questions.json` adds 12 same-author questions fixed before v2 experiments; the final ranking met 12/12 expected outcomes. This is additional development evidence, not independent human validation. See [ranking changes and remaining failures](../../docs/search-ranking.md).
+
+## v3 comparison and probes
+
+`comparison-v3.json` records the unchanged-corpus comparison: 48/50 development outcomes, 93.75% recall, 37.24% precision and 18/18 correct withholding. `paraphrase-questions.json` contains eight same-author probes fixed before v3 experiments; seven outcomes pass, with one missed verification paragraph. The older 12-case suite still passes but precision declines slightly. See [limitations and full comparison](../../docs/operational-query-matching.md). The original v1/v2 baselines remain unchanged.

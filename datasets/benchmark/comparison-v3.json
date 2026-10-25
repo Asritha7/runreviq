@@ -1,0 +1,123 @@
+{
+  "recorded_on": "2026-10-25",
+  "baseline_source_commit": "f531413a205377676239a2faa65fcbfc46cec24e",
+  "note": "Same-author fictional development evaluation; probe questions fixed before v3 experiments, no tuning on their failure. Not independent real-world validation.",
+  "dev": {
+    "before": {
+      "cases": 50,
+      "passed": 44,
+      "recall_at_5": 0.875,
+      "hit_rate_at_5": 0.875,
+      "precision_at_returned_5": 0.3546875,
+      "mean_reciprocal_rank": 0.6901041666666666,
+      "refusal_accuracy": 0.8888888888888888,
+      "false_positive_rate": 0.1111111111111111,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.529999999999999,
+      "p95_latency_ms": 8.8,
+      "dataset_sha256": "03f1f2cd57b34a43a28cb2be9f71b7a0d7f25671bd4049f98430754777e70298",
+      "retrieval_method": "postgres_english_coverage_v2",
+      "failed_cases": [
+        "H24",
+        "H28",
+        "H29",
+        "H30",
+        "H37",
+        "H41"
+      ]
+    },
+    "after": {
+      "cases": 50,
+      "passed": 48,
+      "recall_at_5": 0.9375,
+      "hit_rate_at_5": 0.9375,
+      "precision_at_returned_5": 0.3723958333333333,
+      "mean_reciprocal_rank": 0.7317708333333334,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": 1,
+      "median_latency_ms": 8.940000000000001,
+      "p95_latency_ms": 12.07,
+      "dataset_sha256": "03f1f2cd57b34a43a28cb2be9f71b7a0d7f25671bd4049f98430754777e70298",
+      "retrieval_method": "postgres_english_operational_v3",
+      "failed_cases": [
+        "H28",
+        "H29"
+      ]
+    }
+  },
+  "validation": {
+    "before": {
+      "cases": 12,
+      "passed": 12,
+      "recall_at_5": 1.0,
+      "hit_rate_at_5": 1,
+      "precision_at_returned_5": 0.3854166666666667,
+      "mean_reciprocal_rank": 0.71875,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.795,
+      "p95_latency_ms": 8.61,
+      "dataset_sha256": "1dc4b4f3f5b36396be256987d9b4b2838092a6a651a0250306b800eea4f016e6",
+      "retrieval_method": "postgres_english_coverage_v2",
+      "failed_cases": []
+    },
+    "after": {
+      "cases": 12,
+      "passed": 12,
+      "recall_at_5": 1.0,
+      "hit_rate_at_5": 1,
+      "precision_at_returned_5": 0.3645833333333333,
+      "mean_reciprocal_rank": 0.78125,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": 1,
+      "median_latency_ms": 9.08,
+      "p95_latency_ms": 9.9,
+      "dataset_sha256": "1dc4b4f3f5b36396be256987d9b4b2838092a6a651a0250306b800eea4f016e6",
+      "retrieval_method": "postgres_english_operational_v3",
+      "failed_cases": []
+    }
+  },
+  "paraphrase": {
+    "before": {
+      "cases": 8,
+      "passed": 5,
+      "recall_at_5": 0.25,
+      "hit_rate_at_5": 0.25,
+      "precision_at_returned_5": 0.0625,
+      "mean_reciprocal_rank": 0.25,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.665,
+      "p95_latency_ms": 8.32,
+      "dataset_sha256": "b47639296cb9653a7f9e59c6dcf3ebd60a9d55dde86ba7bacdaf9eb0121b2813",
+      "retrieval_method": "postgres_english_coverage_v2",
+      "failed_cases": [
+        "P01",
+        "P02",
+        "P03"
+      ]
+    },
+    "after": {
+      "cases": 8,
+      "passed": 7,
+      "recall_at_5": 0.75,
+      "hit_rate_at_5": 0.75,
+      "precision_at_returned_5": 0.22916666666666666,
+      "mean_reciprocal_rank": 0.5833333333333334,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": 1,
+      "median_latency_ms": 8.585,
+      "p95_latency_ms": 9.68,
+      "dataset_sha256": "b47639296cb9653a7f9e59c6dcf3ebd60a9d55dde86ba7bacdaf9eb0121b2813",
+      "retrieval_method": "postgres_english_operational_v3",
+      "failed_cases": [
+        "P02"
+      ]
+    }
+  }
+}

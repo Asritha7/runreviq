@@ -90,9 +90,9 @@ class SearchDatabaseTests(unittest.TestCase):
         ingest(docs,dbname=self.dbname,root=root)
         report=evaluate(self.dbname,'realistic')
         self.assertEqual(report['cases'],50)
-        self.assertGreaterEqual(report['recall_at_5'],.875)
-        self.assertGreaterEqual(report['precision_at_returned_5'],.30)
-        self.assertGreaterEqual(report['refusal_accuracy'],.80)
+        self.assertGreaterEqual(report['recall_at_5'],.9375)
+        self.assertGreaterEqual(report['precision_at_returned_5'],.35)
+        self.assertEqual(report['refusal_accuracy'],1)
         self.assertEqual(len(report['dataset_sha256']),64)
         self.assertTrue(all(r['integrity_ok'] for r in report['results']))
         for result in report['results']:
@@ -123,6 +123,31 @@ class SearchDatabaseTests(unittest.TestCase):
         self.assertEqual(report['cases'],12)
         self.assertEqual(report['passed'],12)
         self.assertTrue(all(r['integrity_ok'] for r in report['results']))
+
+    def test_paraphrase_probes_and_exclusion_gate(self):
+        from runreviq.database import connect, ingest
+        from runreviq.evaluate_search import evaluate, suite_data
+        with connect(dbname=self.dbname) as conn:
+            conn.execute('TRUNCATE opslens.document_withdrawals, opslens.publications, opslens.document_versions, opslens.documents')
+        docs,root,_=suite_data('paraphrase')
+        ingest(docs,dbname=self.dbname,root=root)
+        report=evaluate(self.dbname,'paraphrase')
+        self.assertEqual(report['cases'],8)
+        self.assertGreaterEqual(report['recall_at_5'],.75)
+        self.assertEqual(report['refusal_accuracy'],1)
+        self.assertTrue(all(r['integrity_ok'] for r in report['results']))
+        for question in ('How do I configure database durability?', 'HTTP 503 errors', 'UNKNOWN-900'):
+            result=search(role='platform',question=question,dbname=self.dbname,service='harbor',software_version='3.0.0',environment='production',key_rotation_enabled=True)
+            self.assertEqual(result['status'],'insufficient_evidence')
+            self.assertEqual(result['passages'],[])
+            self.assertEqual(result['recommended_documents'],[])
+
+    def test_exact_code_is_required_in_authorized_source(self):
+        result=search(role='platform',question='HTTP 503 errors',dbname=self.dbname,**QUERY)
+        self.assertEqual(result['passages'],[])
+        self.assertEqual(result['status'],'insufficient_evidence')
+        result=search(role='platform',question='intermittent 401 errors',dbname=self.dbname,**QUERY)
+        self.assertEqual(result['passages'][0]['document_id'],'RB-042')
 
     def test_current_revision_withdrawal_and_acl(self):
         from runreviq.database import ingest, connect
