@@ -1,6 +1,6 @@
 # Measuring retrieval effectiveness
 
-Runreviq now has two offline evaluation suites: the original 30-case `regression` suite and the larger 50-case `realistic` fictional development benchmark. The latter has 13 longer runbooks and deliberately difficult paraphrases, distractors and unsupported questions. Neither suite proves effectiveness on real incidents. The larger corpus, fixed labels and recorded results are in [datasets/benchmark](../datasets/benchmark/README.md).
+Runreviq now has three offline evaluation suites: the original 30-case `regression` suite and the larger 50-case `realistic` fictional development benchmark. An additional 12-question `validation` suite reuses the larger corpus. The larger corpus has 13 longer runbooks and deliberately difficult paraphrases, distractors and unsupported questions. None of these suites proves effectiveness on real incidents. The larger corpus, fixed labels and recorded results are in [datasets/benchmark](../datasets/benchmark/README.md).
 
 ## Commands and isolation
 
@@ -32,8 +32,10 @@ Metrics with no eligible cases are `null`. Per-case output contains the actual s
 
 ## CI interpretation
 
-The required suite tests metric arithmetic with hand-calculated examples, validates all 50 labels, runs the realistic evaluator against a disposable database and checks citation/current-source integrity and restricted-source isolation. CI does not require the new relevance scores to be perfect and does not pin the known poor ranking as desired behavior. The original 30 regression cases still must pass. A green CI run therefore means the evaluator and safety checks work, not that search quality is production-ready.
+The required suite tests metric arithmetic with hand-calculated examples, validates all 50 labels, runs the realistic evaluator against a disposable database and checks citation/current-source integrity and restricted-source isolation. CI does not require perfect relevance. With v2 ranking, it requires development recall ≥ 87.5%, precision ≥ 30% and withholding accuracy ≥ 80%, plus 12/12 additional validation outcomes. These are development regression floors, not production acceptance criteria. The original 30 regression cases still must pass. A green CI run therefore means the evaluator and safety checks work, not that search quality is production-ready.
 
 ## Next experiment
 
 Keep the corpus and labels fixed while improving query-term handling and relevance ranking. Start with the documented failures: generic-word matches, source exclusions presented as guidance, and missed verification paragraphs. Compare recall, precision and withholding together so a change cannot look better simply by returning nothing. Test unseen questions separately before claiming generalization. Consider local semantic/hybrid retrieval only after measuring the lexical changes; add generated answers after evidence selection and withholding are reliable.
+
+For the current ranking and unchanged-corpus comparison, see [coverage-based search v2](search-ranking.md). The added validation questions were fixed before v2 experiments and are now regressions, not permanently unseen data.

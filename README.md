@@ -132,3 +132,7 @@ Designated publishers can list published documents, inspect immutable history, a
 ## Retrieval effectiveness benchmark
 
 A separate fictional benchmark now tests 13 longer runbooks against 50 questions. The baseline retrieves much of the expected evidence but also returns many irrelevant passages and misses withholding cases. See [results and limitations](datasets/benchmark/README.md) and [metric definitions](docs/search-evaluation.md). Its data is loaded only into disposable evaluation databases; the working collection is unchanged.
+
+## Search relevance improvements
+
+Coverage-based lexical ranking now reduces generic-word matches and discounts recognized scope disclaimers while preserving exact quotations. On the fixed 50-question benchmark, precision improves from 18.54% to 35.47% and correct withholding from 8/18 to 16/18 at unchanged aggregate recall. Search still misses some paraphrases and returns noisy results. See [algorithm, comparison and remaining failures](docs/search-ranking.md).
