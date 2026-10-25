@@ -125,6 +125,18 @@ class PublicationDatabaseTests(unittest.TestCase):
         self.assertEqual(pub.detail(self.sub['id'],dbname=self.dbname)['metadata'],META)
         changes=self.round(2,'changes_requested');self.assertIsNone(self.publish(changes))
 
+    def test_search_only_sees_published_role_authorized_snapshot(self):
+        from runreviq.search import search
+        context=dict(question='rotate keys',service='identity-service',software_version='2.4.0',environment='staging',dbname=self.dbname)
+        self.assertEqual(search(role='platform',**context)['passages'],[])
+        receipt=self.publish()
+        found=search(role='platform',**context)['passages']
+        self.assertEqual(len(found),1)
+        self.assertEqual(found[0]['document_id'],receipt['document_id'])
+        self.assertEqual(found[0]['quote'],'You must rotate keys.')
+        self.assertEqual(found[0]['start_line'],2)
+        self.assertEqual(search(role='intern',**context)['passages'],[])
+
     def test_invalid_publication_rolls_back(self):
         for kwargs in ({'claims':[]},{'verified':False},{'claims':[{**CLAIMS[0],'end_line':999}]},{'roles':['platform','platform']}):
             with self.assertRaises(DraftInputError):self.publish(**kwargs)
