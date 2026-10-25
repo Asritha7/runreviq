@@ -88,3 +88,7 @@ Manual lifecycle QA used two published revisions of a fictional upload in a disp
 ## Search evaluation
 
 The database-enabled suite includes the 30-case labeled question evaluation, exact passage boundaries, authentication/input handling, revision changes, withdrawal persistence, ACL revocation and restricted-canary isolation. Browser logic covers question submission, context follow-up and source opening. Run `.venv/bin/python -m runreviq.evaluate_search` for a JSON report from a disposable database. See [metric definitions and limitations](search.md).
+
+## Larger relevance benchmark
+
+The realistic suite contains 50 questions over 13 separate fictional documents. Integration tests run it in a disposable database, verify exact-source integrity and restricted-source isolation, and validate labels. Unit tests verify precision, partial recall, reciprocal rank, empty metrics and percentile arithmetic. Known relevance failures are reported, not required to pass CI. The original 30-case suite remains a required regression. See [metric definitions](search-evaluation.md) and [the frozen baseline](../datasets/benchmark/README.md).

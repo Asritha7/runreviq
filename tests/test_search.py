@@ -80,6 +80,27 @@ class SearchDatabaseTests(unittest.TestCase):
         report=evaluate(self.dbname)
         self.assertEqual(report['passed'],30,json.dumps(report,indent=2))
 
+    def test_realistic_benchmark_runs_without_claiming_perfect_quality(self):
+        from runreviq.database import connect, ingest
+        from runreviq.evaluate_search import evaluate, suite_data
+        with connect(dbname=self.dbname) as conn:
+            conn.execute('TRUNCATE opslens.document_withdrawals, opslens.publications, opslens.document_versions, opslens.documents')
+        docs,root,question_path=suite_data('realistic')
+        roles={case['id']:case['context']['role'] for case in json.loads(question_path.read_text())}
+        ingest(docs,dbname=self.dbname,root=root)
+        report=evaluate(self.dbname,'realistic')
+        self.assertEqual(report['cases'],50)
+        self.assertEqual(len(report['dataset_sha256']),64)
+        self.assertTrue(all(r['integrity_ok'] for r in report['results']))
+        for result in report['results']:
+            self.assertLessEqual(len(result['retrieved']),5)
+            if roles[result['id']]!='security':
+                self.assertNotIn('SEC-701',json.dumps(result['retrieved']))
+                self.assertNotIn('HARBOR-AUDIT-CANARY',json.dumps(result['retrieved']))
+        # A wrong relevance decision is reported, not silently changed into a
+        # passing label. Quality has no green-CI threshold in this first baseline.
+        self.assertEqual(report['passed'],sum(r['passed'] for r in report['results']))
+
     def test_current_revision_withdrawal_and_acl(self):
         from runreviq.database import ingest, connect
         newer=copy.deepcopy(self.docs[1]); newer['revision']=2

@@ -1,0 +1,3269 @@
+{
+  "cases": 50,
+  "passed": 36,
+  "recall_at_5": 0.875,
+  "hit_rate_at_5": 0.875,
+  "precision_at_returned_5": 0.18541666666666667,
+  "mean_reciprocal_rank": 0.5859375,
+  "refusal_accuracy": 0.4444444444444444,
+  "false_positive_rate": 0.5555555555555556,
+  "citation_accuracy": 1,
+  "median_latency_ms": 7.285,
+  "p95_latency_ms": 9.03,
+  "suite": "realistic",
+  "dataset_sha256": "03f1f2cd57b34a43a28cb2be9f71b7a0d7f25671bd4049f98430754777e70298",
+  "retrieval_method": "postgres_english_lexical_v1",
+  "categories": {
+    "access": {
+      "cases": 2,
+      "passed": 1,
+      "recall_at_5": null,
+      "hit_rate_at_5": null,
+      "precision_at_returned_5": null,
+      "mean_reciprocal_rank": null,
+      "refusal_accuracy": 0.5,
+      "false_positive_rate": 0.5,
+      "citation_accuracy": 1,
+      "median_latency_ms": 6.365,
+      "p95_latency_ms": 7.5
+    },
+    "conflict": {
+      "cases": 1,
+      "passed": 1,
+      "recall_at_5": null,
+      "hit_rate_at_5": null,
+      "precision_at_returned_5": null,
+      "mean_reciprocal_rank": null,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": null,
+      "median_latency_ms": 6.2,
+      "p95_latency_ms": 6.2
+    },
+    "context": {
+      "cases": 3,
+      "passed": 3,
+      "recall_at_5": null,
+      "hit_rate_at_5": null,
+      "precision_at_returned_5": null,
+      "mean_reciprocal_rank": null,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": null,
+      "median_latency_ms": 5.71,
+      "p95_latency_ms": 5.93
+    },
+    "direct": {
+      "cases": 28,
+      "passed": 25,
+      "recall_at_5": 0.8928571428571429,
+      "hit_rate_at_5": 0.8928571428571429,
+      "precision_at_returned_5": 0.18333333333333335,
+      "mean_reciprocal_rank": 0.6041666666666666,
+      "refusal_accuracy": null,
+      "false_positive_rate": null,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.575,
+      "p95_latency_ms": 9.03
+    },
+    "empty_terms": {
+      "cases": 1,
+      "passed": 1,
+      "recall_at_5": null,
+      "hit_rate_at_5": null,
+      "precision_at_returned_5": null,
+      "mean_reciprocal_rank": null,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": null,
+      "median_latency_ms": 7.02,
+      "p95_latency_ms": 7.02
+    },
+    "multiple_sources": {
+      "cases": 1,
+      "passed": 1,
+      "recall_at_5": 1.0,
+      "hit_rate_at_5": 1,
+      "precision_at_returned_5": 0.4,
+      "mean_reciprocal_rank": 0.5,
+      "refusal_accuracy": null,
+      "false_positive_rate": null,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.26,
+      "p95_latency_ms": 7.26
+    },
+    "paraphrase": {
+      "cases": 3,
+      "passed": 2,
+      "recall_at_5": 0.6666666666666666,
+      "hit_rate_at_5": 0.6666666666666666,
+      "precision_at_returned_5": 0.13333333333333333,
+      "mean_reciprocal_rank": 0.4444444444444444,
+      "refusal_accuracy": null,
+      "false_positive_rate": null,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.53,
+      "p95_latency_ms": 8.7
+    },
+    "review": {
+      "cases": 1,
+      "passed": 1,
+      "recall_at_5": null,
+      "hit_rate_at_5": null,
+      "precision_at_returned_5": null,
+      "mean_reciprocal_rank": null,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": null,
+      "median_latency_ms": 5.11,
+      "p95_latency_ms": 5.11
+    },
+    "unrelated": {
+      "cases": 1,
+      "passed": 1,
+      "recall_at_5": null,
+      "hit_rate_at_5": null,
+      "precision_at_returned_5": null,
+      "mean_reciprocal_rank": null,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": null,
+      "median_latency_ms": 7.25,
+      "p95_latency_ms": 7.25
+    },
+    "unsupported_overlap": {
+      "cases": 9,
+      "passed": 0,
+      "recall_at_5": null,
+      "hit_rate_at_5": null,
+      "precision_at_returned_5": null,
+      "mean_reciprocal_rank": null,
+      "refusal_accuracy": 0,
+      "false_positive_rate": 1,
+      "citation_accuracy": 1,
+      "median_latency_ms": 7.12,
+      "p95_latency_ms": 9.42
+    }
+  },
+  "recorded_on": "2026-10-25",
+  "purpose": "Frozen fictional development baseline; not held-out or real-world validation.",
+  "search_source_commit": "5d843dcc9d8b17b9621040e27d59f26606f89727",
+  "results": [
+    {
+      "id": "H01",
+      "category": "direct",
+      "question": "What should I compare when JWKS refresh fails?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 8.1,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H02",
+      "category": "direct",
+      "question": "Can I refresh a verifier cache without incident approval?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 8.53,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 2,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H03",
+      "category": "direct",
+      "question": "What if both replicas already have the same public key?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.75,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 3,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H04",
+      "category": "direct",
+      "question": "How do I distinguish expired tokens from host clock skew?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.68,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 3,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H05",
+      "category": "direct",
+      "question": "Should I increase token lifetime to handle incorrect host time?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 9.03,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 3,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H06",
+      "category": "direct",
+      "question": "What do we record after hosts resume from maintenance?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.65,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H07",
+      "category": "direct",
+      "question": "Which connection pool counts should I inspect?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.84,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H08",
+      "category": "direct",
+      "question": "Should I increase every replica connection pool?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.85,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 2,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H09",
+      "category": "direct",
+      "question": "How do I verify connection acquisition has recovered?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.44,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 3,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H10",
+      "category": "direct",
+      "question": "How do I identify a blocking transaction?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.61,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H11",
+      "category": "direct",
+      "question": "Who approves cancellation of a transaction blocker?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.5,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 2,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H12",
+      "category": "direct",
+      "question": "What should I verify after cancellation of a blocker?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.54,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 2,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H13",
+      "category": "direct",
+      "question": "What should I inspect on a new unready replica?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 8.12,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 4,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H14",
+      "category": "direct",
+      "question": "Should I remove readiness checks to unblock a rollout?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.63,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H15",
+      "category": "direct",
+      "question": "When can I resume a paused rollout?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.04,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 4,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H16",
+      "category": "direct",
+      "question": "What schema compatibility checks are needed before rollback?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.07,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H17",
+      "category": "direct",
+      "question": "When should I stop a limited rollback?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.83,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H18",
+      "category": "direct",
+      "question": "Does rollback prove root cause?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 8.46,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 2,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H19",
+      "category": "direct",
+      "question": "How do I investigate poison messages?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.0,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 3,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H20",
+      "category": "direct",
+      "question": "Can I purge the queue to reduce backlog?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 6.8,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H21",
+      "category": "direct",
+      "question": "How do I verify queue recovery?",
+      "passed": false,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 6.77,
+      "recall": 0.0,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "retrieved": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H22",
+      "category": "direct",
+      "question": "What should I compare when cache evictions rise?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.02,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 4,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H23",
+      "category": "direct",
+      "question": "Should I flush the cache during peak traffic?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.08,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H24",
+      "category": "direct",
+      "question": "What metrics validate cache recovery?",
+      "passed": false,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 6.78,
+      "recall": 0.0,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "retrieved": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H25",
+      "category": "direct",
+      "question": "How do I compare DNS answers across workloads?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 6.9,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H26",
+      "category": "direct",
+      "question": "Is hardcoding endpoint addresses a permanent fix?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 6.68,
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H27",
+      "category": "direct",
+      "question": "What if DNS resolves but connections fail?",
+      "passed": false,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 6.85,
+      "recall": 0.0,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "retrieved": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H28",
+      "category": "paraphrase",
+      "question": "Requests are stuck waiting for a free database slot.",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.31,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H29",
+      "category": "paraphrase",
+      "question": "New instances never become eligible to receive traffic.",
+      "passed": false,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.53,
+      "recall": 0.0,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H30",
+      "category": "paraphrase",
+      "question": "Jobs keep failing and being requeued; what should we inspect?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 8.7,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 3,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H31",
+      "category": "direct",
+      "question": "Which audit event should security correlate with approval?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 9.2,
+      "recall": 1.0,
+      "precision": 0.2,
+      "rank": 1,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "SEC-701",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "SEC-701",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "SEC-701",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "SEC-701",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "SEC-701",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "SEC-701",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "SEC-701",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H32",
+      "category": "multiple_sources",
+      "question": "How do we distinguish waiting for connections from waiting for transaction locks?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": false,
+      "latency_ms": 7.26,
+      "recall": 1.0,
+      "precision": 0.4,
+      "rank": 2,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DB-201",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H33",
+      "category": "unsupported_overlap",
+      "question": "How do I renew the TLS certificate?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 6.7,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H34",
+      "category": "unsupported_overlap",
+      "question": "What is the password reset process?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 9.42,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H35",
+      "category": "unsupported_overlap",
+      "question": "Which universal cache expiry duration should I configure?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 7.12,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "H36",
+      "category": "unsupported_overlap",
+      "question": "What exactly-once message delivery guarantees do we provide?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 7.61,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "QUE-401",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H37",
+      "category": "unsupported_overlap",
+      "question": "How do I change database durability settings?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 7.01,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H38",
+      "category": "unsupported_overlap",
+      "question": "How do I recover an identity provider outage?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 7.04,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        }
+      ]
+    },
+    {
+      "id": "H39",
+      "category": "unsupported_overlap",
+      "question": "Which command upgrades the database schema?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 6.82,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 11,
+          "end_line": 11
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H40",
+      "category": "unsupported_overlap",
+      "question": "How do I reset an account lockout?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 8.03,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H41",
+      "category": "unsupported_overlap",
+      "question": "What is the cause of every HTTP 500 error?",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 7.46,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DB-202",
+          "revision": 1,
+          "start_line": 15,
+          "end_line": 15
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 19,
+          "end_line": 19
+        }
+      ]
+    },
+    {
+      "id": "H42",
+      "category": "access",
+      "question": "HARBOR-AUDIT-CANARY",
+      "passed": false,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "selected",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 7.5,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "irrelevant": [
+        {
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-301",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "DEP-302",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "document_id": "NET-601",
+          "revision": 1,
+          "start_line": 7,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "H43",
+      "category": "access",
+      "question": "Inspect connection pool counts",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 5.23,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [],
+      "irrelevant": []
+    },
+    {
+      "id": "H44",
+      "category": "context",
+      "question": "Inspect connection pool counts",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 5.71,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [],
+      "irrelevant": []
+    },
+    {
+      "id": "H45",
+      "category": "context",
+      "question": "Inspect connection pool counts",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 5.21,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [],
+      "irrelevant": []
+    },
+    {
+      "id": "H46",
+      "category": "context",
+      "question": "Inspect connection pool counts",
+      "passed": true,
+      "expected_status": "needs_context_or_review",
+      "actual_status": "needs_context_or_review",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 5.93,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [],
+      "irrelevant": []
+    },
+    {
+      "id": "H47",
+      "category": "conflict",
+      "question": "Should we disable rotation?",
+      "passed": true,
+      "expected_status": "conflict",
+      "actual_status": "conflict",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 6.2,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [],
+      "irrelevant": []
+    },
+    {
+      "id": "H48",
+      "category": "review",
+      "question": "How do I inspect recovery checkpoints?",
+      "passed": true,
+      "expected_status": "needs_context_or_review",
+      "actual_status": "needs_context_or_review",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 5.11,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [],
+      "irrelevant": []
+    },
+    {
+      "id": "H49",
+      "category": "empty_terms",
+      "question": "the and or",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 7.02,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [],
+      "irrelevant": []
+    },
+    {
+      "id": "H50",
+      "category": "unrelated",
+      "question": "quantum banana submarine",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "integrity_ok": true,
+      "withheld": true,
+      "latency_ms": 7.25,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "retrieved": [],
+      "irrelevant": []
+    }
+  ]
+}

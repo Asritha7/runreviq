@@ -248,3 +248,7 @@ Apply migration 006 using `.venv/bin/python -m runreviq.database bootstrap` and 
 Restart the local API, sign in, and enter an optional question above the service context. Try “Compare failing versus healthy replicas” with production, version 2.4.0 and key rotation enabled. Matching passages link to exact stored lines. Leave the question blank for the existing selector. No migration or new credentials are needed.
 
 Run `.venv/bin/python -m runreviq.evaluate_search` for the isolated 30-case evaluation. See [search behavior and limitations](docs/search.md).
+
+## Run the larger search benchmark
+
+Run `.venv/bin/python -m runreviq.evaluate_search --suite realistic --report-only` to evaluate 50 labeled questions against 13 fictional runbooks in an automatically created disposable database. No migration, model download or API restart is needed. The report includes known quality failures; omit `--report-only` to receive a nonzero exit for those failures. See [evaluation semantics](docs/search-evaluation.md).

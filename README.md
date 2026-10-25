@@ -128,3 +128,7 @@ Separately assigned publishers can publish an independently approved snapshot wi
 ## Manage published guidance
 
 Designated publishers can list published documents, inspect immutable history, and withdraw current approved guidance with a recorded reason. Withdrawn revisions are excluded from new database-backed selection; authorized history access remains available with warnings. New approved revisions replace earlier ones without erasing history. See [publication management](docs/publication-management.md).
+
+## Retrieval effectiveness benchmark
+
+A separate fictional benchmark now tests 13 longer runbooks against 50 questions. The baseline retrieves much of the expected evidence but also returns many irrelevant passages and misses withholding cases. See [results and limitations](datasets/benchmark/README.md) and [metric definitions](docs/search-evaluation.md). Its data is loaded only into disposable evaluation databases; the working collection is unchanged.
