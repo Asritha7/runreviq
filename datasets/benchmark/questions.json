@@ -1,0 +1,982 @@
+[
+  {
+    "id": "H01",
+    "question": "What should I compare when JWKS refresh fails?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "AUTH-101",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H02",
+    "question": "Can I refresh a verifier cache without incident approval?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "AUTH-101",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H03",
+    "question": "What if both replicas already have the same public key?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "AUTH-101",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "H04",
+    "question": "How do I distinguish expired tokens from host clock skew?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "AUTH-102",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H05",
+    "question": "Should I increase token lifetime to handle incorrect host time?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "AUTH-102",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H06",
+    "question": "What do we record after hosts resume from maintenance?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "AUTH-102",
+        "revision": 1,
+        "start_line": 7,
+        "end_line": 7
+      }
+    ]
+  },
+  {
+    "id": "H07",
+    "question": "Which connection pool counts should I inspect?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-201",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H08",
+    "question": "Should I increase every replica connection pool?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-201",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H09",
+    "question": "How do I verify connection acquisition has recovered?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-201",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "H10",
+    "question": "How do I identify a blocking transaction?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-202",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H11",
+    "question": "Who approves cancellation of a transaction blocker?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-202",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H12",
+    "question": "What should I verify after cancellation of a blocker?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-202",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "H13",
+    "question": "What should I inspect on a new unready replica?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DEP-301",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H14",
+    "question": "Should I remove readiness checks to unblock a rollout?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DEP-301",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H15",
+    "question": "When can I resume a paused rollout?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DEP-301",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "H16",
+    "question": "What schema compatibility checks are needed before rollback?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DEP-302",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H17",
+    "question": "When should I stop a limited rollback?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DEP-302",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H18",
+    "question": "Does rollback prove root cause?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DEP-302",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "H19",
+    "question": "How do I investigate poison messages?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "QUE-401",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H20",
+    "question": "Can I purge the queue to reduce backlog?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "QUE-401",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H21",
+    "question": "How do I verify queue recovery?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "QUE-401",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "H22",
+    "question": "What should I compare when cache evictions rise?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "CACHE-501",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H23",
+    "question": "Should I flush the cache during peak traffic?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "CACHE-501",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H24",
+    "question": "What metrics validate cache recovery?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "CACHE-501",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "H25",
+    "question": "How do I compare DNS answers across workloads?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "NET-601",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H26",
+    "question": "Is hardcoding endpoint addresses a permanent fix?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "NET-601",
+        "revision": 1,
+        "start_line": 15,
+        "end_line": 15
+      }
+    ]
+  },
+  {
+    "id": "H27",
+    "question": "What if DNS resolves but connections fail?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "NET-601",
+        "revision": 1,
+        "start_line": 19,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "id": "H28",
+    "question": "Requests are stuck waiting for a free database slot.",
+    "category": "paraphrase",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-201",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H29",
+    "question": "New instances never become eligible to receive traffic.",
+    "category": "paraphrase",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DEP-301",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H30",
+    "question": "Jobs keep failing and being requeued; what should we inspect?",
+    "category": "paraphrase",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "QUE-401",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H31",
+    "question": "Which audit event should security correlate with approval?",
+    "category": "direct",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "security",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "SEC-701",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H32",
+    "question": "How do we distinguish waiting for connections from waiting for transaction locks?",
+    "category": "multiple_sources",
+    "rationale": "The labeled paragraphs directly address the requested observation or action; generic related text is not sufficient.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "DB-201",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      },
+      {
+        "document_id": "DB-202",
+        "revision": 1,
+        "start_line": 11,
+        "end_line": 11
+      }
+    ]
+  },
+  {
+    "id": "H33",
+    "question": "How do I renew the TLS certificate?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H34",
+    "question": "What is the password reset process?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H35",
+    "question": "Which universal cache expiry duration should I configure?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H36",
+    "question": "What exactly-once message delivery guarantees do we provide?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H37",
+    "question": "How do I change database durability settings?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H38",
+    "question": "How do I recover an identity provider outage?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H39",
+    "question": "Which command upgrades the database schema?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H40",
+    "question": "How do I reset an account lockout?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H41",
+    "question": "What is the cause of every HTTP 500 error?",
+    "category": "unsupported_overlap",
+    "rationale": "The corpus does not supply the requested procedure or fact. Related keywords or explicit exclusions are not an answer.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H42",
+    "question": "HARBOR-AUDIT-CANARY",
+    "category": "access",
+    "rationale": "The only matching marker belongs to a security-only source.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H43",
+    "question": "Inspect connection pool counts",
+    "category": "access",
+    "rationale": "This reader has no authorized benchmark guidance.",
+    "context": {
+      "role": "intern",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H44",
+    "question": "Inspect connection pool counts",
+    "category": "context",
+    "rationale": "The approved sources apply only to production.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "staging",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H45",
+    "question": "Inspect connection pool counts",
+    "category": "context",
+    "rationale": "No benchmark source covers this version.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "4.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H46",
+    "question": "Inspect connection pool counts",
+    "category": "context",
+    "rationale": "The explicit rotation prerequisite is unknown.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": null
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "H47",
+    "question": "Should we disable rotation?",
+    "category": "conflict",
+    "rationale": "Two applicable reviewed claims oppose the same action.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.1.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "conflict",
+    "expected_passages": []
+  },
+  {
+    "id": "H48",
+    "question": "How do I inspect recovery checkpoints?",
+    "category": "review",
+    "rationale": "The proposal has unverified metadata and no known environment.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.2.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "H49",
+    "question": "the and or",
+    "category": "empty_terms",
+    "rationale": "No searchable English terms remain.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "H50",
+    "question": "quantum banana submarine",
+    "category": "unrelated",
+    "rationale": "No operational evidence supports this topic.",
+    "context": {
+      "role": "platform",
+      "service": "harbor",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  }
+]

@@ -1,0 +1,245 @@
+[
+  {
+    "id": "AUTH-101",
+    "title": "Signing key propagation",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/AUTH-101.md"
+  },
+  {
+    "id": "AUTH-102",
+    "title": "Token clock skew",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/AUTH-102.md"
+  },
+  {
+    "id": "DB-201",
+    "title": "Database connection pool exhaustion",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/DB-201.md"
+  },
+  {
+    "id": "DB-202",
+    "title": "Transaction lock investigation",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/DB-202.md"
+  },
+  {
+    "id": "DEP-301",
+    "title": "Deployment readiness failure",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/DEP-301.md"
+  },
+  {
+    "id": "DEP-302",
+    "title": "Release rollback decision",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/DEP-302.md"
+  },
+  {
+    "id": "QUE-401",
+    "title": "Worker queue backlog",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/QUE-401.md"
+  },
+  {
+    "id": "CACHE-501",
+    "title": "Cache memory pressure",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/CACHE-501.md"
+  },
+  {
+    "id": "NET-601",
+    "title": "Service discovery resolution",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/NET-601.md"
+  },
+  {
+    "id": "SEC-701",
+    "title": "Restricted audit investigation",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.0.0",
+    "version_max_exclusive": "3.1.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/SEC-701.md"
+  },
+  {
+    "id": "ROT-801",
+    "title": "Emergency rotation freeze",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.1.0",
+    "version_max_exclusive": "3.2.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [
+      {
+        "action": "disable_rotation",
+        "rule": "must"
+      }
+    ],
+    "path": "datasets/northstar/ROT-801.md"
+  },
+  {
+    "id": "ROT-802",
+    "title": "Emergency rotation continuity",
+    "revision": 1,
+    "service": "harbor",
+    "environment": "production",
+    "version_min": "3.1.0",
+    "version_max_exclusive": "3.2.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [
+      {
+        "action": "disable_rotation",
+        "rule": "must_not"
+      }
+    ],
+    "path": "datasets/northstar/ROT-802.md"
+  },
+  {
+    "id": "FUT-901",
+    "title": "Unverified recovery proposal",
+    "revision": 1,
+    "service": "harbor",
+    "environment": null,
+    "version_min": "3.2.0",
+    "version_max_exclusive": "3.3.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": false,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/FUT-901.md"
+  }
+]
