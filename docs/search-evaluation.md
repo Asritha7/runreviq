@@ -41,3 +41,7 @@ Keep the corpus and labels fixed while improving query-term handling and relevan
 For the current ranking and unchanged-corpus comparison, see [coverage-based search v2](search-ranking.md). The added validation questions were fixed before v2 experiments and are now regressions, not permanently unseen data.
 
 See [current v3 comparison and known regressions](operational-query-matching.md). The additional probe questions are now regression data, not permanently unseen validation.
+
+## Separately authored questions
+
+Use `--questions PATH` to replace a suite's questions while retaining its frozen corpus. Use `--validate-only` for database-free schema, exact-label and individual positive-source applicability checks. Invalid input is rejected before database creation. External reports are explicitly marked `question_source: external` and `independence: not_verified`. See [independent evaluation workflow](independent-evaluation.md) for private storage, case format, review and freezing rules. Existing benchmark data and ranking remain unchanged.
