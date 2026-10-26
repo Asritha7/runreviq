@@ -256,3 +256,7 @@ Run `.venv/bin/python -m runreviq.evaluate_search --suite realistic --report-onl
 ## Coverage-based search update
 
 Restart the API to load v2 ranking; no migration, new credentials or model download is needed. Existing Google sessions may require sign-in again. Run `.venv/bin/python -m runreviq.evaluate_search --suite validation --report-only` for the additional 12-question suite. See [ranking limits and comparison](docs/search-ranking.md).
+
+## v3 query-matching update
+
+Restart the API to load v3 matching; Google sign-in may need to be repeated. No migration, new credentials or downloaded models are required. Run `.venv/bin/python -m runreviq.evaluate_search --suite paraphrase --report-only` for the eight new fictional probes. See [vocabulary, exact matching and limitations](docs/operational-query-matching.md).

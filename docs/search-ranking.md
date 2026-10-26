@@ -1,5 +1,7 @@
 # Coverage-based lexical search v2
 
+This describes the v2 foundation and historical comparison. Current search adds [v3 operational vocabulary and support checks](operational-query-matching.md); the weighting and coverage formula below is retained.
+
 The first lexical search matched any query word and often returned irrelevant passages. `postgres_english_coverage_v2` adds explicit coverage gates and topic context. It remains local keyword retrieval, not a semantic model or an answerability guarantee. No paid API, new model, dependency, migration or stored index is introduced.
 
 ## Algorithm and authority boundaries

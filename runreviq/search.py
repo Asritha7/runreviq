@@ -6,9 +6,9 @@ from psycopg.types.json import Jsonb
 from runreviq.database import connect
 from runreviq.citations import validate_citations
 from runreviq.selector import ROLES, select
-from runreviq.ranking import rank, query_text, searchable_text, normalize_text
+from runreviq.ranking import rank, query_text, searchable_text, normalize_text, exact_terms, has_exact_terms
 
-RETRIEVAL_METHOD = 'postgres_english_coverage_v2'
+RETRIEVAL_METHOD = 'postgres_english_operational_v3'
 
 
 def passages(content):
@@ -77,14 +77,25 @@ def search(*, role, question, dbname='opslens', **context):
                     heading = line.lstrip('# ').strip()
                 if number in wanted:
                     headings[(metadata['id'], number)] = heading
-        texts = [dict(body=normalize_text(searchable_text(p['quote'])),
+        texts = [dict(full=normalize_text(p['quote']), body=normalize_text(searchable_text(p['quote'])),
                       context=normalize_text(p['title'] + ' ' + headings[(p['document_id'],p['start_line'])]))
                  for p in candidates]
         terms = conn.execute("""SELECT tsvector_to_array(to_tsvector('english', value->>'body')),
-                tsvector_to_array(to_tsvector('english', value->>'context'))
+                tsvector_to_array(to_tsvector('english', value->>'context')),
+                tsvector_to_array(to_tsvector('english', value->>'full'))
             FROM jsonb_array_elements(%s::jsonb) WITH ORDINALITY t(value, position) ORDER BY position""",
             (Jsonb(texts),)).fetchall()
-        hits = rank(candidates, normalized, [t[0] for t in terms], [t[1] for t in terms])
+        required = exact_terms(question)
+        exact_documents = {metadata['id'] for metadata, _, content in rows
+                           if has_exact_terms(content, required)}
+        eligible = [i for i,p in enumerate(candidates) if p['document_id'] in exact_documents]
+        # A topic mentioned only in explicit scope exclusions is not evidence.
+        # Compute this only over sources passing the same exact-term gate.
+        supported = {term for i in eligible for term in terms[i][0] + terms[i][1]}
+        mentioned = {term for i in eligible for term in terms[i][2]}
+        excluded_only = set(normalized) & (mentioned - supported)
+        hits = [] if excluded_only else rank([candidates[i] for i in eligible], normalized,
+                                             [terms[i][0] for i in eligible], [terms[i][1] for i in eligible])
         result['passages'] = hits
         result['recommended_documents'] = list(dict.fromkeys(p['document_id'] for p in result['passages']))
         result['evidence'] = [e for e in result['evidence'] if e['document_id'] in result['recommended_documents']]

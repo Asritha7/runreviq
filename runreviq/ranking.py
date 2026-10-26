@@ -5,16 +5,32 @@ from collections import Counter
 
 # Question scaffolding should not outweigh incident terminology. No domain
 # identifiers, source IDs or benchmark-specific answers are encoded here.
-SCAFFOLD = set('ask can could would should what which how why when where please tell show give use need help check inspect compare find look'.split())
+SCAFFOLD = set('ask can could would should what which how why when where please tell show give use need help check inspect compare find look metrics'.split())
 EXCLUSION = re.compile(r'\b(?:does not|do not) (?:cover|specify|authorize|establish)\b|\boutside (?:this|the) (?:procedure|scope)\b|\bnot instructions for\b', re.I)
 
 
 def normalize_text(text):
-    # PostgreSQL English stemming leaves some nominalized actions separate.
-    # These are morphological aliases, not operational advice or answer rules.
-    aliases = {'recovery': 'recover', 'verification': 'verify', 'validation': 'validate'}
-    return re.sub(r'\b(?:recovery|verification|validation)\b',
+    # Small, explicit operational vocabulary; no source IDs or answers.
+    # This is a lexical aid, not a claim that these terms are universally equal.
+    phrases = {r'\bdatabase slots?\b': 'database connection',
+               r'\beligible to receive traffic\b': 'ready'}
+    for pattern, replacement in phrases.items():
+        text = re.sub(pattern, replacement, text, flags=re.I)
+    aliases = {'recovery': 'recover', 'verification': 'verify', 'validation': 'verify',
+               'validate': 'verify', 'instances': 'replicas', 'instance': 'replica',
+               'jobs': 'tasks', 'job': 'task', 'requeue': 'retry', 'requeued': 'retry',
+               'requeuing': 'retry'}
+    return re.sub(r'\b(?:' + '|'.join(aliases) + r')\b',
                   lambda match: aliases[match.group().lower()], text, flags=re.I)
+
+
+def exact_terms(question):
+    """Specific numeric codes/versions and uppercase IDs must not fuzzy-match."""
+    return re.findall(r'(?<![\w.-])(?:[A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)+|[0-9]+(?:\.[0-9]+)*)(?![\w-]|\.\d)', question)
+
+
+def has_exact_terms(text, terms):
+    return all(re.search(r'(?<![\w.-])' + re.escape(term) + r'(?![\w-]|\.\d)', text, re.I) for term in terms)
 
 
 def searchable_text(text):
