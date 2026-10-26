@@ -140,3 +140,9 @@ The v2 coverage-based lexical ranking reduced generic-word matches and discounts
 ## Operational query matching
 
 The current v3 search adds a small operational vocabulary, exact numeric/code matching and withholding for terms mentioned only in scope exclusions. The fixed development benchmark improves to 48/50 outcomes and 93.75% recall, but precision remains 37.24% and some paraphrases still fail. See [current behavior and trade-offs](docs/operational-query-matching.md).
+
+## Independently supplied evaluation questions
+
+The evaluator accepts local JSON questions against a frozen built-in corpus, with offline label validation and disposable-database execution. Imported questions are not automatically considered independent. See [authoring, review and evaluation instructions](docs/independent-evaluation.md). This workflow does not change ranking or establish new quality results.
+
+A first [user-supplied synthetic scenario assessment](docs/external-validation-results.md) confirms tested context/access boundaries but exposes missed applicable procedures, prohibitions and authorized findings. It is a baseline with explicit metadata assumptions, not a production-readiness claim.

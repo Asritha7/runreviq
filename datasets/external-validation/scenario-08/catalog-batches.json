@@ -1,0 +1,53 @@
+[
+  [
+    {
+      "id": "RB-801",
+      "title": "RB-801",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [],
+      "path": "datasets/northstar/RB-801-r1.md"
+    }
+  ],
+  [
+    {
+      "id": "SEC-802",
+      "title": "SEC-802",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [
+        {
+          "action": "disable_signature_verification",
+          "rule": "must_not",
+          "citation": {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "JWT signature verification must remain enabled in production. Disabling signature verification is prohibited.",
+            "source_sha256": "67d2b8eccdaae75afc2969f8426a7f23428e7c179cbfd9e75d99291d9e4f2b59"
+          }
+        }
+      ],
+      "path": "datasets/northstar/SEC-802-r1.md"
+    }
+  ]
+]

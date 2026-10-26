@@ -100,3 +100,5 @@ Tests cover title-only rejection, missing concepts, scope-disclaimer scoring, pr
 ## v3 query-matching checks
 
 Tests cover exact code/identifier boundaries (including trailing punctuation), operational vocabulary and preserved negation, scope-only withholding, numeric-code mismatch and the eight-question probe. CI floors are development recall ≥93.75%, precision ≥35%, all 18 withholding outcomes, and probe recall ≥75% with all four withholding outcomes. Original 30/30 and additional 12/12 regressions remain required. See [measured trade-offs](operational-query-matching.md).
+
+External evaluation coverage checks strict case/context types, inaccessible or inapplicable positive labels, preflight rejection before database access, database-free validation, stable/change-sensitive fingerprints, and external-report integrity without an independence claim. Run the full Python suite with `RUNREVIQ_TEST_DATABASE=1` to include the disposable PostgreSQL path. See [independent evaluation](independent-evaluation.md).

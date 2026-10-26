@@ -2,6 +2,11 @@
 import copy
 import json
 import unittest
+import tempfile
+import io
+from pathlib import Path
+from unittest.mock import patch
+from contextlib import redirect_stdout, redirect_stderr
 
 from runreviq.database import prepare
 from runreviq.evaluate_search import aggregate, relevance, suite_data, validate_cases, report_exit_code
@@ -63,3 +68,44 @@ class EvaluationTests(unittest.TestCase):
             if mutate=='status': changed[0]['expected_status']='insufficient_evidence'
             with self.subTest(mutate=mutate), self.assertRaises(ValueError):
                 validate_cases(changed,records)
+
+    def test_invalid_external_cases_fail_before_database_access(self):
+        from runreviq.evaluate_search import main
+        docs, root, path = suite_data('realistic')
+        original = json.loads(path.read_text())[:1]
+        for mutation in ('empty', 'role', 'boolean', 'version', 'question', 'extra', 'revision', 'context'):
+            cases = copy.deepcopy(original)
+            if mutation == 'empty': cases = []
+            if mutation == 'role': cases[0]['context']['role'] = 'admin'
+            if mutation == 'boolean': cases[0]['context']['key_rotation_enabled'] = 'false'
+            if mutation == 'version': cases[0]['context']['software_version'] = 'latest'
+            if mutation == 'question': cases[0]['question'] = ' ' * 10
+            if mutation == 'extra': cases[0]['context']['dbname'] = 'opslens'
+            if mutation == 'revision': cases[0]['expected_passages'][0]['revision'] = True
+            if mutation == 'context': cases[0]['context']['service'] = 'other-service'
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                filename = Path(directory) / 'cases.json'
+                filename.write_text(json.dumps(cases))
+                with patch('sys.argv', ['evaluate', '--suite', 'realistic', '--questions', str(filename)]), patch('runreviq.evaluate_search.connect') as connect, redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as error:
+                    main()
+                self.assertEqual(error.exception.code, 2)
+                connect.assert_not_called()
+
+    def test_validate_only_external_cases_without_database_and_stable_fingerprint(self):
+        from runreviq.evaluate_search import main
+        _, _, path = suite_data('realistic')
+        with tempfile.TemporaryDirectory() as directory:
+            filename = Path(directory) / 'cases.json'
+            cases = json.loads(path.read_text())[:1]
+            reports = []
+            for question in (cases[0]['question'], cases[0]['question'], 'A different question'):
+                cases[0]['question'] = question
+                filename.write_text(json.dumps(cases))
+                output = io.StringIO()
+                with patch('sys.argv', ['evaluate', '--suite', 'realistic', '--questions', str(filename), '--validate-only']), patch('runreviq.evaluate_search.connect') as connect, redirect_stdout(output):
+                    self.assertEqual(main(), 0)
+                connect.assert_not_called()
+                reports.append(json.loads(output.getvalue()))
+            self.assertEqual(reports[0], reports[1])
+            self.assertNotEqual(reports[1]['dataset_sha256'], reports[2]['dataset_sha256'])
+            self.assertEqual(reports[0]['cases'], 1)

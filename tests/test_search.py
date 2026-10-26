@@ -80,6 +80,16 @@ class SearchDatabaseTests(unittest.TestCase):
         report=evaluate(self.dbname)
         self.assertEqual(report['passed'],30,json.dumps(report,indent=2))
 
+    def test_external_cases_use_existing_integrity_checks_without_independence_claim(self):
+        from runreviq.evaluate_search import evaluate, load_cases
+        cases = load_cases('regression')[:2]
+        report = evaluate(self.dbname, cases=cases)
+        self.assertEqual(report['question_source'], 'external')
+        self.assertEqual(report['independence'], 'not_verified')
+        self.assertEqual(report['cases'], 2)
+        self.assertEqual(report['passed'], 2)
+        self.assertTrue(all(r['integrity_ok'] for r in report['results']))
+
     def test_realistic_benchmark_runs_without_claiming_perfect_quality(self):
         from runreviq.database import connect, ingest
         from runreviq.evaluate_search import evaluate, suite_data
