@@ -1,0 +1,386 @@
+{
+  "dataset_sha256": "afddc7c45e486116b6c5918cc9739ebc4c17b9524de3b6ed6ca557f8f820b59f",
+  "labels_sha256": "6b6eb968f942794a268ad3d993d0ffde1e3e86a739dbd40c0cb7104920a54fc2",
+  "scope": "Exact evidence recall/precision, withholding and access checks; not answer correctness",
+  "baseline_method": "postgres_english_operational_v3",
+  "current_method": "postgres_english_context_v4",
+  "before": {
+    "answerable_cases": 8,
+    "withholding_cases": 3,
+    "status_accuracy": 0.45454545454545453,
+    "mean_recall_at_5": 0.1875,
+    "mean_precision_at_returned_5": 0.25,
+    "false_positive_rate": 0,
+    "withholding_accuracy": 1,
+    "returned_quotation_count": 4,
+    "citation_integrity": "verified",
+    "authorization_checks": {
+      "platform_disclosure_absent": true,
+      "platform_revision_denied": true,
+      "revoked_revision_denied": true,
+      "revoked_search_disclosure_absent": true
+    },
+    "cases": [
+      {
+        "id": "S01",
+        "expected_status": "selected",
+        "actual_status": "insufficient_evidence",
+        "status_matches": false,
+        "expected_count": 1,
+        "retrieved_count": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [
+          {
+            "document_id": "RB-101",
+            "revision": 1,
+            "start_line": 3,
+            "end_line": 3
+          }
+        ],
+        "irrelevant": []
+      },
+      {
+        "id": "S02",
+        "expected_status": "conflict",
+        "actual_status": "conflict",
+        "status_matches": true,
+        "expected_count": 0,
+        "retrieved_count": 0,
+        "recall": null,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S03",
+        "expected_status": "needs_context_or_review",
+        "actual_status": "needs_context_or_review",
+        "status_matches": true,
+        "expected_count": 0,
+        "retrieved_count": 0,
+        "recall": null,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S04",
+        "expected_status": "selected",
+        "actual_status": "insufficient_evidence",
+        "status_matches": false,
+        "expected_count": 1,
+        "retrieved_count": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [
+          {
+            "document_id": "RB-401",
+            "revision": 2,
+            "start_line": 3,
+            "end_line": 3
+          }
+        ],
+        "irrelevant": []
+      },
+      {
+        "id": "S05",
+        "expected_status": "selected",
+        "actual_status": "insufficient_evidence",
+        "status_matches": false,
+        "expected_count": 2,
+        "retrieved_count": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [
+          {
+            "document_id": "RB-501",
+            "revision": 1,
+            "start_line": 3,
+            "end_line": 3
+          },
+          {
+            "document_id": "RB-502",
+            "revision": 1,
+            "start_line": 3,
+            "end_line": 3
+          }
+        ],
+        "irrelevant": []
+      },
+      {
+        "id": "S06",
+        "expected_status": "selected",
+        "actual_status": "insufficient_evidence",
+        "status_matches": false,
+        "expected_count": 1,
+        "retrieved_count": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [
+          {
+            "document_id": "RB-601",
+            "revision": 1,
+            "start_line": 3,
+            "end_line": 3
+          }
+        ],
+        "irrelevant": []
+      },
+      {
+        "id": "S07",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 1,
+        "retrieved_count": 1,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S08",
+        "expected_status": "selected",
+        "actual_status": "insufficient_evidence",
+        "status_matches": false,
+        "expected_count": 1,
+        "retrieved_count": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [
+          {
+            "document_id": "SEC-802",
+            "revision": 1,
+            "start_line": 3,
+            "end_line": 3
+          }
+        ],
+        "irrelevant": []
+      },
+      {
+        "id": "S09",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 2,
+        "retrieved_count": 1,
+        "recall": 0.5,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [
+          {
+            "document_id": "RB-902",
+            "revision": 1,
+            "start_line": 3,
+            "end_line": 3
+          }
+        ],
+        "irrelevant": []
+      },
+      {
+        "id": "S10-platform",
+        "expected_status": "insufficient_evidence",
+        "actual_status": "insufficient_evidence",
+        "status_matches": true,
+        "expected_count": 0,
+        "retrieved_count": 0,
+        "recall": null,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S10-security",
+        "expected_status": "selected",
+        "actual_status": "insufficient_evidence",
+        "status_matches": false,
+        "expected_count": 1,
+        "retrieved_count": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [
+          {
+            "document_id": "SEC-1001",
+            "revision": 1,
+            "start_line": 3,
+            "end_line": 3
+          }
+        ],
+        "irrelevant": []
+      }
+    ]
+  },
+  "after": {
+    "answerable_cases": 8,
+    "withholding_cases": 3,
+    "status_accuracy": 1,
+    "mean_recall_at_5": 1.0,
+    "mean_precision_at_returned_5": 1.0,
+    "false_positive_rate": 0,
+    "withholding_accuracy": 1,
+    "returned_quotation_count": 12,
+    "citation_integrity": "verified",
+    "authorization_checks": {
+      "platform_disclosure_absent": true,
+      "platform_revision_denied": true,
+      "revoked_revision_denied": true,
+      "revoked_search_disclosure_absent": true
+    },
+    "cases": [
+      {
+        "id": "S01",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 1,
+        "retrieved_count": 1,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S02",
+        "expected_status": "conflict",
+        "actual_status": "conflict",
+        "status_matches": true,
+        "expected_count": 0,
+        "retrieved_count": 0,
+        "recall": null,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S03",
+        "expected_status": "needs_context_or_review",
+        "actual_status": "needs_context_or_review",
+        "status_matches": true,
+        "expected_count": 0,
+        "retrieved_count": 0,
+        "recall": null,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S04",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 1,
+        "retrieved_count": 1,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S05",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 2,
+        "retrieved_count": 2,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S06",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 1,
+        "retrieved_count": 1,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S07",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 1,
+        "retrieved_count": 1,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S08",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 1,
+        "retrieved_count": 1,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S09",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 2,
+        "retrieved_count": 2,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S10-platform",
+        "expected_status": "insufficient_evidence",
+        "actual_status": "insufficient_evidence",
+        "status_matches": true,
+        "expected_count": 0,
+        "retrieved_count": 0,
+        "recall": null,
+        "precision": 0.0,
+        "rank": null,
+        "missing": [],
+        "irrelevant": []
+      },
+      {
+        "id": "S10-security",
+        "expected_status": "selected",
+        "actual_status": "selected",
+        "status_matches": true,
+        "expected_count": 1,
+        "retrieved_count": 1,
+        "recall": 1.0,
+        "precision": 1.0,
+        "rank": 1,
+        "missing": [],
+        "irrelevant": []
+      }
+    ]
+  }
+}

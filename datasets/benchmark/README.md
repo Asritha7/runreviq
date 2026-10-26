@@ -52,3 +52,5 @@ The original corpus, labels and `baseline.json` remain unchanged. `comparison-v2
 ## v3 comparison and probes
 
 `comparison-v3.json` records the unchanged-corpus comparison: 48/50 development outcomes, 93.75% recall, 37.24% precision and 18/18 correct withholding. `paraphrase-questions.json` contains eight same-author probes fixed before v3 experiments; seven outcomes pass, with one missed verification paragraph. The older 12-case suite still passes but precision declines slightly. See [limitations and full comparison](../../docs/operational-query-matching.md). The original v1/v2 baselines remain unchanged.
+
+The v4 experiment has a separate `comparison-v4.json`. It reaches 50/50 development outcomes with 38.28% mean precision, while the eight-question probe still misses P02 and its precision drops to 20.83%. Source/question fixtures and prior baseline reports remain unchanged. See [v4 algorithm and limits](../../docs/context-sensitive-retrieval.md).

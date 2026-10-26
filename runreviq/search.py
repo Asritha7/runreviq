@@ -1,14 +1,15 @@
 """Local lexical passage retrieval; exact excerpts, never generated answers."""
 import hashlib
+import re
 
 from psycopg.types.json import Jsonb
 
 from runreviq.database import connect
 from runreviq.citations import validate_citations
 from runreviq.selector import ROLES, select
-from runreviq.ranking import rank, query_text, searchable_text, normalize_text, exact_terms, has_exact_terms
+from runreviq.ranking import rank, query_text, searchable_text, normalize_text, exact_terms, has_exact_terms, http_terms, numeric_match
 
-RETRIEVAL_METHOD = 'postgres_english_operational_v3'
+RETRIEVAL_METHOD = 'postgres_english_context_v4'
 
 
 def passages(content):
@@ -61,8 +62,18 @@ def search(*, role, question, dbname='opslens', **context):
                                            revision=metadata['revision'], title=metadata['title']))
         # PostgreSQL provides the same English stemming for query and source.
         # Ranking uses only authorized applicable candidates in this snapshot.
+        # These exact context values already passed applicability checks.
+        # Remove their repetition from relevance scoring, not from stored text.
+        scoring_question = re.sub(r'(?<![\w.-])' + re.escape(context['service']) + r'(?![\w.-])', ' ', question, flags=re.I)
+        scoring_question = re.sub(r'(?<![\w.-])v?' + re.escape(context['software_version']) + r'(?![\w.-])', ' ', scoring_question, flags=re.I)
         normalized = conn.execute("SELECT tsvector_to_array(to_tsvector('english', %s))",
-                                  (normalize_text(query_text(question)),)).fetchone()[0]
+                                  (normalize_text(query_text(scoring_question)),)).fetchone()[0]
+        clauses = re.split(r'\b(?:while|whereas|as well as|and also)\b', scoring_question, flags=re.I)
+        query_groups = []
+        if len(clauses) > 1:
+            query_groups = [row[0] for row in conn.execute(
+                "SELECT tsvector_to_array(to_tsvector('english', value)) FROM jsonb_array_elements_text(%s)",
+                (Jsonb([normalize_text(query_text(clause)) for clause in clauses]),)).fetchall()]
         starts = {}
         for candidate in candidates:
             starts.setdefault(candidate['document_id'], set()).add(candidate['start_line'])
@@ -77,25 +88,48 @@ def search(*, role, question, dbname='opslens', **context):
                     heading = line.lstrip('# ').strip()
                 if number in wanted:
                     headings[(metadata['id'], number)] = heading
-        texts = [dict(full=normalize_text(p['quote']), body=normalize_text(searchable_text(p['quote'])),
+        policy_actions = {}
+        for metadata, _, _ in rows:
+            for claim in metadata['claims']:
+                if metadata['metadata_verified'] and claim['rule'] == 'must_not' and 'citation' in claim:
+                    policy_actions.setdefault(metadata['id'], []).append(claim)
+        texts = [dict(policy=normalize_text(' '.join(c['action'].replace('_', ' ')
+                         for c in policy_actions.get(p['document_id'], [])
+                         if p['start_line'] <= c['citation']['start_line'] and c['citation']['end_line'] <= p['end_line'])), full=normalize_text(p['quote']), body=normalize_text(searchable_text(p['quote'])),
                       context=normalize_text(p['title'] + ' ' + headings[(p['document_id'],p['start_line'])]))
                  for p in candidates]
         terms = conn.execute("""SELECT tsvector_to_array(to_tsvector('english', value->>'body')),
                 tsvector_to_array(to_tsvector('english', value->>'context')),
-                tsvector_to_array(to_tsvector('english', value->>'full'))
+                tsvector_to_array(to_tsvector('english', value->>'full')),
+                tsvector_to_array(to_tsvector('english', value->>'policy'))
             FROM jsonb_array_elements(%s::jsonb) WITH ORDINALITY t(value, position) ORDER BY position""",
             (Jsonb(texts),)).fetchall()
-        required = exact_terms(question)
-        exact_documents = {metadata['id'] for metadata, _, content in rows
-                           if has_exact_terms(content, required)}
-        eligible = [i for i,p in enumerate(candidates) if p['document_id'] in exact_documents]
+        required = [term for term in exact_terms(question) if term != context['software_version']]
+        codes = http_terms(question)
+        matching_documents = {metadata['id'] for metadata, _, content in rows
+                           if numeric_match(content, required, codes)}
+        rankable = [i for i,p in enumerate(candidates) if p['document_id'] in matching_documents]
         # A topic mentioned only in explicit scope exclusions is not evidence.
         # Compute this only over sources passing the same exact-term gate.
-        supported = {term for i in eligible for term in terms[i][0] + terms[i][1]}
-        mentioned = {term for i in eligible for term in terms[i][2]}
+        supported = {term for i in rankable for term in terms[i][0] + terms[i][1]}
+        mentioned = {term for i in rankable for term in terms[i][2]}
         excluded_only = set(normalized) & (mentioned - supported)
-        hits = [] if excluded_only else rank([candidates[i] for i in eligible], normalized,
-                                             [terms[i][0] for i in eligible], [terms[i][1] for i in eligible])
+        # Code-free sources need at least two query terms beyond status/generic error words.
+        code_free = {metadata['id'] for metadata, _, content in rows
+                     if codes and not has_exact_terms(content, codes)}
+        generic = codes | {'http', 'status', 'respons', 'error', 'failur'}
+        rankable = [i for i in rankable if candidates[i]['document_id'] not in code_free
+                    or len((set(normalized) - generic) & set(terms[i][0])) >= 2]
+        # Status gates already checked specifics; do not penalize general evidence for
+        # lacking a status token when the question supplies other diagnostic concepts.
+        ranking_query = [term for term in normalized if term not in codes | {'http'}]
+        if not codes or len(set(ranking_query) - generic) < 2:
+            ranking_query = normalized
+        # Executable/universal requests retain the stricter missing-concept gate.
+        coverage_floor = .50 if re.search(r'\b(?:commands?|sql|every|universal|exactly)\b', question, re.I) else .35
+        hits = [] if excluded_only else rank([candidates[i] for i in rankable], ranking_query,
+                                             [terms[i][0] for i in rankable], [terms[i][1] for i in rankable],
+                                             policy_terms=[terms[i][3] for i in rankable], coverage_floor=coverage_floor, query_groups=query_groups)
         result['passages'] = hits
         result['recommended_documents'] = list(dict.fromkeys(p['document_id'] for p in result['passages']))
         result['evidence'] = [e for e in result['evidence'] if e['document_id'] in result['recommended_documents']]

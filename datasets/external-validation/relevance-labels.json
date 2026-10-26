@@ -1,0 +1,147 @@
+[
+  {
+    "id": "S01",
+    "scenario_id": "S01",
+    "result_field": "search",
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-101",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "S02",
+    "scenario_id": "S02",
+    "result_field": "search",
+    "expected_status": "conflict",
+    "expected_passages": []
+  },
+  {
+    "id": "S03",
+    "scenario_id": "S03",
+    "result_field": "search",
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "S04",
+    "scenario_id": "S04",
+    "result_field": "search",
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-401",
+        "revision": 2,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "S05",
+    "scenario_id": "S05",
+    "result_field": "search",
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-501",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "RB-502",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "S06",
+    "scenario_id": "S06",
+    "result_field": "search",
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "RB-601",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "S07",
+    "scenario_id": "S07",
+    "result_field": "search",
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "POL-702",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "S08",
+    "scenario_id": "S08",
+    "result_field": "search",
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "SEC-802",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "S09",
+    "scenario_id": "S09",
+    "result_field": "search",
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "INC-901",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "RB-902",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "S10-platform",
+    "scenario_id": "S10",
+    "result_field": "search",
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "S10-security",
+    "scenario_id": "S10",
+    "result_field": "security_search",
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "SEC-1001",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  }
+]

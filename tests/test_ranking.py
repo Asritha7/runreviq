@@ -44,3 +44,38 @@ class RankingTests(unittest.TestCase):
             self.assertFalse(has_exact_terms(text,terms))
         self.assertTrue(has_exact_terms('MARKER-CODE.', ['MARKER-CODE']))
         self.assertEqual(exact_terms('What causes 503.'), ['503'])
+
+    def test_contextual_http_matching_preserves_specifics_and_explicit_restrictions(self):
+        from runreviq.ranking import http_terms, numeric_match
+        self.assertEqual(http_terms('401 authentication errors'), {'401'})
+        self.assertEqual(http_terms('Set capacity to 401'), set())
+        self.assertTrue(numeric_match('Inspect authentication diagnostics and JWKS.', ['401'], {'401'}))
+        for source in ('For HTTP 503 errors, restart.',
+                       'For HTTP 503 incidents only. For 401 see another document.',
+                       'Restricted to HTTP 503. A 401 incident is different.',
+                       'Only for HTTP 503 errors; 401 requires other diagnostics.',
+                       'Not for HTTP 401 incidents.'):
+            with self.subTest(source=source):
+                self.assertFalse(numeric_match(source, ['401'], {'401'}))
+        self.assertTrue(numeric_match('For HTTP 401 errors only, inspect keys.', ['401'], {'401'}))
+        self.assertFalse(numeric_match('General authentication procedure BUILD-99.', ['401', 'BUILD-9'], {'401'}))
+        self.assertFalse(numeric_match('Version 2.4.1', ['2.4.0'], set()))
+        self.assertFalse(numeric_match('For HTTP 401 errors.', ['401', '503'], {'401', '503'}))
+
+    def test_policy_priority_requires_relevant_reviewed_action_terms(self):
+        candidates = [dict(document_id='A-1'), dict(document_id='B-1')]
+        args = (candidates, ['signature', 'verify'], [['signature','verify']]*2, [[],[]])
+        self.assertEqual(rank(*args, policy_terms=[[], ['signature','verify']])[0], candidates[1])
+        self.assertEqual(rank(*args, policy_terms=[[], ['database','delete']])[0], candidates[0])
+        self.assertEqual(rank(*args, policy_terms=[[], ['signature']])[0], candidates[0])
+        self.assertEqual(rank([candidates[0]], ['signature','verify'], [['database','delete']], [[]],
+                              policy_terms=[['signature','verify']]), [])
+
+    def test_complementary_clauses_retain_body_evidence_requirement(self):
+        candidates = [dict(document_id='A-1'), dict(document_id='B-1')]
+        result = rank(candidates, ['jwks','failure','sign','key','identifier'],
+                      [['jwks','failure'],['sign','key','identifier']], [[],[]],
+                      query_groups=[['jwks','failure'],['sign','key','identifier']])
+        self.assertEqual({p['document_id'] for p in result}, {'A-1','B-1'})
+        self.assertEqual(rank([candidates[0]], ['jwks','failure'], [['unrelated']], [['jwks','failure']],
+                              query_groups=[['jwks','failure']]), [])
