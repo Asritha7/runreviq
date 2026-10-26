@@ -1,0 +1,42 @@
+[
+  [
+    {
+      "id": "RB-401",
+      "title": "RB-401",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "staging",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "superseded",
+      "claims": [],
+      "path": "datasets/northstar/RB-401-r1.md"
+    }
+  ],
+  [
+    {
+      "id": "RB-401",
+      "title": "RB-401",
+      "revision": 2,
+      "service": "identity-service",
+      "environment": "staging",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [],
+      "path": "datasets/northstar/RB-401-r2.md"
+    }
+  ]
+]

@@ -10,7 +10,7 @@ The existing question suites were written by the same author as the implementati
 4. Save questions, rationale, author/reviewer provenance and review date privately. Use pseudonyms if recording provenance. The case format permits `rationale`; keep other review notes in a separate local file. Resolve label disagreements before scoring, without consulting the retrieval output.
 5. Freeze the question file and retain its reported dataset fingerprint. Once results influence changes, that set becomes development data. Collect a fresh independently written set for the next generalization check.
 
-Independently written questions about this fictional corpus still do not establish performance on real company incidents. Real questions must be sanitized and have evidence in the chosen corpus; this command does not ingest a new corpus or connect to company services. No independent questions have been collected by this implementation.
+Independently written questions about this fictional corpus still do not establish performance on real company incidents. Real questions must be sanitized and have evidence in the chosen corpus; this command does not ingest a new corpus or connect to company services. The import workflow does not establish independent authorship; see the supplied-scenario record below for the subsequent user contribution.
 
 ## Local file format
 
@@ -58,3 +58,7 @@ The evaluation creates and drops a disposable database using the existing local 
 External reports include `question_source: external`, `independence: not_verified`, and the corpus/question fingerprint. Compare precision, recall, withholding, exact-citation integrity and individual misses together. Omit `--report-only` for a nonzero exit on any failed expected outcome. Integrity failures remain fatal even with that option. A passing outcome requires complete expected recall and status/integrity checks, but can still include irrelevant passages: inspect precision separately.
 
 Do not claim improved quality simply because this import workflow passes its tests. Ranking is unchanged. First collect independently reviewed questions, run the frozen baseline, and classify misses before proposing a retrieval change.
+
+## Supplied ten-scenario baseline
+
+The user subsequently supplied ten synthetic scenarios with their own source passages. Because those passages are absent from the built-in corpora, they use a separate [isolated scenario runner](../datasets/external-validation/README.md), not `--questions` against unrelated sources. See the [executed baseline and limitations](external-validation-results.md). The proposed independence is attributed to the submitter; adapter metadata assumptions still require human review.

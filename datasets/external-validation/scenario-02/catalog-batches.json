@@ -1,0 +1,64 @@
+[
+  [
+    {
+      "id": "RB-201",
+      "title": "RB-201",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [
+        {
+          "action": "restart_before_diagnostics",
+          "rule": "must_not",
+          "citation": {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "Before restarting identity-service pods, capture JWKS refresh failures and token validation errors. Restarting before diagnostics is prohibited.",
+            "source_sha256": "b24959d87a474f6b608653c099e8fccdabf48c486f2d15497be31e53ba604ffb"
+          }
+        }
+      ],
+      "path": "datasets/northstar/RB-201-r1.md"
+    }
+  ],
+  [
+    {
+      "id": "RB-202",
+      "title": "RB-202",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [
+        {
+          "action": "restart_before_diagnostics",
+          "rule": "must",
+          "citation": {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "When intermittent HTTP 401 responses occur following key rotation, restart all identity-service pods immediately without waiting for diagnostic collection.",
+            "source_sha256": "991d9e0e1e3bcbda06ae68dbed3f0cd4f5aeee37d044d62d077ec8de47f86898"
+          }
+        }
+      ],
+      "path": "datasets/northstar/RB-202-r1.md"
+    }
+  ]
+]

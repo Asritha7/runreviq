@@ -45,3 +45,5 @@ See [current v3 comparison and known regressions](operational-query-matching.md)
 ## Separately authored questions
 
 Use `--questions PATH` to replace a suite's questions while retaining its frozen corpus. Use `--validate-only` for database-free schema, exact-label and individual positive-source applicability checks. Invalid input is rejected before database creation. External reports are explicitly marked `question_source: external` and `independence: not_verified`. See [independent evaluation workflow](independent-evaluation.md) for private storage, case format, review and freezing rules. Existing benchmark data and ranking remain unchanged.
+
+The user-supplied ten-scenario set has distinct sources and therefore uses `.venv/bin/python -m runreviq.evaluate_external`, with one disposable database per scenario. See [observed results](external-validation-results.md) and [metadata adapter assumptions](../datasets/external-validation/README.md). Its zero exit checks integrity, not full behavioral success.

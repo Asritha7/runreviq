@@ -1,0 +1,40 @@
+[
+  [
+    {
+      "id": "SEC-1001",
+      "title": "SEC-1001",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [],
+      "path": "datasets/northstar/SEC-1001-r1.md"
+    }
+  ],
+  [
+    {
+      "id": "RB-1002",
+      "title": "RB-1002",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [],
+      "path": "datasets/northstar/RB-1002-r1.md"
+    }
+  ]
+]

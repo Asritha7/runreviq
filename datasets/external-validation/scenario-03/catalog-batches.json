@@ -1,0 +1,42 @@
+[
+  [
+    {
+      "id": "RB-301",
+      "title": "RB-301",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [],
+      "path": "datasets/northstar/RB-301-r1.md"
+    }
+  ],
+  [
+    {
+      "id": "RB-302",
+      "title": "RB-302",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": false,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [],
+      "path": "datasets/northstar/RB-302-r1.md"
+    }
+  ]
+]

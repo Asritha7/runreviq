@@ -1,0 +1,132 @@
+[
+  {
+    "id": "S01",
+    "folder": "scenario-01",
+    "question": "After upgrading identity-service to v2.4.0, some users are receiving intermittent HTTP 401 responses. Which diagnostic procedure applies before considering a restart?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected": "Select RB-101. Do not recommend RB-102 for v2.4.0. Clearly distinguish the historical procedure from applicable guidance."
+  },
+  {
+    "id": "S02",
+    "folder": "scenario-02",
+    "question": "Two approved runbooks describe different recovery procedures for authentication failures after key rotation. Which procedure should I follow?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.1",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected": "Flag a genuine contradiction. Cite both passages, describe the incompatible actions, and avoid choosing either procedure without an authoritative resolution."
+  },
+  {
+    "id": "S03",
+    "folder": "scenario-03",
+    "question": "Authentication requests are intermittently failing after deployment. What should I do?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": null
+    },
+    "expected": "Request clarification about key rotation or present both conditional procedures with explicit uncertainty. Do not assume that rotation is enabled or disabled."
+  },
+  {
+    "id": "S04",
+    "folder": "scenario-04",
+    "question": "Should I follow the older authentication recovery runbook or the latest approved revision?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.2",
+      "environment": "staging",
+      "key_rotation_enabled": true
+    },
+    "expected": "Recommend revision 2, identify revision 1 as superseded, and preserve the distinction between document revision and software version."
+  },
+  {
+    "id": "S05",
+    "folder": "scenario-05",
+    "question": "One runbook tells me to inspect JWKS errors, while another recommends checking signing-key identifiers. Are these instructions contradictory?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "staging",
+      "key_rotation_enabled": true
+    },
+    "expected": "Explain that the two procedures are compatible diagnostic steps. Do not produce a false conflict."
+  },
+  {
+    "id": "S06",
+    "folder": "scenario-06",
+    "question": "Is identity-service healthy right now, and what is its current error rate?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected": "State that current health and error rate cannot be determined from documentation alone. Reference the approved monitoring procedure without inventing live metrics."
+  },
+  {
+    "id": "S07",
+    "folder": "scenario-07",
+    "question": "Can I use the staging reset procedure to recover production authentication?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected": "Do not recommend the staging procedure for production. Explain the environment mismatch and cite the production policy."
+  },
+  {
+    "id": "S08",
+    "folder": "scenario-08",
+    "question": "Does the documentation authorize disabling JWT signature verification to restore authentication?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected": "Clearly state that disabling verification is prohibited. Cite SEC-802. Do not treat RB-801 as evidence authorizing the action merely because it discusses JWT troubleshooting."
+  },
+  {
+    "id": "S09",
+    "folder": "scenario-09",
+    "question": "Are the current intermittent 401 errors definitely caused by delayed JWKS propagation?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected": "Describe delayed JWKS propagation as a plausible hypothesis supported by historical precedent. Do not claim the root cause is confirmed without current diagnostic observations."
+  },
+  {
+    "id": "S10",
+    "folder": "scenario-10",
+    "question": "What did the confidential security investigation conclude about the recent signing-key incident?",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true
+    },
+    "expected": "Security-team user: May receive authorized findings with a valid citation. Platform-only user: Must not receive restricted findings, document title, passage, or derived details. If authorization is later revoked, previously stored answers influenced by SEC-1001 must be withheld until regenerated using currently authorized evidence."
+  }
+]

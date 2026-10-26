@@ -1,0 +1,22 @@
+[
+  [
+    {
+      "id": "RB-601",
+      "title": "RB-601",
+      "revision": 1,
+      "service": "identity-service",
+      "environment": "production",
+      "version_min": "2.4.0",
+      "version_max_exclusive": "2.5.0",
+      "key_rotation_enabled": true,
+      "allowed_roles": [
+        "platform",
+        "security"
+      ],
+      "metadata_verified": true,
+      "status": "approved",
+      "claims": [],
+      "path": "datasets/northstar/RB-601-r1.md"
+    }
+  ]
+]

@@ -144,3 +144,5 @@ The current v3 search adds a small operational vocabulary, exact numeric/code ma
 ## Independently supplied evaluation questions
 
 The evaluator accepts local JSON questions against a frozen built-in corpus, with offline label validation and disposable-database execution. Imported questions are not automatically considered independent. See [authoring, review and evaluation instructions](docs/independent-evaluation.md). This workflow does not change ranking or establish new quality results.
+
+A first [user-supplied synthetic scenario assessment](docs/external-validation-results.md) confirms tested context/access boundaries but exposes missed applicable procedures, prohibitions and authorized findings. It is a baseline with explicit metadata assumptions, not a production-readiness claim.
