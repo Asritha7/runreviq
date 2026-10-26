@@ -13,7 +13,7 @@
     const item = node('button', text); item.type = 'button'; item.addEventListener('click', action); return item;
   };
   function clearViewer() {
-    viewSequence++; $('viewer').hidden = true; $('document-lines').replaceChildren();
+    viewSequence++; $('viewer').hidden = true; $('document-lines').replaceChildren(); $('viewer-profile').replaceChildren();
     $('viewer-title').textContent = 'Document revision'; $('viewer-meta').textContent = ''; $('checksum').textContent = '';
   }
   function reset(message = 'Disconnected. Enter a key to reconnect.') {
@@ -39,7 +39,7 @@
         response.status === 409 ? 'This draft was edited in another tab. Your edits remain here; copy them before loading the latest draft.' :
         response.status === 413 ? 'The file exceeds the 1 MB limit.' :
         response.status === 429 ? 'Your account has reached its 20-draft limit. Contact the local operator.' :
-        response.status === 422 ? (path.endsWith('/review') ? 'Check the six review fields (at most 200 characters each) and the review revision.' : path.startsWith('/v1/drafts') ? 'Use a nonempty UTF-8 Markdown file with a simple .md filename.' : 'Check the service, version, environment, and key-rotation values.') :
+        response.status === 422 ? (path.endsWith('/review') ? 'Check the review fields, evidence ranges, HTTP scope and review revision.' : path.startsWith('/v1/drafts') ? 'Use a nonempty UTF-8 Markdown file with a simple .md filename.' : 'Check the service, version, environment, key rotation and HTTP status. The question and HTTP status must agree.') :
         'The service is unavailable. Check the local server and database, then retry.');
       error.status = response.status; throw error;
     }
@@ -125,6 +125,7 @@
       const quoteMatches = citation && citation.document_id === doc.document_id && citation.revision === doc.revision &&
         lines.slice(citation.start_line - 1, citation.end_line).join('\n') === citation.quote;
       lines.forEach((text, index) => $('document-lines').append(node('li', text || ' ', quoteMatches && index + 1 >= citation.start_line && index + 1 <= citation.end_line ? 'cited' : '')));
+      renderProfile($('viewer-profile'), doc.evidence_profile, doc.content);
       $('checksum').textContent = doc.checksum; $('viewer-title').focus();
     } catch (error) { if (generation === epoch && sequence === viewSequence) fail(error, 'viewer-meta'); }
   }
@@ -140,11 +141,18 @@
     const banner = node('div', undefined, `banner ${status}`);
     banner.append(node('span', labels[status], 'badge'), node('p', result.message)); root.append(banner);
     const steps = node('ul'); for (const step of result.next_steps) steps.append(node('li', step)); root.append(steps);
+    if (result.http_status_context != null) root.append(node('p', `HTTP ${result.http_status_context} · ${result.http_status_source === 'question' ? 'Read from your question' : 'Supplied context'}`, 'hint'));
     for (const question of result.questions) {
       const box = node('section', undefined, 'question'); box.append(node('h3', question.question));
       if (question.field === 'key_rotation_enabled') for (const value of [true, false]) {
         box.append(button(value ? 'Yes, enabled' : 'No, disabled', () => {
           $('rotation').value = String(value); runQuery({...lastQuery, key_rotation_enabled: value});
+        }));
+      }
+      if (question.field === 'http_status') {
+        box.append(node('p', 'Choose the observed status, or enter a different status in the context form. Leave it blank if unknown.'));
+        for (const value of question.allowed_answers || []) box.append(button(`HTTP ${value}`, () => {
+          $('http-status').value = String(value); runQuery({...lastQuery, http_status: value});
         }));
       }
       root.append(box);
@@ -176,6 +184,12 @@
       card.append(node('h3', passage.title), node('blockquote', passage.quote),
         node('p', `${passage.document_id} · revision ${passage.revision} · lines ${passage.start_line}–${passage.end_line}`, 'hint'),
         button('Open cited passage', () => openDocument(passage, passage)));
+      card.append(node('p', roleLabel(passage.evidence_role), 'badge'));
+      if (passage.usage_note) card.append(node('p', passage.usage_note));
+      if (passage.applicability) {
+        const a = passage.applicability;
+        card.append(node('p', `${a.service} · ${a.environment} · software >=${a.version_min}, <${a.version_max_exclusive} · rotation ${a.key_rotation_enabled == null ? 'no requirement' : a.key_rotation_enabled ? 'enabled' : 'disabled'} · ${scopeLabel(a.http_scope)}`, 'hint'));
+      }
       root.append(card);
     }
     if (!result.passages?.length && !result.conflict_details.length && result.evidence.length) {
@@ -193,6 +207,56 @@
       render(result); $('query-status').textContent = `Evaluated ${query.service} · ${query.software_version} · ${query.environment}`;
     } catch (error) { if (generation === epoch && sequence === querySequence) fail(error, 'query-status'); }
     finally { if (generation === epoch && sequence === querySequence) $('submit-query').disabled = false; }
+  }
+  const roleNames = {procedure:'Procedure', prohibition:'Prohibition', historical:'Historical context', monitoring:'Monitoring reference'};
+  const roleLabel = role => Object.hasOwn(roleNames, role) ? roleNames[role] : 'Unclassified evidence';
+  const scopeLabel = scope => !scope ? 'HTTP scope unclassified' : scope.mode === 'general' ? 'General HTTP applicability' : `HTTP only: ${scope.codes.join(', ')}`;
+  function renderProfile(root, profile, content) {
+    if (!profile) { root.append(node('p', 'Evidence types and HTTP scope have not been classified.', 'hint')); return; }
+    root.append(node('h4', 'Evidence profile'), node('p', scopeLabel(profile.http_scope)));
+    const lines = content.split(/\r\n|\n|\r/);
+    for (const unit of profile.units) root.append(node('p', `${roleLabel(unit.role)} · source lines ${unit.start_line}–${unit.end_line}`), node('blockquote', lines.slice(unit.start_line-1, unit.end_line).join('\n')));
+    root.append(node('p', profile.units.length ? 'Only these marked source ranges are searchable after publication. Review their meaning and completeness.' : 'No ranges marked: paragraph retrieval remains active.', 'hint'));
+  }
+  function profileEditor(fields, profile, content) {
+    const label = node('label', undefined, 'profile-toggle'), enabled = node('input'); enabled.type='checkbox'; enabled.id='profile-enabled'; enabled.checked=!!profile;
+    label.append(enabled, node('span', 'Propose evidence types and HTTP scope')); fields.append(label);
+    const controls=node('fieldset'); controls.disabled=!enabled.checked;
+    controls.append(node('legend','Evidence proposal'),node('p','These are your proposals. Independent approval and publication are required. Mark all useful passages: only marked ranges will be searchable when any ranges are supplied.', 'hint'));
+    fields.append(controls);
+    enabled.addEventListener('change',()=>{ controls.disabled=!enabled.checked; });
+    const select=(parent,text,id,choices,value)=>{ const label=node('label',text),el=node('select');el.id=id;label.htmlFor=id; for(const [v,t] of choices){const o=node('option',t);o.value=v;el.append(o);}el.value=value;parent.append(label,el);return el; };
+    const scope=select(controls,'Document HTTP scope','profile-scope',[['unknown','Unclassified'],['general','General HTTP applicability'],['only','Only specified HTTP statuses']],profile?.http_scope?.mode || 'unknown');
+    const codes=node('input');codes.id='profile-codes';codes.type='text';codes.maxLength=100;codes.value=profile?.http_scope?.codes.join(', ') || '';
+    const codesLabel=node('label','HTTP statuses (comma-separated, 100–599)');codesLabel.htmlFor=codes.id;controls.append(codesLabel,codes);
+    const syncScope=()=>{codes.disabled=scope.value!=='only';codes.required=scope.value==='only';};syncScope();scope.addEventListener('change',syncScope);
+    const rows=node('div');controls.append(rows);const units=[];let serial=0;
+    const add=unit=>{
+      if(units.length>=20)return;
+      const group=node('fieldset'),id=++serial;group.append(node('legend',`Source range ${id}`));
+      const role=select(group,'Evidence type',`unit-role-${id}`,Object.entries(roleNames),unit?.role || 'procedure');
+      const number=(text,name,value)=>{const label=node('label',text),input=node('input');input.type='number';input.id=`unit-${name}-${id}`;input.min=1;input.max=content.split(/\r\n|\n|\r/).length;input.required=true;input.value=value==null?'':String(value);label.htmlFor=input.id;group.append(label,input);return input;};
+      const start=number('First source line','start',unit?.start_line),end=number('Last source line','end',unit?.end_line);
+      const quote=node('blockquote');group.append(quote);
+      const showQuote=()=>{const first=Number(start.value),last=Number(end.value);quote.textContent=first>0 && last>=first && last-first<20 ? content.split(/\r\n|\n|\r/).slice(first-1,last).join('\n') : 'Choose source lines to preview the exact passage.';};
+      start.addEventListener('input',showQuote);end.addEventListener('input',showQuote);showQuote();
+      const row={group,role,start,end};units.push(row);
+      group.append(button('Remove range',()=>{units.splice(units.indexOf(row),1);rows.replaceChildren(...units.map(u=>u.group));}));rows.append(group);
+    };
+    for(const unit of profile?.units || [])add(unit);
+    controls.append(button('Add source range',()=>add()));
+    return ()=>{
+      if(!enabled.checked)return undefined;
+      const values=scope.value==='only'?codes.value.split(',').map(c=>c.trim()):[];
+      if(scope.value==='only' && (!values.length || values.length>20 || values.some(c=>!/^\d{3}$/.test(c)||Number(c)<100||Number(c)>599) || new Set(values).size!==values.length)) throw Error('Enter 1–20 distinct HTTP statuses from 100 to 599.');
+      let previous=0;const lines=content.split(/\r\n|\n|\r/);
+      const ranges=units.map(u=>{
+        const start=Number(u.start.value),end=Number(u.end.value);
+        if(!Number.isInteger(start)||!Number.isInteger(end)||start<=previous||end<start||end-start>=20||end>lines.length||!lines.slice(start-1,end).some(l=>l.trim()&&!l.trimStart().startsWith('#'))) throw Error('Mark ordered, non-overlapping source ranges of 1–20 lines containing source text.');
+        previous=end;return {role:u.role.value,start_line:start,end_line:end};
+      });
+      return {schema_version:1,http_scope:scope.value==='unknown'?null:{mode:scope.value,codes:values.map(Number)},units:ranges};
+    };
   }
   const draftLabels = {title:'Title', service:'Service', environment:'Environment', version_min:'Minimum version', version_max_exclusive:'Maximum version (exclusive)', key_rotation_enabled:'Key rotation', version_range:'Version range'};
   function renderDraft(draft) {
@@ -214,7 +278,8 @@
       provenance.append(node('p', `${draftLabels[field] || field} · line ${entry.line}`), node('blockquote', entry.quote));
     }
     root.append(provenance);
-    const source = node('details'); source.append(node('summary', 'View stored Markdown'), node('pre', draft.content)); root.append(source);
+    const source = node('details'); source.append(node('summary', 'View stored Markdown'), node('pre', draft.content));
+    const numbered=node('ol');for(const line of draft.content.split(/\r\n|\n|\r/))numbered.append(node('li',line || ' '));source.append(node('h4','Source line numbers'),numbered); root.append(source);
     root.append(node('p', 'Original source and extraction stay unchanged. Your edits are private review progress, not approval or publication.', 'hint'));
     renderReviewEditor(draft, root);
     renderSubmissionControls(draft, root);
@@ -236,6 +301,7 @@
       fields.append(label, input); inputs[field] = input;
     }
     fields.append(node('p', 'Environment: production or staging. Versions: X.Y.Z. Key rotation: true, false, or none (no requirement). Blank means missing; you may save incomplete work.', 'hint'));
+    const readProfile = profileEditor(fields, draft.review?.metadata.evidence_profile, draft.content);
     const save = node('button', 'Save review progress'); save.type = 'submit';
     fields.append(save); form.append(fields); root.append(form);
     if (draft.review && draft.review.revision >= 100) {
@@ -243,11 +309,14 @@
     }
     form.addEventListener('submit', async event => {
       event.preventDefault(); if (!token || fields.disabled) return;
+      let profile;
+      try { profile=readProfile(); } catch(error) { $('draft-status').textContent=error.message; return; }
       const generation = epoch, sequence = ++draftSequence;
       const current = () => generation === epoch && sequence === draftSequence;
       fields.disabled = true; $('draft-fields').disabled = true;
       $('draft-status').textContent = 'Saving your review progress…';
       const metadata = Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, input.value]));
+      if(profile !== undefined) metadata.evidence_profile=profile;
       try {
         const review = await request(`/v1/drafts/${encodeURIComponent(draft.id)}/review`, {method:'POST', body:JSON.stringify({expected_revision:draft.review ? draft.review.revision : 0, metadata})});
         if (!current()) return;
@@ -312,8 +381,8 @@
   function renderSubmitted(item) {
     const root=$('submission-preview'); root.append(node('h3', `${item.filename} · submitted revision ${item.revision}`),node('p',(item.published ? 'Published · ' : 'Unpublished · ')+item.status.replaceAll('_',' ')));
     const table=node('table',undefined,'metadata-table');
-    for(const [field,value] of Object.entries(item.review.metadata)) { const row=node('tr'); row.append(node('th',draftLabels[field]||field),node('td',value)); table.append(row); }
-    root.append(table);
+    for(const [field,value] of Object.entries(item.review.metadata)) { if(field==='evidence_profile')continue; const row=node('tr'); row.append(node('th',draftLabels[field]||field),node('td',value)); table.append(row); }
+    root.append(table); renderProfile(root,item.review.metadata.evidence_profile,item.content);
     const original=node('details'); original.append(node('summary','Original extraction and source lines'));
     for(const [field,value] of Object.entries(item.proposal.proposed_metadata||{})) original.append(node('p',`${draftLabels[field]||field}: ${value===null?'No requirement':String(value)}`));
     for(const issue of item.proposal.issues||[]) original.append(node('p',`${draftLabels[issue.field]||issue.field}: ${issue.reason.replaceAll('_',' ')}`));
@@ -343,7 +412,7 @@
 
   function publicationError(error) {
     if (error.status===409) return 'This submission was already published with different settings, or a newer revision is published. Reload the queue.';
-    if (error.status===422) return 'Verify metadata, choose reading roles, and provide 1–20 distinct claims with valid source line ranges.';
+    if (error.status===422) return 'Verify metadata, choose reading roles, and provide supported claims with valid source line ranges. Prohibition ranges require a forbidden claim; evidence-only publication requires reviewed ranges.';
     return workflowMessage(error);
   }
   async function publishingOperation(action) {
@@ -368,8 +437,8 @@
   function renderPublication(item) {
     const root=$('publish-preview'); root.append(node('h3',`${item.filename} · approved revision ${item.revision}`));
     const table=node('table',undefined,'metadata-table');
-    for(const [key,value] of Object.entries(item.metadata)) { const row=node('tr');row.append(node('th',draftLabels[key]||key),node('td',value));table.append(row); }
-    root.append(table,node('p','Reviewer comment: '+item.review_comment));
+    for(const [key,value] of Object.entries(item.metadata)) { if(key==='evidence_profile')continue; const row=node('tr');row.append(node('th',draftLabels[key]||key),node('td',value));table.append(row); }
+    root.append(table,node('p','Reviewer comment: '+item.review_comment)); renderProfile(root,item.metadata.evidence_profile,item.content);
     const source=node('details');source.append(node('summary','Approved source with line numbers'));
     const lines=node('ol'); for(const line of item.content.split(/\r?\n/)) lines.append(node('li',line)); source.append(lines);root.append(source);
     const form=node('form'),fields=node('fieldset');form.append(fields);root.append(form);
@@ -378,7 +447,9 @@
     fields.append(node('h4','Who may read this document?'),node('p','These roles apply to all published revisions of this document, including history.','hint'));
     const roles=['platform','security','intern'].map(role=>({role,input:checked(role)}));
     fields.append(node('h4','Reviewed claims'),node('p','For each instruction, choose a consistent action name (for example rotate_signing_keys), whether it is required or forbidden, and the source lines supporting it. Quotes are taken from those exact lines. This is a human verification step.','hint'));
-    const claimsRoot=node('div'),claims=[]; fields.append(claimsRoot);
+    const units=item.metadata.evidence_profile?.units || [];
+    const evidenceOnly=units.length && !units.some(u=>u.role==='prohibition') ? checked('No normative claims: publish reviewed evidence only.') : null;
+    const claimsRoot=node('fieldset'),claims=[]; fields.append(claimsRoot);
     const addClaim=()=>{
       if(claims.length>=20)return;
       const group=node('fieldset');group.append(node('legend',`Claim ${claims.length+1}`));
@@ -388,7 +459,8 @@
       const start=input('First source line','number'),end=input('Last source line','number');start.min=end.min=1;
       claims.push({action,rule,start,end});claimsRoot.append(group);
     };
-    addClaim(); fields.append(button('Add another claim',addClaim));
+    addClaim(); const addClaimButton=button('Add another claim',addClaim); fields.append(addClaimButton);
+    evidenceOnly?.addEventListener('change',()=>{claimsRoot.disabled=!!evidenceOnly.checked;addClaimButton.disabled=!!evidenceOnly.checked;});
     fields.append(node('p','Publishing makes this exact approved snapshot available as evidence to the selected roles. Later draft edits are excluded.','hint'));
     const publish=node('button','Publish approved revision');publish.type='submit';fields.append(publish);
     form.addEventListener('submit',async event=>{
@@ -396,7 +468,7 @@
       const generation=epoch,sequence=publishSequence,current=()=>generation===epoch&&sequence===publishSequence;
       fields.disabled=true;$('load-publish-queue').disabled=true;
       try {
-        const result=await request(`/v1/publications/${encodeURIComponent(item.id)}`,{method:'POST',body:JSON.stringify({metadata_verified:!!verified.checked,allowed_roles:roles.filter(r=>r.input.checked).map(r=>r.role),claims:claims.map(c=>({action:c.action.value,rule:c.rule.value,start_line:Number(c.start.value),end_line:Number(c.end.value)}))})});
+        const result=await request(`/v1/publications/${encodeURIComponent(item.id)}`,{method:'POST',body:JSON.stringify({metadata_verified:!!verified.checked,allowed_roles:roles.filter(r=>r.input.checked).map(r=>r.role),claims:evidenceOnly?.checked?[]:claims.map(c=>({action:c.action.value,rule:c.rule.value,start_line:Number(c.start.value),end_line:Number(c.end.value)}))})});
         if(!current())return;
         root.replaceChildren(node('p',`Published ${result.document_id} revision ${result.revision} at ${result.published_at}.`));
         $('publish-status').textContent='Published. Authorized users can now find this revision when its applicability matches their situation.';
@@ -447,6 +519,7 @@
         try {
           const source=await request(`/v1/publication-management/documents/${encodeURIComponent(doc.document_id)}/revisions/${revision.revision}`);if(!active())return;
           $('managed-source').replaceChildren(node('h3',`Stored revision ${source.revision} · ${source.status}`),node('p',source.status==='active'?'Check applicability before acting.':'Historical or withdrawn evidence — do not use as current guidance.'),node('pre',source.content));
+          renderProfile($('managed-source'),source.metadata?.evidence_profile,source.content);
           if(source.withdrawal)$('managed-source').append(node('p','Withdrawal reason: '+source.withdrawal.reason));
         } catch(error){if(active()){ $('managed-source').replaceChildren();if(error.status===401)fail(error,'manage-status');else {$('manage-status').textContent=managementError(error);if(error.status===403)root.replaceChildren();}}}
       }));root.append(card);
@@ -503,7 +576,7 @@
 
   $('query-form').addEventListener('submit', event => {
     event.preventDefault(); const rotation = $('rotation').value;
-    runQuery({...($('question').value.trim() ? {question:$('question').value.trim()} : {}), service:$('service').value.trim(), software_version:$('version').value.trim(), environment:$('environment').value,
+    runQuery({...($('http-status').value.trim() ? {http_status:Number($('http-status').value)} : {}), ...($('question').value.trim() ? {question:$('question').value.trim()} : {}), service:$('service').value.trim(), software_version:$('version').value.trim(), environment:$('environment').value,
       key_rotation_enabled:rotation === 'unknown' ? null : rotation === 'true'});
   });
 })();

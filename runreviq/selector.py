@@ -149,6 +149,7 @@ def main():
     parser.add_argument("--version", required=True)
     parser.add_argument("--environment", required=True, choices=["production", "staging"])
     parser.add_argument("--key-rotation", choices=["true", "false", "unknown"], default="unknown")
+    parser.add_argument("--http-status", type=int, help="Observed HTTP status, 100–599; omit when unknown")
     args = parser.parse_args()
     try:
         if args.source == "database":
@@ -162,7 +163,8 @@ def main():
             documents = load_documents()
         result = select(documents, role=args.role, service=args.service,
                         software_version=args.version, environment=args.environment,
-                        key_rotation_enabled={"true": True, "false": False, "unknown": None}[args.key_rotation])
+                        key_rotation_enabled={"true": True, "false": False, "unknown": None}[args.key_rotation],
+                        http_status=args.http_status)
     except ValueError as exc:
         parser.error(str(exc))
     print(json.dumps(result, indent=2))

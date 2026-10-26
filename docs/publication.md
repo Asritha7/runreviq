@@ -17,10 +17,11 @@ Publishers can inspect all approved snapshots regardless of their reading role. 
 ## Browser workflow
 
 1. Select **Load publishing queue**. It shows up to 100 approved, unpublished eligible submissions, oldest first.
-2. Open an approved revision and inspect its metadata, reviewer comment, and numbered original source.
+2. Open an approved revision and inspect its metadata, any evidence profile and exact range quotes, reviewer comment, and numbered original source.
 3. Explicitly confirm you verified the metadata against the source and applicability.
 4. Choose at least one reading role. These become the document's current access policy, including access to older published revisions.
 5. Enter 1–20 distinct normalized action names, required/forbidden rules, and source line ranges. Use consistent names across documents so conflicting instructions can be compared. Each range must contain nonempty source text. The server constructs the exact quotation and source fingerprint; it does not infer or verify the semantic meaning of your claim.
+   Profiles with units and no prohibition offer **No normative claims: publish reviewed evidence only** when the source has no instructions requiring claims. Prohibition units always need a cited forbidden claim inside each range. The server enforces the profile/range requirement; humans must verify claim meaning and completeness.
 6. Select **Publish approved revision**. Success shows the document ID, revision, and publication time. Invalid inputs, stale publication conflicts, unavailable storage, and denied access are shown explicitly.
 
 This is a human attestation step, not an independent second review of publisher-entered claims. Claims are recorded in immutable published metadata. An approved snapshot may be published even if a newer draft exists: later draft edits never substitute for the approved snapshot. Publishing a newer revision prevents publication of older unpublished revisions.
@@ -59,3 +60,5 @@ The dedicated `opslens_publish_operator` account can read approved snapshots and
 There is no publisher-assignment UI, claim editing after publication, notification, source editing, or merging of separately uploaded source lineages. Corrected metadata requires a new saved revision and independent approval; corrected source requires a new upload. The existing fixture ingestion CLI remains a trusted administrator path. File-based CLI selection reads fixtures only; use database mode for uploaded publications.
 
 Published guidance can now be inspected and withdrawn through [publication management](publication-management.md). Withdrawal preserves source and permissions, and does not rewrite earlier publication receipts.
+
+The approved optional evidence profile is copied from the snapshot and cannot be overridden in the publication request. See [reviewed evidence](reviewed-evidence.md) for typed retrieval and scope behavior.

@@ -259,3 +259,62 @@ test('question search shows plain-text excerpts and opens exact revision; follow
   assert.equal(h.get('document-lines').children[6].textContent,'<script>source</script>');
   h.get('disconnect').fire('click'); assert.equal(h.get('result').children.length,0);
 });
+
+const evidenceProfile={schema_version:1,http_scope:{mode:'only',codes:[401]},units:[{role:'historical',start_line:1,end_line:1}]};
+test('HTTP clarification preserves the question and rotation, and typed evidence is plain text',async()=>{
+  const h=harness();await h.login();h.get('question').value='Authentication failures';h.get('rotation').value='true';h.get('query-form').fire('submit');
+  assert.equal(JSON.parse(h.pending[1].options.body).http_status,undefined);
+  h.respond(1,{...result,status:'needs_context_or_review',questions:[{field:'http_status',question:'Which status?',allowed_answers:[401]}]});await tick();
+  find(h.get('result'),'HTTP 401').fire('click');
+  assert.deepEqual(JSON.parse(h.pending[2].options.body),{question:'Authentication failures',service:'identity-service',software_version:'2.4.0',environment:'production',key_rotation_enabled:true,http_status:401});
+  h.respond(2,{...result,http_status_context:401,http_status_source:'provided',passages:[{document_id:'X',revision:1,title:'Prior incident',quote:'<script>history</script>',start_line:1,end_line:1,evidence_role:'historical',usage_note:'Not confirmation of current cause.',applicability:{service:'identity-service',environment:'production',version_min:'2.4.0',version_max_exclusive:'2.5.0',key_rotation_enabled:true,http_scope:evidenceProfile.http_scope}}]});await tick();
+  const nodes=descendants(h.get('result'));assert.ok(nodes.some(n=>n.textContent==='Historical context'));assert.ok(nodes.some(n=>n.textContent==='Not confirmation of current cause.'));assert.ok(nodes.some(n=>n.textContent==='<script>history</script>'));
+  h.get('http-status').value='503';h.get('query-form').fire('submit');assert.equal(JSON.parse(h.pending[3].options.body).http_status,503);
+});
+test('author can propose exact source ranges and null scope without granting authority',async()=>{
+  const {h,editor}=await reviewHarness();const all=()=>descendants(editor),get=id=>all().find(n=>n.id===id);
+  const enabled=get('profile-enabled');enabled.checked=true;enabled.fire('change');find(editor,'Add source range').fire('click');
+  get('unit-role-1').value='historical';get('unit-start-1').value='1';get('unit-end-1').value='1';editor.fire('submit');
+  const body=JSON.parse(h.pending[3].options.body);
+  assert.deepEqual(body.metadata.evidence_profile,{schema_version:1,http_scope:null,units:[{role:'historical',start_line:1,end_line:1}]});
+  assert.equal(body.metadata.metadata_verified,undefined);assert.equal(body.metadata.allowed_roles,undefined);
+  h.respond(3,{revision:1,metadata:body.metadata,issues:[]});await tick();
+  const loaded=descendants(h.get('draft-preview'));assert.equal(loaded.find(n=>n.id==='profile-enabled').checked,true);assert.equal(loaded.find(n=>n.id==='unit-role-1').value,'historical');
+});
+test('invalid HTTP codes and out-of-source ranges preserve edits without sending a request',async()=>{
+  const {h,editor}=await reviewHarness();const get=id=>descendants(editor).find(n=>n.id===id);
+  get('profile-enabled').checked=true;get('profile-enabled').fire('change');get('profile-scope').value='only';get('profile-scope').fire('change');get('profile-codes').value='401,401';editor.fire('submit');
+  assert.equal(h.pending.length,3);assert.match(h.get('draft-status').textContent,/distinct HTTP/);
+  get('profile-codes').value='401, 503';find(editor,'Add source range').fire('click');get('unit-start-1').value='1';get('unit-end-1').value='50';editor.fire('submit');assert.equal(h.pending.length,3);assert.match(h.get('draft-status').textContent,/source ranges/);
+  get('unit-end-1').value='1';editor.fire('submit');assert.deepEqual(JSON.parse(h.pending[3].options.body).metadata.evidence_profile.http_scope,{mode:'only',codes:[401,503]});
+});
+test('removing a range and disabling a profile leaves the legacy metadata contract',async()=>{
+  const {h,editor}=await reviewHarness();const enabled=descendants(editor).find(n=>n.id==='profile-enabled');enabled.checked=true;enabled.fire('change');
+  find(editor,'Add source range').fire('click');find(editor,'Remove range').fire('click');assert.equal(descendants(editor).some(n=>n.id==='unit-start-1'),false);
+  enabled.checked=false;enabled.fire('change');editor.fire('submit');assert.equal(JSON.parse(h.pending[3].options.body).metadata.evidence_profile,undefined);
+});
+async function profilePublicationHarness(role){
+  const h=harness();await h.login();h.get('load-publish-queue').fire('click');h.respond(1,{can_publish:true});await tick();h.respond(2,{submissions:[{id:'s1',filename:'guide.md',revision:1}]});await tick();find(h.get('publish-queue'),'guide.md · approved revision 1').fire('click');
+  h.respond(3,{id:'s1',filename:'guide.md',revision:1,metadata:{title:'Guide',evidence_profile:{...evidenceProfile,units:[{role,start_line:1,end_line:1}]}},review_comment:'Checked',content:'<script>evidence</script>'});await tick();return h;
+}
+test('reviewed non-normative evidence can publish without invented claims',async()=>{
+  const h=await profilePublicationHarness('monitoring'),nodes=descendants(h.get('publish-preview'));
+  assert.ok(nodes.some(n=>n.tag==='blockquote'&&n.textContent==='<script>evidence</script>'));assert.ok(nodes.some(n=>n.textContent==='Monitoring reference · source lines 1–1'));
+  const boxes=nodes.filter(n=>n.type==='checkbox');assert.equal(boxes.length,5);boxes[0].checked=true;boxes[1].checked=true;boxes[4].checked=true;boxes[4].fire('change');
+  assert.equal(find(h.get('publish-preview'),'Add another claim').disabled,true);
+  nodes.find(n=>n.tag==='form').fire('submit');assert.deepEqual(JSON.parse(h.pending[4].options.body),{metadata_verified:true,allowed_roles:['platform'],claims:[]});
+});
+test('prohibition publication cannot opt out of supporting normative claims',async()=>{
+  const h=await profilePublicationHarness('prohibition');assert.equal(descendants(h.get('publish-preview')).filter(n=>n.type==='checkbox').length,4);
+});
+test('revision viewer shows source-bound profile and clears it on disconnect',async()=>{
+  const h=harness();await h.login();h.get('query-form').fire('submit');h.respond(1,result);await tick();find(h.get('result'),'Read stored revision').fire('click');
+  h.respond(2,{document_id:'RB-042',revision:1,title:'History',content:'<script>history</script>',checksum:'abc',current_revision:1,is_current:true,revision_status:'approved',evidence_profile:evidenceProfile});await tick();
+  assert.ok(descendants(h.get('viewer-profile')).some(n=>n.textContent==='HTTP only: 401'));assert.ok(descendants(h.get('viewer-profile')).some(n=>n.tag==='blockquote'&&n.textContent==='<script>history</script>'));
+  h.get('disconnect').fire('click');assert.equal(h.get('viewer-profile').children.length,0);
+});
+test('reviewer sees the submitted scope and source quotes without editing profile authority',async()=>{
+  const h=harness();await h.login();h.get('load-review-queue').fire('click');h.respond(1,{can_review:true});await tick();h.respond(2,{submissions:[{id:'s',filename:'history.md',revision:1}]});await tick();find(h.get('review-queue'),'history.md · revision 1').fire('click');
+  h.respond(3,{id:'s',filename:'history.md',revision:1,status:'pending',content:'<script>history</script>',proposal:{},review:{metadata:{title:'History',evidence_profile:evidenceProfile}}});await tick();
+  const nodes=descendants(h.get('submission-preview'));assert.ok(nodes.some(n=>n.textContent==='HTTP only: 401'));assert.ok(nodes.some(n=>n.tag==='blockquote'&&n.textContent==='<script>history</script>'));assert.equal(nodes.some(n=>n.id==='profile-enabled'),false);
+});

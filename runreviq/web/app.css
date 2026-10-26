@@ -101,3 +101,14 @@ header{flex-wrap:wrap}
 #managed-history input[type="checkbox"] { width:auto; margin-right:.65rem; }
 #managed-list h3, #managed-list p, #managed-history h3, #managed-history p { overflow-wrap:anywhere; }
 #managed-list article, #managed-history article { border-top:1px solid var(--border); margin-top:1rem; padding-top:1rem; }
+
+#draft-preview input[type="checkbox"]{width:auto;margin-right:.65rem}
+#draft-preview fieldset fieldset{margin:1rem 0;border:1px solid var(--line);padding:1rem;border-radius:8px}
+#draft-preview ol{max-height:320px;overflow:auto;background:var(--source-bg);padding:1rem 1rem 1rem 3rem}
+#draft-preview li{white-space:pre-wrap;overflow-wrap:anywhere;font-family:monospace}
+#viewer-profile blockquote{white-space:pre-wrap;overflow-wrap:anywhere}
+fieldset:disabled{opacity:.65}
+
+#draft-preview .profile-toggle{display:flex;align-items:center;gap:.5rem}
+#draft-preview .profile-toggle input{display:inline-block;margin:0}
+#draft-preview blockquote{white-space:pre-wrap;overflow-wrap:anywhere}
