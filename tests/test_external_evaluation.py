@@ -53,6 +53,12 @@ class ExternalDatabaseTests(unittest.TestCase):
     def test_isolated_context_conflicts_history_and_revocation(self):
         report = run()
         self.assertTrue(integrity_ok(report))
+        from runreviq.compare_external import load_labels, measure
+        measured = measure(report, load_labels())
+        self.assertEqual(measured['mean_recall_at_5'], 1)
+        self.assertEqual(measured['mean_precision_at_returned_5'], 1)
+        self.assertEqual(measured['withholding_accuracy'], 1)
+        self.assertEqual(measured['false_positive_rate'], 0)
         cases = {case['id']: case for case in report['results']}
         self.assertEqual(cases['S01']['selection']['recommended_documents'], ['RB-101'])
         self.assertEqual(cases['S02']['search']['status'], 'conflict')
@@ -63,3 +69,31 @@ class ExternalDatabaseTests(unittest.TestCase):
         self.assertEqual(cases['S07']['selection']['recommended_documents'], ['POL-702'])
         self.assertTrue(cases['S10']['security_revision_available'])
         self.assertEqual(cases['S10']['stored_answer_regeneration'], 'not_implemented_no_answer_store')
+
+
+class ExternalComparisonTests(unittest.TestCase):
+    def test_frozen_baseline_metrics_include_empty_results_and_reject_changed_corpus(self):
+        import copy
+        import json
+        from runreviq.evaluate_external import FIXTURE
+        from runreviq.compare_external import compare, load_labels, measure
+        baseline = json.loads((FIXTURE / 'baseline-v3.json').read_text())
+        metrics = measure(baseline, load_labels())
+        self.assertEqual(metrics['answerable_cases'], 8)
+        self.assertEqual(metrics['withholding_cases'], 3)
+        self.assertEqual(metrics['mean_recall_at_5'], 1.5 / 8)
+        self.assertEqual(metrics['mean_precision_at_returned_5'], 2 / 8)
+        self.assertEqual(metrics['false_positive_rate'], 0)
+        self.assertEqual(metrics['returned_quotation_count'], 4)
+        empty = copy.deepcopy(baseline)
+        for case in empty['results']:
+            case['quotation_count'] = 0
+            case['citation_integrity'] = 'not_applicable'
+            for field in ('search', 'security_search'):
+                if field in case:
+                    case[field]['passages'] = []
+                    case[field]['recommended_documents'] = []
+        self.assertEqual(measure(empty, load_labels())['citation_integrity'], 'not_applicable')
+        changed = dict(baseline, dataset_sha256='changed')
+        with self.assertRaises(ValueError):
+            compare(baseline, changed)

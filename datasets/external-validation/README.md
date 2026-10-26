@@ -28,3 +28,9 @@ The `.local` directory must exist. The runner creates and drops ten uniquely nam
 The committed `baseline-v3.json` is the actual first-baseline output, recorded using `postgres_english_operational_v3` with adapter revision from this PR. It includes the source/question fingerprint, raw selection/search responses, history inspection and access-revocation checks. See [assessment](../../docs/external-validation-results.md). The baseline contains only the supplied fictional material; do not use this public report format for private incident data.
 
 This execution exposes the questions to the implementation author. Any subsequent tuning using them makes them development data; future generalization claims need a fresh independently reviewed set. Existing historical benchmarks and their labels remain unchanged.
+
+## v4 comparison
+
+`relevance-labels.json` records exact line-3 passage targets derived from the user's existing expectations, with S10 separated into platform/security cases. These labels were formalized after observing v3 and while implementing v4; they are not new unseen annotations. S06's target is the monitoring procedure, not a live-health answer. Human review of these interpretations remains appropriate.
+
+`results-v4.json` and `comparison-v4.json` preserve the new output separately. Reproduce the comparison with `.venv/bin/python -m runreviq.compare_external .local/external-v4.json`. The original `baseline-v3.json`, scenarios, source Markdown and catalogs are unchanged. See [v4 assessment](../../docs/context-sensitive-retrieval.md), including the broader benchmark's remaining noise and probe precision regression.

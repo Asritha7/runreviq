@@ -179,3 +179,37 @@ class SearchDatabaseTests(unittest.TestCase):
         result=search(role='platform',question="NORTHSTAR-RESTRICTED-CANARY' | !:*); DROP TABLE opslens.documents; --",dbname=self.dbname,**QUERY)
         self.assertNotIn('SEC-021',json.dumps(result))
         self.assertNotIn('NORTHSTAR-RESTRICTED-CANARY',json.dumps(result))
+
+    def test_general_diagnostics_and_status_specific_procedures_remain_distinct(self):
+        import tempfile
+        from pathlib import Path
+        from runreviq.database import ingest
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'datasets/northstar').mkdir(parents=True)
+            documents = []
+            for number, content in (
+                (910, 'Inspect authentication diagnostics, JWKS propagation and signing keys.'),
+                (911, 'For HTTP 503 incidents only, inspect authentication diagnostics and JWKS propagation. HTTP 401 requires other guidance.'),
+                (912, 'For HTTP 401 incidents only, inspect authentication diagnostics and JWKS propagation.'),
+                (913, 'Inspect authentication diagnostics, JWKS propagation and signing keys.')):
+                doc = copy.deepcopy(self.docs[1])
+                doc.update(id=f'TEST-{number}', title='Authentication diagnostics', claims=[],
+                           path=f'datasets/northstar/TEST-{number}.md')
+                if number == 913:
+                    doc['allowed_roles'] = ['security']
+                (root / doc['path']).write_text('# Diagnostics\n\n' + content + '\n')
+                documents.append(doc)
+            ingest(documents, root=root, dbname=self.dbname)
+            query = 'HTTP 401 authentication diagnostics and JWKS propagation'
+            result = search(role='platform', question=query, dbname=self.dbname, **QUERY)
+            ids = result['recommended_documents']
+            self.assertIn('TEST-910', ids)
+            self.assertIn('TEST-912', ids)
+            self.assertNotIn('TEST-911', ids)
+            self.assertNotIn('TEST-913', json.dumps(result))
+            same_version = search(role='platform', question=query + ' on version 2.4.0', dbname=self.dbname, **QUERY)
+            self.assertIn('TEST-910', same_version['recommended_documents'])
+            generic = search(role='platform', question='HTTP 503 errors', dbname=self.dbname, **QUERY)
+            self.assertNotIn('TEST-910', generic['recommended_documents'])
+            self.assertNotIn('TEST-912', generic['recommended_documents'])

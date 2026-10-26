@@ -146,3 +146,7 @@ The current v3 search adds a small operational vocabulary, exact numeric/code ma
 The evaluator accepts local JSON questions against a frozen built-in corpus, with offline label validation and disposable-database execution. Imported questions are not automatically considered independent. See [authoring, review and evaluation instructions](docs/independent-evaluation.md). This workflow does not change ranking or establish new quality results.
 
 A first [user-supplied synthetic scenario assessment](docs/external-validation-results.md) confirms tested context/access boundaries but exposes missed applicable procedures, prohibitions and authorized findings. It is a baseline with explicit metadata assumptions, not a production-readiness claim.
+
+## Context-sensitive retrieval
+
+The v4 candidate separates unchanged eligibility checks from revised numeric relevance guards, query handling and priority for relevant cited prohibitions. It retrieves the supplied scenarios' expected evidence while preserving tested access/withholding boundaries. These scenarios now influenced tuning; broader precision remains low and the eight-question probe has a precision regression. See [algorithm, measured results and remaining limits](docs/context-sensitive-retrieval.md).

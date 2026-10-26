@@ -266,3 +266,7 @@ Restart the API to load v3 matching; Google sign-in may need to be repeated. No 
 Save reviewed cases privately under `.local/evaluation/`. Run `.venv/bin/python -m runreviq.evaluate_search --suite realistic --questions .local/evaluation/questions.json --validate-only` before scoring. Remove `--validate-only` and add `--report-only` to run against a disposable database. No migration or API restart is needed. See [case format and independent review workflow](docs/independent-evaluation.md); external file provenance is not verified automatically.
 
 For the supplied ten-scenario dataset, run `.venv/bin/python -m runreviq.evaluate_external`. It creates a separate disposable database for each scenario and prints raw results without changing the working collection. See [fixture provenance and assumptions](datasets/external-validation/README.md). Exit zero indicates quote/access integrity, not that all requested behaviors are implemented.
+
+## v4 retrieval update
+
+After merging v4, restart the API to load `postgres_english_context_v4`; Google sessions may need sign-in again. No schema migration, source re-ingestion, model download or new credentials are required. Compare external reports with `.venv/bin/python -m runreviq.compare_external .local/external-v4.json` after producing that file with `runreviq.evaluate_external`. See [v4 behavior and regression results](docs/context-sensitive-retrieval.md).

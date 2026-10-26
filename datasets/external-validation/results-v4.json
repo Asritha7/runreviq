@@ -1,0 +1,932 @@
+{
+  "dataset_sha256": "afddc7c45e486116b6c5918cc9739ebc4c17b9524de3b6ed6ca557f8f820b59f",
+  "retrieval_method": "postgres_english_context_v4",
+  "provenance": "user_supplied_synthetic_independence_asserted_by_submitter",
+  "scope": "Backend evidence retrieval, citations and revision access; not generated-answer quality or browser authentication",
+  "results": [
+    {
+      "id": "S01",
+      "question": "After upgrading identity-service to v2.4.0, some users are receiving intermittent HTTP 401 responses. Which diagnostic procedure applies before considering a restart?",
+      "expected": "Select RB-101. Do not recommend RB-102 for v2.4.0. Clearly distinguish the historical procedure from applicable guidance.",
+      "selection": {
+        "status": "selected",
+        "message": "Found approved guidance applicable to the supplied context.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-101"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-101"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-101",
+            "revision": 1,
+            "path": "datasets/northstar/RB-101-r1.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "selected",
+        "message": "Found matching source passages. These are excerpts, not an answer or proof of the cause.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-101"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-101"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-101",
+            "revision": 1,
+            "path": "datasets/northstar/RB-101-r1.md"
+          }
+        ],
+        "passages": [
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "For intermittent authentication failures following key rotation, first verify JWKS retrieval success, cached signing-key identifiers, and token validation timestamps across affected replicas. Do not restart workloads before recording these observations.",
+            "source_sha256": "d8ce6da179cf0655a3f6088ad13f19b8267b246c36f786daa98c88e36b7c9df8",
+            "document_id": "RB-101",
+            "revision": 1,
+            "title": "RB-101"
+          }
+        ],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 1,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented"
+    },
+    {
+      "id": "S02",
+      "question": "Two approved runbooks describe different recovery procedures for authentication failures after key rotation. Which procedure should I follow?",
+      "expected": "Flag a genuine contradiction. Cite both passages, describe the incompatible actions, and avoid choosing either procedure without an authoritative resolution.",
+      "selection": {
+        "status": "conflict",
+        "message": "Applicable documents disagree. No recommendation is available until the conflict is reviewed.",
+        "next_steps": [
+          "Ask an authorized document owner to resolve the opposing instructions."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [
+          {
+            "action": "restart_before_diagnostics",
+            "basis": "catalog_rules",
+            "documents": [
+              {
+                "document_id": "RB-201",
+                "title": "RB-201",
+                "revision": 1,
+                "path": "datasets/northstar/RB-201-r1.md",
+                "rules": [
+                  "must_not"
+                ],
+                "citations": [
+                  {
+                    "quote": "Before restarting identity-service pods, capture JWKS refresh failures and token validation errors. Restarting before diagnostics is prohibited.",
+                    "end_line": 3,
+                    "start_line": 3,
+                    "source_sha256": "b24959d87a474f6b608653c099e8fccdabf48c486f2d15497be31e53ba604ffb",
+                    "rule": "must_not",
+                    "document_id": "RB-201",
+                    "revision": 1
+                  }
+                ],
+                "citation_status": "available"
+              },
+              {
+                "document_id": "RB-202",
+                "title": "RB-202",
+                "revision": 1,
+                "path": "datasets/northstar/RB-202-r1.md",
+                "rules": [
+                  "must"
+                ],
+                "citations": [
+                  {
+                    "quote": "When intermittent HTTP 401 responses occur following key rotation, restart all identity-service pods immediately without waiting for diagnostic collection.",
+                    "end_line": 3,
+                    "start_line": 3,
+                    "source_sha256": "991d9e0e1e3bcbda06ae68dbed3f0cd4f5aeee37d044d62d077ec8de47f86898",
+                    "rule": "must",
+                    "document_id": "RB-202",
+                    "revision": 1
+                  }
+                ],
+                "citation_status": "available"
+              }
+            ],
+            "explanation": "Applicable documents require and forbid the same action: restart_before_diagnostics."
+          }
+        ],
+        "applicable_documents": [
+          "RB-201",
+          "RB-202"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [
+          [
+            "RB-201",
+            "RB-202"
+          ]
+        ],
+        "recommended_documents": [],
+        "evidence": [
+          {
+            "document_id": "RB-201",
+            "revision": 1,
+            "path": "datasets/northstar/RB-201-r1.md"
+          },
+          {
+            "document_id": "RB-202",
+            "revision": 1,
+            "path": "datasets/northstar/RB-202-r1.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "conflict",
+        "message": "Applicable documents disagree. No recommendation is available until the conflict is reviewed.",
+        "next_steps": [
+          "Ask an authorized document owner to resolve the opposing instructions."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [
+          {
+            "action": "restart_before_diagnostics",
+            "basis": "catalog_rules",
+            "documents": [
+              {
+                "document_id": "RB-201",
+                "title": "RB-201",
+                "revision": 1,
+                "path": "datasets/northstar/RB-201-r1.md",
+                "rules": [
+                  "must_not"
+                ],
+                "citations": [
+                  {
+                    "quote": "Before restarting identity-service pods, capture JWKS refresh failures and token validation errors. Restarting before diagnostics is prohibited.",
+                    "end_line": 3,
+                    "start_line": 3,
+                    "source_sha256": "b24959d87a474f6b608653c099e8fccdabf48c486f2d15497be31e53ba604ffb",
+                    "rule": "must_not",
+                    "document_id": "RB-201",
+                    "revision": 1
+                  }
+                ],
+                "citation_status": "available"
+              },
+              {
+                "document_id": "RB-202",
+                "title": "RB-202",
+                "revision": 1,
+                "path": "datasets/northstar/RB-202-r1.md",
+                "rules": [
+                  "must"
+                ],
+                "citations": [
+                  {
+                    "quote": "When intermittent HTTP 401 responses occur following key rotation, restart all identity-service pods immediately without waiting for diagnostic collection.",
+                    "end_line": 3,
+                    "start_line": 3,
+                    "source_sha256": "991d9e0e1e3bcbda06ae68dbed3f0cd4f5aeee37d044d62d077ec8de47f86898",
+                    "rule": "must",
+                    "document_id": "RB-202",
+                    "revision": 1
+                  }
+                ],
+                "citation_status": "available"
+              }
+            ],
+            "explanation": "Applicable documents require and forbid the same action: restart_before_diagnostics."
+          }
+        ],
+        "applicable_documents": [
+          "RB-201",
+          "RB-202"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [
+          [
+            "RB-201",
+            "RB-202"
+          ]
+        ],
+        "recommended_documents": [],
+        "evidence": [
+          {
+            "document_id": "RB-201",
+            "revision": 1,
+            "path": "datasets/northstar/RB-201-r1.md"
+          },
+          {
+            "document_id": "RB-202",
+            "revision": 1,
+            "path": "datasets/northstar/RB-202-r1.md"
+          }
+        ],
+        "passages": [],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 2,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented"
+    },
+    {
+      "id": "S03",
+      "question": "Authentication requests are intermittently failing after deployment. What should I do?",
+      "expected": "Request clarification about key rotation or present both conditional procedures with explicit uncertainty. Do not assume that rotation is enabled or disabled.",
+      "selection": {
+        "status": "needs_context_or_review",
+        "message": "More context or metadata review is required before guidance can be recommended.",
+        "next_steps": [
+          "Answer the follow-up question and submit the request again."
+        ],
+        "questions": [
+          {
+            "field": "key_rotation_enabled",
+            "question": "Is key rotation enabled in the affected service?",
+            "allowed_answers": [
+              true,
+              false
+            ]
+          }
+        ],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [],
+        "uncertain_documents": [
+          "RB-301",
+          "RB-302"
+        ],
+        "conflicts": [],
+        "recommended_documents": [],
+        "evidence": []
+      },
+      "search": {
+        "status": "needs_context_or_review",
+        "message": "More context or metadata review is required before guidance can be recommended.",
+        "next_steps": [
+          "Answer the follow-up question and submit the request again."
+        ],
+        "questions": [
+          {
+            "field": "key_rotation_enabled",
+            "question": "Is key rotation enabled in the affected service?",
+            "allowed_answers": [
+              true,
+              false
+            ]
+          }
+        ],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [],
+        "uncertain_documents": [
+          "RB-301",
+          "RB-302"
+        ],
+        "conflicts": [],
+        "recommended_documents": [],
+        "evidence": [],
+        "passages": [],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 0,
+      "citation_integrity": "not_applicable",
+      "answer_generation": "not_implemented"
+    },
+    {
+      "id": "S04",
+      "question": "Should I follow the older authentication recovery runbook or the latest approved revision?",
+      "expected": "Recommend revision 2, identify revision 1 as superseded, and preserve the distinction between document revision and software version.",
+      "selection": {
+        "status": "selected",
+        "message": "Found approved guidance applicable to the supplied context.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-401"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-401"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-401",
+            "revision": 2,
+            "path": "datasets/northstar/RB-401-r2.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "selected",
+        "message": "Found matching source passages. These are excerpts, not an answer or proof of the cause.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-401"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-401"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-401",
+            "revision": 2,
+            "path": "datasets/northstar/RB-401-r2.md"
+          }
+        ],
+        "passages": [
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "Inspect token validation logs, JWKS endpoint availability, and cached signing-key identifiers before restarting. Restart only after the documented checks are complete.",
+            "source_sha256": "2d9ccc2ce69ec0b92a7ece3b8a009257b13029258fd05941be127523f9dee042",
+            "document_id": "RB-401",
+            "revision": 2,
+            "title": "RB-401"
+          }
+        ],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 1,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented",
+      "history": [
+        {
+          "document_id": "RB-401",
+          "revision": 1,
+          "title": "RB-401",
+          "content": "# RB-401\n\nRestart the identity-service deployment when repeated token validation failures occur.\n",
+          "checksum": "6fa3534f5f34dfa0fb2baf6d2d0a8410968cdda8de92792e40eb1dca1eca08b6",
+          "current_revision": 2,
+          "is_current": false,
+          "revision_status": "superseded",
+          "guidance_status": "superseded",
+          "withdrawal": null
+        },
+        {
+          "document_id": "RB-401",
+          "revision": 2,
+          "title": "RB-401",
+          "content": "# RB-401\n\nInspect token validation logs, JWKS endpoint availability, and cached signing-key identifiers before restarting. Restart only after the documented checks are complete.\n",
+          "checksum": "709c0e94acffff6ab65fb0cfb70552c02362ca11c371fa12a75ba348b47040bc",
+          "current_revision": 2,
+          "is_current": true,
+          "revision_status": "approved",
+          "guidance_status": "active",
+          "withdrawal": null
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "question": "One runbook tells me to inspect JWKS errors, while another recommends checking signing-key identifiers. Are these instructions contradictory?",
+      "expected": "Explain that the two procedures are compatible diagnostic steps. Do not produce a false conflict.",
+      "selection": {
+        "status": "selected",
+        "message": "Found approved guidance applicable to the supplied context.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-501",
+          "RB-502"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-501",
+          "RB-502"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-501",
+            "revision": 1,
+            "path": "datasets/northstar/RB-501-r1.md"
+          },
+          {
+            "document_id": "RB-502",
+            "revision": 1,
+            "path": "datasets/northstar/RB-502-r1.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "selected",
+        "message": "Found matching source passages. These are excerpts, not an answer or proof of the cause.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-501",
+          "RB-502"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-502",
+          "RB-501"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-501",
+            "revision": 1,
+            "path": "datasets/northstar/RB-501-r1.md"
+          },
+          {
+            "document_id": "RB-502",
+            "revision": 1,
+            "path": "datasets/northstar/RB-502-r1.md"
+          }
+        ],
+        "passages": [
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "Compare cached signing-key identifiers against currently published JWKS keys to identify propagation delays.",
+            "source_sha256": "9c085837c371fb4a0ac6263c8b256bf1d1e07a4e0fa47ea52b9a29a7699305da",
+            "document_id": "RB-502",
+            "revision": 1,
+            "title": "RB-502"
+          },
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "Inspect JWKS refresh errors and endpoint availability during intermittent authentication failures.",
+            "source_sha256": "c0ac41893b2c9a31c787a218a51789393831f20758192e23670679a670698a34",
+            "document_id": "RB-501",
+            "revision": 1,
+            "title": "RB-501"
+          }
+        ],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 2,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented"
+    },
+    {
+      "id": "S06",
+      "question": "Is identity-service healthy right now, and what is its current error rate?",
+      "expected": "State that current health and error rate cannot be determined from documentation alone. Reference the approved monitoring procedure without inventing live metrics.",
+      "selection": {
+        "status": "selected",
+        "message": "Found approved guidance applicable to the supplied context.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-601"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-601"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-601",
+            "revision": 1,
+            "path": "datasets/northstar/RB-601-r1.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "selected",
+        "message": "Found matching source passages. These are excerpts, not an answer or proof of the cause.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-601"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-601"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-601",
+            "revision": 1,
+            "path": "datasets/northstar/RB-601-r1.md"
+          }
+        ],
+        "passages": [
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "Use the approved monitoring dashboard to inspect authentication failure rates and token validation errors. Historical incidents cannot establish the current service health.",
+            "source_sha256": "e6a34ce2ed31c4757b87d9f1c353f0aebbdc7714e8a08d51c2a4cbf9af1e5d91",
+            "document_id": "RB-601",
+            "revision": 1,
+            "title": "RB-601"
+          }
+        ],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 1,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented"
+    },
+    {
+      "id": "S07",
+      "question": "Can I use the staging reset procedure to recover production authentication?",
+      "expected": "Do not recommend the staging procedure for production. Explain the environment mismatch and cite the production policy.",
+      "selection": {
+        "status": "selected",
+        "message": "Found approved guidance applicable to the supplied context.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "POL-702"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "POL-702"
+        ],
+        "evidence": [
+          {
+            "document_id": "POL-702",
+            "revision": 1,
+            "path": "datasets/northstar/POL-702-r1.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "selected",
+        "message": "Found matching source passages. These are excerpts, not an answer or proof of the cause.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "POL-702"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "POL-702"
+        ],
+        "evidence": [
+          {
+            "document_id": "POL-702",
+            "revision": 1,
+            "path": "datasets/northstar/POL-702-r1.md"
+          }
+        ],
+        "passages": [
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "Production key-cache resets require an approved change and must not use staging recovery procedures.",
+            "source_sha256": "fce60db9e8139e527e8376d7f6ad2f90574a95e893142a8c1a75f715f11c8f20",
+            "document_id": "POL-702",
+            "revision": 1,
+            "title": "POL-702"
+          }
+        ],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 1,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented"
+    },
+    {
+      "id": "S08",
+      "question": "Does the documentation authorize disabling JWT signature verification to restore authentication?",
+      "expected": "Clearly state that disabling verification is prohibited. Cite SEC-802. Do not treat RB-801 as evidence authorizing the action merely because it discusses JWT troubleshooting.",
+      "selection": {
+        "status": "selected",
+        "message": "Found approved guidance applicable to the supplied context.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-801",
+          "SEC-802"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-801",
+          "SEC-802"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-801",
+            "revision": 1,
+            "path": "datasets/northstar/RB-801-r1.md"
+          },
+          {
+            "document_id": "SEC-802",
+            "revision": 1,
+            "path": "datasets/northstar/SEC-802-r1.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "selected",
+        "message": "Found matching source passages. These are excerpts, not an answer or proof of the cause.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-801",
+          "SEC-802"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "SEC-802"
+        ],
+        "evidence": [
+          {
+            "document_id": "SEC-802",
+            "revision": 1,
+            "path": "datasets/northstar/SEC-802-r1.md"
+          }
+        ],
+        "passages": [
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "JWT signature verification must remain enabled in production. Disabling signature verification is prohibited.",
+            "source_sha256": "67d2b8eccdaae75afc2969f8426a7f23428e7c179cbfd9e75d99291d9e4f2b59",
+            "document_id": "SEC-802",
+            "revision": 1,
+            "title": "SEC-802"
+          }
+        ],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 1,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented"
+    },
+    {
+      "id": "S09",
+      "question": "Are the current intermittent 401 errors definitely caused by delayed JWKS propagation?",
+      "expected": "Describe delayed JWKS propagation as a plausible hypothesis supported by historical precedent. Do not claim the root cause is confirmed without current diagnostic observations.",
+      "selection": {
+        "status": "selected",
+        "message": "Found approved guidance applicable to the supplied context.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "INC-901",
+          "RB-902"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "INC-901",
+          "RB-902"
+        ],
+        "evidence": [
+          {
+            "document_id": "INC-901",
+            "revision": 1,
+            "path": "datasets/northstar/INC-901-r1.md"
+          },
+          {
+            "document_id": "RB-902",
+            "revision": 1,
+            "path": "datasets/northstar/RB-902-r1.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "selected",
+        "message": "Found matching source passages. These are excerpts, not an answer or proof of the cause.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "INC-901",
+          "RB-902"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "INC-901",
+          "RB-902"
+        ],
+        "evidence": [
+          {
+            "document_id": "INC-901",
+            "revision": 1,
+            "path": "datasets/northstar/INC-901-r1.md"
+          },
+          {
+            "document_id": "RB-902",
+            "revision": 1,
+            "path": "datasets/northstar/RB-902-r1.md"
+          }
+        ],
+        "passages": [
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "In a previous v2.4 production incident, delayed signing-key propagation caused intermittent HTTP 401 errors following key rotation.",
+            "source_sha256": "fd7ced3b6abc222c544745d42533add462e4ad5a6ac2358c3cd4b5e2c7aee2e8",
+            "document_id": "INC-901",
+            "revision": 1,
+            "title": "INC-901"
+          },
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "Before assigning a cause, correlate affected request timestamps, JWKS refresh errors, and signing-key identifiers across replicas.",
+            "source_sha256": "6e65de8c962d8a2a521ae3fbd907b1e397c6f1321b5ee65e9c27bcc5fb801fb4",
+            "document_id": "RB-902",
+            "revision": 1,
+            "title": "RB-902"
+          }
+        ],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 2,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented"
+    },
+    {
+      "id": "S10",
+      "question": "What did the confidential security investigation conclude about the recent signing-key incident?",
+      "expected": "Security-team user: May receive authorized findings with a valid citation. Platform-only user: Must not receive restricted findings, document title, passage, or derived details. If authorization is later revoked, previously stored answers influenced by SEC-1001 must be withheld until regenerated using currently authorized evidence.",
+      "selection": {
+        "status": "selected",
+        "message": "Found approved guidance applicable to the supplied context.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-1002"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "RB-1002"
+        ],
+        "evidence": [
+          {
+            "document_id": "RB-1002",
+            "revision": 1,
+            "path": "datasets/northstar/RB-1002-r1.md"
+          }
+        ]
+      },
+      "search": {
+        "status": "insufficient_evidence",
+        "message": "No sufficiently relevant passages in approved guidance accessible for this context.",
+        "next_steps": [
+          "Try concrete terms from the incident, check the context, or request an approved source."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "RB-1002"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [],
+        "evidence": [],
+        "passages": [],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "quotation_count": 1,
+      "citation_integrity": "verified",
+      "answer_generation": "not_implemented",
+      "security_search": {
+        "status": "selected",
+        "message": "Found matching source passages. These are excerpts, not an answer or proof of the cause.",
+        "next_steps": [
+          "Read the supporting documents and follow their approval requirements before acting."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [
+          "SEC-1001"
+        ],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [
+          "SEC-1001"
+        ],
+        "evidence": [
+          {
+            "document_id": "SEC-1001",
+            "revision": 1,
+            "path": "datasets/northstar/SEC-1001-r1.md"
+          }
+        ],
+        "passages": [
+          {
+            "start_line": 3,
+            "end_line": 3,
+            "quote": "The investigation identified an internal signing-key handling defect in a restricted authentication component.",
+            "source_sha256": "b131cdb76de725dbab0d9f30bed6614a99f6f9b325670b42573e075acd6d0826",
+            "document_id": "SEC-1001",
+            "revision": 1,
+            "title": "SEC-1001"
+          }
+        ],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "security_revision_available": true,
+      "platform_disclosure_absent": true,
+      "platform_revision_denied": true,
+      "after_revocation": {
+        "status": "insufficient_evidence",
+        "message": "Could not find enough approved guidance you can access for the supplied context.",
+        "next_steps": [
+          "Check the service, version, environment and prerequisites, or request an approved source."
+        ],
+        "questions": [],
+        "review_items": [],
+        "conflict_details": [],
+        "applicable_documents": [],
+        "uncertain_documents": [],
+        "conflicts": [],
+        "recommended_documents": [],
+        "evidence": [],
+        "passages": [],
+        "retrieval_method": "postgres_english_context_v4"
+      },
+      "revoked_revision_denied": true,
+      "revoked_search_disclosure_absent": true,
+      "stored_answer_regeneration": "not_implemented_no_answer_store"
+    }
+  ]
+}
