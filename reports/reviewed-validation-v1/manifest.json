@@ -1,0 +1,7 @@
+{
+  "report_sha256": "3afe5d9b6a02903c295ff5c9a077956c70bb5bc17c0a5281401e506d267fa5a6",
+  "code_revision": "fffdc25681abf9b1994b6e200f6c891abfab8b18",
+  "fixture_sha256": "a74bae500513a2a256464b4322ca4b868c932dee3428be913ceb9a29599bf658",
+  "implementation_sha256": "53f988801a63a38c2f9ea9dbe9824f0235d6446fbd6d4bd705257fd8e643dc5e",
+  "note": "Captured from a clean committed tree; subsequent commit adds report and interpretation only."
+}

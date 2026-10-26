@@ -57,3 +57,27 @@ node --test tests/web.test.cjs
 Each configuration creates, seeds and drops a uniquely named `opslens_test_reviewed_*` database. No database name or external fixture path can be supplied through this CLI. Reports retain complete per-case results, traces, configuration hashes, frozen fixture hash, engine identifier, code revision/dirty state and Python implementation fingerprint. `--report-only` tolerates relevance/status failures but never suppresses detected disclosure or citation-integrity failures.
 
 Future genuinely unseen cases require separate authorship, freezing and explicit provenance. These questions are now development data; do not describe subsequent tuning on them as held-out validation.
+
+## Recorded results
+
+[Complete raw results and traces](../reports/reviewed-validation-v1/results.json) were captured at clean code revision `fffdc25681abf9b1994b6e200f6c891abfab8b18`; the [report manifest](../reports/reviewed-validation-v1/manifest.json) records its checksum and input/implementation fingerprints.
+
+| Measure | Legacy paragraphs | Reviewed ranges/scope | Reviewed bundle |
+| --- | ---: | ---: | ---: |
+| Case checks passed | 51/60 | 58/60 | 58/60 |
+| Recall@5, 36 positive cases | 97.22% | 97.22% | 97.22% |
+| Precision@returned-5 | 84.26% | 84.26% | 94.44% |
+| Fixed Precision@5 | 21.11% | 21.11% | 21.11% |
+| False-positive withholding failures | 4/24 | 0/24 | 0/24 |
+| False conflicts | 3/59 | 0/59 | 0/59 |
+| Appropriate abstention | 17/24 | 24/24 | 24/24 |
+| Incorrect abstention | 0/36 | 0/36 | 0/36 |
+| Restricted disclosure cases | 0/60 | 0/60 | 0/60 |
+| Inapplicable passage cases | 4/60 | 0/60 | 0/60 |
+| Citation integrity failure cases | 0/60 | 0/60 | 0/60 |
+
+**Interpretation:** HTTP scope improves intended-context handling. Complementary bundling improves precision primarily by removing duplicate procedures; it does not find additional gold evidence in this corpus. Unchanged recall and fixed Precision@5 make that limitation visible. The result is not evidence of a general semantic ranking improvement. These figures are not comparable to the existing legacy corpus's 38.28% precision because both corpus and gold relevance definitions differ.
+
+**Unresolved failures:** Q-009 and Q-037 ask for signing-key propagation diagnostics together with dashboard error rates. Both still miss the procedure alternative group at the relevance-ranking stage, before the candidate/result cap. Reserving a role slot cannot rescue a passage rejected by ranking. Neither labels nor thresholds were tuned after this report. These two repeated-family failures are development evidence for a future fix, followed by a fresh evaluation set.
+
+**Limits:** only two templated operational families plus a small conflict family; no independently reviewed classifications; no live telemetry or generated answers; no general semantic entailment verifier; no claim of production readiness. No golden-span omission or truncation failure occurred in this particular report, although diagnostic unit tests exercise those categories. Existing authorization/session/revocation and publication/withdrawal suites remain necessary: this benchmark does not replace them. Full local checks passed: 206 Python tests and 33 browser logic tests, including all three paired arms and diagnostic-versus-normal output equality.
