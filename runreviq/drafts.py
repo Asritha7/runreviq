@@ -9,6 +9,7 @@ from psycopg.types.json import Jsonb
 from runreviq.database import credentials
 from runreviq.extraction import extract, parse_value, FIELDS
 from runreviq.selector import version
+from runreviq.evidence import validate_profile
 
 MAX_BYTES = 1_000_000
 MAX_DRAFTS = 20
@@ -90,13 +91,22 @@ class ReviewConflict(Exception):
     pass
 
 
-def validate_review(metadata):
+def validate_review(metadata, content=None):
     """Allow incomplete work, but never treat invalid values as usable metadata."""
-    if (not isinstance(metadata, dict) or set(metadata) != {'title', *FIELDS}
-            or any(not isinstance(v, str) or len(v) > 200 or '\x00' in v for v in metadata.values())):
-        raise DraftInputError('Expected only the six editable string fields')
+    base = {'title', *FIELDS}
+    if (not isinstance(metadata, dict) or not base <= set(metadata) or set(metadata) - base - {'evidence_profile'}
+            or any(not isinstance(metadata[k], str) or len(metadata[k]) > 200 or '\x00' in metadata[k] for k in base)):
+        raise DraftInputError('Expected editable string fields and an optional evidence profile')
     values, issues = {}, []
-    for field, raw in metadata.items():
+    if 'evidence_profile' in metadata:
+        try:
+            values['evidence_profile'] = validate_profile(metadata['evidence_profile'], content)
+        except ValueError as exc:
+            raise DraftInputError('Invalid evidence profile') from exc
+    for field in metadata:
+        if field == 'evidence_profile':
+            continue
+        raw = metadata[field]
         raw = raw.strip()
         if not raw:
             issues.append({'field': field, 'reason': 'missing'})
@@ -130,8 +140,10 @@ def save_review(owner, identifier, expected_revision, metadata, *, dbname='opsle
         # Every review writer for a draft shares this lock, preventing lost updates.
         lock = int(uuid.UUID(str(identifier)).hex[:15], 16)
         conn.execute('SELECT pg_advisory_xact_lock(%s)', (lock,))
-        if not conn.execute('SELECT 1 FROM opslens.upload_drafts WHERE id=%s', (identifier,)).fetchone():
+        source = conn.execute('SELECT content FROM opslens.upload_drafts WHERE id=%s', (identifier,)).fetchone()
+        if not source:
             return None
+        result = validate_review(metadata, source[0])
         previous = latest_review(conn, identifier)
         current = previous['revision'] if previous else 0
         if current != expected_revision:
