@@ -270,3 +270,7 @@ For the supplied ten-scenario dataset, run `.venv/bin/python -m runreviq.evaluat
 ## v4 retrieval update
 
 After merging v4, restart the API to load `postgres_english_context_v4`; Google sessions may need sign-in again. No schema migration, source re-ingestion, model download or new credentials are required. Compare external reports with `.venv/bin/python -m runreviq.compare_external .local/external-v4.json` after producing that file with `runreviq.evaluate_external`. See [v4 behavior and regression results](docs/context-sensitive-retrieval.md).
+
+## Reviewed evidence metadata contract
+
+No migration or re-ingestion is needed for optional evidence profiles; immutable JSONB snapshots store them. Restart the API after merging backend changes. See [profile schema and authority boundaries](docs/reviewed-evidence.md). Existing documents remain unclassified until a new revision is deliberately reviewed and published.

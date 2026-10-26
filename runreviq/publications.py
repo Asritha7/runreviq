@@ -10,6 +10,7 @@ from psycopg.types.json import Jsonb
 from runreviq.database import credentials
 from runreviq.drafts import DraftInputError, ReviewConflict, validate_review
 from runreviq.selector import ROOT, ROLES
+from runreviq.evidence import validate_prohibitions
 from runreviq.submissions import can_review, initialize_reviewers
 
 PUBLISHERS_FILE = ROOT / '.local/publishers.json'
@@ -92,10 +93,16 @@ def publish(actor, identifier, roles, claims, verified, *, dbname='opslens'):
         if row is None:
             return None
         draft,revision,name,content,raw,comment = row
-        review = validate_review(raw)
+        review = validate_review(raw, content)
         if review['issues']:
             raise DraftInputError('Invalid approved metadata')
-        cited = prepare_claims(claims,content)
+        profile = review['validated_metadata'].get('evidence_profile')
+        cited = [] if claims == [] and profile and profile['units'] else prepare_claims(claims,content)
+        if profile:
+            try:
+                validate_prohibitions(profile, cited)
+            except ValueError as exc:
+                raise DraftInputError('Prohibition needs reviewed claim evidence') from exc
         document_id = 'UPLOAD-' + str(uuid.UUID(str(draft)).int)
         metadata = dict(review['validated_metadata'],id=document_id,revision=revision,
                         status='approved',metadata_verified=True,claims=cited,path='submission:'+str(identifier))

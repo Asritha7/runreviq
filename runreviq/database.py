@@ -111,7 +111,7 @@ def prepare(documents, root=ROOT):
                 'metadata_verified', 'status', 'claims', 'path'}
     root = Path(root).resolve()
     for doc in documents:
-        if set(doc) != expected:
+        if not expected <= set(doc) or set(doc) - expected - {'evidence_profile'}:
             raise ValueError('Unexpected or missing catalog fields')
         if not re.fullmatch(r'[A-Z]+-[0-9]+', doc['id']):
             raise ValueError('Invalid document ID')
@@ -150,6 +150,10 @@ def prepare(documents, root=ROOT):
             raise ValueError('Document exceeds 1 MB limit')
         content = path.read_text(encoding='utf-8')
         validate_citations(doc['claims'], content)
+        if 'evidence_profile' in doc:
+            from runreviq.evidence import validate_profile, validate_prohibitions
+            profile = validate_profile(doc['evidence_profile'], content)
+            validate_prohibitions(profile, doc['claims'])
         # Permissions are current policy, not immutable historical evidence.
         metadata = {k: v for k, v in doc.items() if k != 'allowed_roles'}
         checksum = hashlib.sha256(json.dumps({'metadata': metadata, 'content': content}, sort_keys=True).encode()).hexdigest()
@@ -216,6 +220,7 @@ def load_authorized_revision(role, document_id, revision, *, dbname='opslens'):
     metadata, content, checksum, current_revision, reason, withdrawn_at = row
     return {'document_id': document_id, 'revision': revision,
             'title': metadata['title'], 'content': content, 'checksum': checksum,
+            'evidence_profile': metadata.get('evidence_profile'),
             'current_revision': current_revision, 'is_current': revision == current_revision,
             'revision_status': metadata['status'],
             'guidance_status': 'withdrawn' if reason is not None else 'superseded' if revision != current_revision else 'active' if metadata['status']=='approved' else metadata['status'],

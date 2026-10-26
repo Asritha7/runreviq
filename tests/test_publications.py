@@ -194,3 +194,30 @@ class PublicationDatabaseTests(unittest.TestCase):
             conn.execute('SELECT publisher FROM opslens.publications')
         for command in ('DELETE FROM opslens.documents','DELETE FROM opslens.publications',"UPDATE opslens.document_versions SET content='changed'",'SET ROLE opslens_review_operator',"DELETE FROM opslens.submission_decisions"):
             with pub.connect_publisher(self.dbname) as conn,self.assertRaises(psycopg.errors.InsufficientPrivilege):conn.execute(command)
+
+    def test_evidence_profile_is_approved_snapshot_and_history_is_immutable(self):
+        from runreviq.evidence import validate_profile
+        profile=dict(schema_version=1,http_scope=dict(mode='only',codes=[401]),
+                     units=[dict(role='procedure',start_line=2,end_line=2)])
+        save_review(self.owner,self.draft['id'],1,dict(META,evidence_profile=profile),dbname=self.dbname)
+        sub=submit(self.owner,self.draft['id'],2,dbname=self.dbname)
+        self.assertIsNone(self.publish(sub))
+        decide(self.reviewer,sub['id'],'approved','Reviewed scope and lines',dbname=self.dbname)
+        receipt=self.publish(sub,claims=[])
+        old=load_authorized_revision('platform',receipt['document_id'],2,dbname=self.dbname)
+        self.assertEqual(old['evidence_profile'],profile)
+        save_review(self.owner,self.draft['id'],2,META,dbname=self.dbname)
+        self.assertEqual(self.publish(sub,claims=[]),receipt)
+        self.assertEqual(load_authorized_revision('platform',receipt['document_id'],2,dbname=self.dbname)['evidence_profile'],profile)
+        self.assertIsNone(load_authorized_revision('intern',receipt['document_id'],2,dbname=self.dbname))
+
+    def test_out_of_source_profile_cannot_be_saved_or_prohibition_published_without_claim(self):
+        profile=dict(schema_version=1,http_scope=None,units=[dict(role='prohibition',start_line=2,end_line=2)])
+        with self.assertRaises(DraftInputError):
+            save_review(self.owner,self.draft['id'],1,dict(META,evidence_profile=dict(profile,units=[dict(role='procedure',start_line=99,end_line=99)])),dbname=self.dbname)
+        save_review(self.owner,self.draft['id'],1,dict(META,evidence_profile=profile),dbname=self.dbname)
+        sub=submit(self.owner,self.draft['id'],2,dbname=self.dbname)
+        decide(self.reviewer,sub['id'],'approved','Review',dbname=self.dbname)
+        with self.assertRaises(DraftInputError):self.publish(sub,claims=[])
+        with self.assertRaises(DraftInputError):self.publish(sub,claims=CLAIMS)
+        self.publish(sub,claims=[dict(CLAIMS[0],rule='must_not')])

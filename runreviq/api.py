@@ -75,6 +75,9 @@ class SearchRequest(SelectionRequest):
     question: str = Field(min_length=1, max_length=500, pattern=r'\S')
 
 
+from runreviq.evidence import EvidenceProfile
+
+
 class ReviewMetadata(BaseModel):
     model_config = ConfigDict(extra='forbid', strict=True)
     title: str = Field(max_length=200)
@@ -83,6 +86,7 @@ class ReviewMetadata(BaseModel):
     version_min: str = Field(max_length=200)
     version_max_exclusive: str = Field(max_length=200)
     key_rotation_enabled: str = Field(max_length=200)
+    evidence_profile: EvidenceProfile | None = None
 
 
 class ReviewRequest(BaseModel):
@@ -113,7 +117,7 @@ class PublicationClaim(BaseModel):
 class PublicationRequest(BaseModel):
     model_config = ConfigDict(extra='forbid', strict=True)
     allowed_roles: list[Literal['platform', 'security', 'intern']] = Field(min_length=1, max_length=3)
-    claims: list[PublicationClaim] = Field(min_length=1, max_length=20)
+    claims: list[PublicationClaim] = Field(max_length=20)
     metadata_verified: StrictBool
 
 
@@ -209,7 +213,7 @@ def create_app(*, key_file=KEY_FILE, document_loader=load_authorized_documents,
     @app.post('/v1/drafts/{draft_id}/review')
     def review_draft(draft_id: UUID, body: ReviewRequest, principal=Depends(identity)):
         try:
-            result = review_writer(draft_owner(principal), draft_id, body.expected_revision, body.metadata.model_dump())
+            result = review_writer(draft_owner(principal), draft_id, body.expected_revision, body.metadata.model_dump(exclude_unset=True))
         except ReviewConflict:
             raise HTTPException(409, 'Draft review changed; reload before saving') from None
         except DraftInputError:
