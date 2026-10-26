@@ -116,3 +116,7 @@ Publisher-only list/history/source/withdrawal routes live under `/v1/publication
 ## Passage search
 
 `POST /v1/search` uses the same authentication and strict context fields as `/v1/select`, with an additional required nonblank `question` (maximum 500 characters). It adds `passages` and `retrieval_method` to the selection response. Quotes carry exact revision, line range and full-source fingerprint. Invalid input returns 422; unavailable search returns a generic 503. See [the search contract and algorithm](search.md).
+
+## Reviewed evidence and HTTP context
+
+Selection/search accept optional `http_status` (strict integer 100–599 or null); search rejects disagreement with an HTTP code in the question. Review metadata accepts an optional `evidence_profile`. Publication permits empty claims only for approved profiles with units, and prohibition units still require cited `must_not` claims. Revisions expose their stored profile. See [the schema, search fields and conservative missing-context behavior](reviewed-evidence.md).

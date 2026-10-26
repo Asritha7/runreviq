@@ -213,3 +213,42 @@ class SearchDatabaseTests(unittest.TestCase):
             generic = search(role='platform', question='HTTP 503 errors', dbname=self.dbname, **QUERY)
             self.assertNotIn('TEST-910', generic['recommended_documents'])
             self.assertNotIn('TEST-912', generic['recommended_documents'])
+
+    def test_reviewed_units_http_scope_and_complementary_bundle(self):
+        import tempfile
+        import hashlib
+        from pathlib import Path
+        from runreviq.database import ingest
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'datasets/northstar').mkdir(parents=True)
+            documents=[]
+            source_texts=[('procedure','Inspect authentication signing key propagation.'),
+                          ('procedure','Inspect authentication signing key propagation.'),
+                          ('prohibition','Do not disable authentication signing key verification.'),
+                          ('historical','Earlier authentication signing key failures involved propagation delays.'),
+                          ('monitoring','Inspect authentication signing key failure rates in the monitoring dashboard.')]
+            for n,(role,text) in enumerate(source_texts,920):
+                doc=copy.deepcopy(self.docs[1]);doc.update(id=f'UNIT-{n}',title='Signing key evidence',claims=[],path=f'datasets/northstar/UNIT-{n}.md')
+                content='# Evidence\n\n'+text+'\n\nUnclassified banana submarine appendix.\n'
+                (root/doc['path']).write_text(content)
+                doc['evidence_profile']=dict(schema_version=1,http_scope=dict(mode='only',codes=[401]),units=[dict(role=role,start_line=3,end_line=3)])
+                if role=='prohibition':
+                    doc['claims']=[dict(action='disable_signature_verification',rule='must_not',citation=dict(start_line=3,end_line=3,quote=text,source_sha256=hashlib.sha256(content.encode()).hexdigest()))]
+                documents.append(doc)
+            ingest(documents,root=root,dbname=self.dbname)
+            result=search(role='platform',question='authentication signing key',http_status=401,dbname=self.dbname,**QUERY)
+            units=[p for p in result['passages'] if p['document_id'].startswith('UNIT-')]
+            self.assertEqual({p['evidence_role'] for p in units},{'procedure','prohibition','historical','monitoring'})
+            self.assertEqual(len(units),4)
+            self.assertTrue(all(p['role_reviewed'] and p['usage_note'] and p['applicability']['http_scope']['codes']==[401] for p in units))
+            wrong=search(role='platform',question='authentication signing key',http_status=503,dbname=self.dbname,**QUERY)
+            self.assertFalse(any(p['document_id'].startswith('UNIT-') for p in wrong['passages']))
+            unknown=search(role='platform',question='authentication signing key',dbname=self.dbname,**QUERY)
+            self.assertEqual(unknown['status'],'needs_context_or_review')
+            self.assertTrue(any(q['field']=='http_status' for q in unknown['questions']))
+            inferred=search(role='platform',question='HTTP 401 authentication signing key',dbname=self.dbname,**QUERY)
+            self.assertEqual(inferred['http_status_context'],401)
+            self.assertEqual(inferred['http_status_source'],'question')
+            self.assertEqual(search(role='intern',question='HTTP 401 authentication signing key',dbname=self.dbname,**QUERY)['passages'],[])
+            appendix=search(role='platform',question='banana submarine',http_status=401,dbname=self.dbname,**QUERY)
+            self.assertEqual(appendix['passages'],[])

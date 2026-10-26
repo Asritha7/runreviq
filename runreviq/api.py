@@ -16,8 +16,9 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from pydantic import model_validator, BaseModel, ConfigDict, Field, StrictBool
 
+from runreviq.evidence import EvidenceProfile
 from runreviq.database import load_authorized_documents, load_authorized_revision
 from runreviq import submissions, publications, lifecycle
 from runreviq.search import search
@@ -69,13 +70,19 @@ class SelectionRequest(BaseModel):
     software_version: str = Field(max_length=32, pattern=r'^[0-9]+\.[0-9]+\.[0-9]+$')
     environment: Literal['production', 'staging']
     key_rotation_enabled: StrictBool | None = None
+    http_status: int | None = Field(default=None, ge=100, le=599)
 
 
 class SearchRequest(SelectionRequest):
     question: str = Field(min_length=1, max_length=500, pattern=r'\S')
 
-
-from runreviq.evidence import EvidenceProfile
+    @model_validator(mode='after')
+    def consistent_http_context(self):
+        from runreviq.ranking import http_terms
+        codes = http_terms(self.question)
+        if self.http_status is not None and codes and codes != {str(self.http_status)}:
+            raise ValueError('Question and explicit HTTP status disagree')
+        return self
 
 
 class ReviewMetadata(BaseModel):
@@ -352,7 +359,7 @@ def create_app(*, key_file=KEY_FILE, document_loader=load_authorized_documents,
     @app.post('/v1/search')
     def passage_search(query: SearchRequest, principal=Depends(identity)):
         try:
-            return searcher(role=principal['role'], **query.model_dump())
+            return searcher(role=principal['role'], **query.model_dump(exclude_unset=True))
         except (psycopg.Error, ValueError, OSError):
             raise HTTPException(503, 'Evidence search unavailable') from None
 
@@ -362,7 +369,7 @@ def create_app(*, key_file=KEY_FILE, document_loader=load_authorized_documents,
             documents = document_loader(principal['role'])
         except (psycopg.Error, ValueError, OSError):
             raise HTTPException(503, 'Evidence store unavailable') from None
-        return select(documents, role=principal['role'], **query.model_dump())
+        return select(documents, role=principal['role'], **query.model_dump(exclude_unset=True))
 
     @app.get('/v1/documents/{document_id}/revisions/{revision}')
     def document_revision(document_id: str = ApiPath(pattern=r'^[A-Z]+-[0-9]+$'),

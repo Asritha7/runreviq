@@ -28,7 +28,7 @@ def load_documents():
 
 
 def select(documents, *, role, service, software_version, environment,
-           key_rotation_enabled=None):
+           key_rotation_enabled=None, http_status=None):
     if role not in ROLES:
         raise ValueError("Unknown test role")
     requested = version(software_version)
@@ -36,6 +36,8 @@ def select(documents, *, role, service, software_version, environment,
         raise ValueError("Environment must be production or staging")
     if key_rotation_enabled is not None and type(key_rotation_enabled) is not bool:
         raise ValueError("key_rotation_enabled must be true, false, or unknown")
+    if http_status is not None and (type(http_status) is not int or not 100 <= http_status <= 599):
+        raise ValueError('HTTP status must be an integer from 100 to 599')
     matches, uncertain = [], []
     questions, review_items = [], []
     # Authorization filtering precedes metadata inspection and all returned explanations.
@@ -50,10 +52,18 @@ def select(documents, *, role, service, software_version, environment,
             continue
         if doc["version_max_exclusive"] is not None and requested >= version(doc["version_max_exclusive"]):
             continue
+        profile = doc.get('evidence_profile')
+        if profile is not None:
+            from runreviq.evidence import validate_profile
+            profile = validate_profile(profile)
+        scope = profile['http_scope'] if profile else None
+        if scope and scope['mode'] == 'only' and http_status is not None and http_status not in scope['codes']:
+            continue
+        missing_http = bool(scope and scope['mode'] == 'only' and http_status is None)
         required = doc["key_rotation_enabled"]
         if required is not None and key_rotation_enabled is not None and required != key_rotation_enabled:
             continue
-        if (not doc["metadata_verified"] or doc["environment"] is None
+        if (missing_http or not doc["metadata_verified"] or doc["environment"] is None
                 or doc["version_min"] is None or doc["version_max_exclusive"] is None
                 or (required is not None and key_rotation_enabled is None)):
             uncertain.append(doc["id"])
@@ -67,8 +77,14 @@ def select(documents, *, role, service, software_version, environment,
                     reasons.append("missing_" + field)
             if reasons:
                 review_items.append(dict(reference, reasons=reasons))
+            if missing_http:
+                question = next((q for q in questions if q['field'] == 'http_status'), None)
+                if question is None:
+                    question = {'field': 'http_status', 'question': 'Which HTTP status occurred in the incident?', 'allowed_answers': []}
+                    questions.append(question)
+                question['allowed_answers'] = sorted(set(question['allowed_answers']) | set(scope['codes']))
             if required is not None and key_rotation_enabled is None:
-                if not questions:
+                if not any(q["field"] == "key_rotation_enabled" for q in questions):
                     questions.append({"field": "key_rotation_enabled",
                                       "question": "Is key rotation enabled in the affected service?",
                                       "allowed_answers": [True, False]})

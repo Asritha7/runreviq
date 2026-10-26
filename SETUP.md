@@ -274,3 +274,5 @@ After merging v4, restart the API to load `postgres_english_context_v4`; Google 
 ## Reviewed evidence metadata contract
 
 No migration or re-ingestion is needed for optional evidence profiles; immutable JSONB snapshots store them. Restart the API after merging backend changes. See [profile schema and authority boundaries](docs/reviewed-evidence.md). Existing documents remain unclassified until a new revision is deliberately reviewed and published.
+
+The v5 search backend accepts optional HTTP status context and returns typed evidence bundles. Legacy documents need no migration. To activate typed retrieval for a document, save its profile, obtain independent approval, and publish a new revision; do not edit published metadata in place. See [retrieval behavior and regression limits](docs/reviewed-evidence.md#retrieval-and-precision-boundaries).
