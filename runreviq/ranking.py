@@ -73,7 +73,7 @@ def query_text(question):
     return ' '.join(word for word in re.findall(r"[\w.-]+", question) if word.lower() not in SCAFFOLD)
 
 
-def rank(candidates, query_terms, body_terms, context_terms, *, policy_terms=None, coverage_floor=.50, query_groups=None):
+def rank(candidates, query_terms, body_terms, context_terms, *, policy_terms=None, coverage_floor=.50, query_groups=None, limit=5):
     """IDF coverage gates and length-normalized lexical relevance.
 
     Context aids topic matching but cannot alone make a passage evidence.
@@ -123,6 +123,6 @@ def rank(candidates, query_terms, body_terms, context_terms, *, policy_terms=Non
         if score >= scored[0][0]*.40 or (score >= scored[0][0]*.30 and matched - covered):
             selected.append(candidate)
             covered.update(matched)
-        if len(selected) == 5:
+        if len(selected) == limit:
             break
     return selected

@@ -26,6 +26,7 @@ class CaseContext(BaseModel):
     software_version: str = Field(max_length=32, pattern=r'^[0-9]+\.[0-9]+\.[0-9]+$')
     environment: Literal['production', 'staging']
     key_rotation_enabled: bool | None = None
+    http_status: int | None = Field(default=None, ge=100, le=599)
 
 
 class PassageLabel(BaseModel):

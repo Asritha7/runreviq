@@ -73,3 +73,37 @@ def validate_prohibitions(profile, claims):
             and claim['citation']['end_line'] <= unit['end_line'] for claim in claims
         ):
             raise ValueError('Each prohibition needs a cited must_not claim inside its range')
+
+
+ROLE_NOTES = {
+    'procedure': 'Reviewed procedure; follow the source prerequisites and approvals.',
+    'prohibition': 'Reviewed restriction; this passage does not authorize the prohibited action.',
+    'historical': 'Historical context is a hypothesis, not confirmation of the current cause.',
+    'monitoring': 'Monitoring reference only; Runreviq has not queried live telemetry.',
+    'unclassified': 'Evidence type has not been reviewed; inspect the full source before acting.',
+}
+
+
+def bundle(passages, limit=5):
+    """Only already-relevant passages enter here; role labels cannot qualify text."""
+    unique, seen = [], set()
+    for passage in passages:
+        role = passage.get('evidence_role', 'unclassified')
+        # Preserve words, negation, numbers and punctuation; collapse whitespace only.
+        key = (role, ' '.join(passage['quote'].split()))
+        if key not in seen:
+            seen.add(key)
+            unique.append(passage)
+    # Reserve one place for each qualified reviewed role before filling by rank.
+    chosen = []
+    for role in ('procedure', 'prohibition', 'monitoring', 'historical'):
+        first = next((p for p in unique if p.get('evidence_role') == role), None)
+        if first is not None:
+            chosen.append(first)
+    for passage in unique:
+        if len(chosen) >= limit:
+            break
+        if passage not in chosen:
+            chosen.append(passage)
+    # Stable original relevance order within the chosen bundle.
+    return [p for p in unique if p in chosen][:limit]

@@ -6,10 +6,11 @@ from psycopg.types.json import Jsonb
 
 from runreviq.database import connect
 from runreviq.citations import validate_citations
+from runreviq.evidence import validate_profile, validate_prohibitions, bundle, ROLE_NOTES
 from runreviq.selector import ROLES, select
 from runreviq.ranking import rank, query_text, searchable_text, normalize_text, exact_terms, has_exact_terms, http_terms, numeric_match
 
-RETRIEVAL_METHOD = 'postgres_english_context_v4'
+RETRIEVAL_METHOD = 'postgres_english_reviewed_v5'
 
 
 def passages(content):
@@ -32,9 +33,30 @@ def passages(content):
             start = index
 
 
+def evidence_passages(content, metadata):
+    profile = metadata.get('evidence_profile')
+    if not profile or not profile['units']:
+        for passage in passages(content):
+            yield dict(passage, evidence_role='unclassified', role_reviewed=False)
+        return
+    # Explicit reviewed units define searchable excerpts, not inherited paragraph labels.
+    lines = content.splitlines()
+    digest = hashlib.sha256(content.encode()).hexdigest()
+    for unit in profile['units']:
+        yield dict(start_line=unit['start_line'], end_line=unit['end_line'],
+                   quote='\n'.join(lines[unit['start_line']-1:unit['end_line']]),
+                   source_sha256=digest, evidence_role=unit['role'], role_reviewed=True)
+
+
 def search(*, role, question, dbname='opslens', **context):
     if role not in ROLES or not isinstance(question, str) or not 1 <= len(question.strip()) <= 500:
         raise ValueError('Invalid search input')
+    requested_codes = http_terms(question)
+    explicit_status = context.get('http_status')
+    if explicit_status is not None and requested_codes and requested_codes != {str(explicit_status)}:
+        raise ValueError('Question and HTTP status disagree')
+    if explicit_status is None and len(requested_codes) == 1:
+        context['http_status'] = int(next(iter(requested_codes)))
     # One snapshot binds authorization, current revision, withdrawal and ranking.
     # No separately maintained index can outlive a withdrawal or ACL change.
     with connect(role=role, dbname=dbname) as conn:
@@ -49,15 +71,20 @@ def search(*, role, question, dbname='opslens', **context):
         documents = []
         for metadata, roles, content in rows:
             validate_citations(metadata['claims'], content)
+            if 'evidence_profile' in metadata:
+                profile = validate_profile(metadata['evidence_profile'], content)
+                validate_prohibitions(profile, metadata['claims'])
             documents.append(dict(metadata, allowed_roles=roles))
         result = select(documents, role=role, **context)
-        result.update(passages=[], retrieval_method=RETRIEVAL_METHOD)
+        result.update(passages=[], retrieval_method=RETRIEVAL_METHOD,
+                      http_status_context=context.get('http_status'),
+                      http_status_source='provided' if explicit_status is not None else 'question' if context.get('http_status') is not None else 'unknown')
         if result['status'] != 'selected':
             return result
         candidates = []
         for metadata, _, content in rows:
             if metadata['id'] in result['recommended_documents']:
-                for passage in passages(content):
+                for passage in evidence_passages(content, metadata):
                     candidates.append(dict(passage, document_id=metadata['id'],
                                            revision=metadata['revision'], title=metadata['title']))
         # PostgreSQL provides the same English stemming for query and source.
@@ -105,9 +132,12 @@ def search(*, role, question, dbname='opslens', **context):
             FROM jsonb_array_elements(%s::jsonb) WITH ORDINALITY t(value, position) ORDER BY position""",
             (Jsonb(texts),)).fetchall()
         required = [term for term in exact_terms(question) if term != context['software_version']]
-        codes = http_terms(question)
+        codes = requested_codes or ({str(context['http_status'])} if context.get('http_status') is not None else set())
+        reviewed_scope_ids = {metadata['id'] for metadata, _, _ in rows
+                              if metadata['metadata_verified'] and metadata.get('evidence_profile', {}).get('http_scope')}
         matching_documents = {metadata['id'] for metadata, _, content in rows
-                           if numeric_match(content, required, codes)}
+                              if (has_exact_terms(content, [t for t in required if t not in codes])
+                                  if metadata['id'] in reviewed_scope_ids else numeric_match(content, required, codes))}
         rankable = [i for i,p in enumerate(candidates) if p['document_id'] in matching_documents]
         # A topic mentioned only in explicit scope exclusions is not evidence.
         # Compute this only over sources passing the same exact-term gate.
@@ -129,7 +159,17 @@ def search(*, role, question, dbname='opslens', **context):
         coverage_floor = .50 if re.search(r'\b(?:commands?|sql|every|universal|exactly)\b', question, re.I) else .35
         hits = [] if excluded_only else rank([candidates[i] for i in rankable], ranking_query,
                                              [terms[i][0] for i in rankable], [terms[i][1] for i in rankable],
-                                             policy_terms=[terms[i][3] for i in rankable], coverage_floor=coverage_floor, query_groups=query_groups)
+                                             policy_terms=[terms[i][3] for i in rankable], coverage_floor=coverage_floor, query_groups=query_groups,
+                                             limit=20 if any(p['role_reviewed'] for p in candidates) else 5)
+        if any(p['role_reviewed'] for p in candidates):
+            hits = bundle(hits)
+        metadata_by_id = {d['id']: d for d in documents}
+        for hit in hits:
+            doc = metadata_by_id[hit['document_id']]
+            hit['usage_note'] = ROLE_NOTES[hit['evidence_role']]
+            hit['applicability'] = {k: doc[k] for k in ('service', 'environment', 'version_min', 'version_max_exclusive', 'key_rotation_enabled')}
+            hit['applicability']['http_scope'] = doc.get('evidence_profile', {}).get('http_scope')
+        result['evidence_summary'] = {role: sum(p['evidence_role'] == role for p in hits) for role in ROLE_NOTES}
         result['passages'] = hits
         result['recommended_documents'] = list(dict.fromkeys(p['document_id'] for p in result['passages']))
         result['evidence'] = [e for e in result['evidence'] if e['document_id'] in result['recommended_documents']]
