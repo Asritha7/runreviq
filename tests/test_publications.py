@@ -221,3 +221,24 @@ class PublicationDatabaseTests(unittest.TestCase):
         with self.assertRaises(DraftInputError):self.publish(sub,claims=[])
         with self.assertRaises(DraftInputError):self.publish(sub,claims=CLAIMS)
         self.publish(sub,claims=[dict(CLAIMS[0],rule='must_not')])
+
+    def test_reviewed_publication_search_and_withdrawal_end_to_end(self):
+        from runreviq.search import search
+        from runreviq import lifecycle
+        source='# Prior incident\n\nEarlier authentication signing key failures involved propagation delays.\n'
+        draft=create_draft(self.owner,'history.md',source,dbname=self.dbname)
+        profile=dict(schema_version=1,http_scope=dict(mode='only',codes=[401]),units=[dict(role='historical',start_line=3,end_line=3)])
+        save_review(self.owner,draft['id'],0,dict(META,evidence_profile=profile),dbname=self.dbname)
+        sub=submit(self.owner,draft['id'],1,dbname=self.dbname)
+        context=dict(service='identity-service',software_version='2.4.0',environment='staging',http_status=401)
+        query=lambda role='platform':search(role=role,question='authentication signing key failures',dbname=self.dbname,**context)
+        self.assertEqual(query()['passages'],[])
+        decide(self.reviewer,sub['id'],'approved','Verified historical context and HTTP restriction',dbname=self.dbname)
+        self.assertEqual(query()['passages'],[])
+        receipt=self.publish(sub,claims=[])
+        hits=query()['passages'];self.assertEqual(len(hits),1)
+        self.assertEqual(hits[0]['quote'],source.splitlines()[2])
+        self.assertEqual(hits[0]['evidence_role'],'historical')
+        self.assertEqual(query('intern')['passages'],[])
+        lifecycle.withdraw(self.publisher,receipt['document_id'],1,'Evidence needs correction',dbname=self.dbname)
+        self.assertEqual(query()['passages'],[])
