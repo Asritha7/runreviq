@@ -1,0 +1,950 @@
+[
+  {
+    "id": "EV-100",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-100.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-101",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-101.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-102",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [
+      {
+        "action": "disable_signature_verification",
+        "rule": "must_not",
+        "citation": {
+          "start_line": 3,
+          "end_line": 3,
+          "quote": "Do not disable signature verification during authentication signing key failures.",
+          "source_sha256": "7567244c7dd2c6e5a84f6d3d362fadde45fcdfa6a057bef5e6d2147c4df66961"
+        }
+      }
+    ],
+    "path": "datasets/northstar/EV-102.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "prohibition",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-103",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-103.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "historical",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-104",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-104.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "monitoring",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-105",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-105.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          503
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-106",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "staging",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-106.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-107",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.1.0",
+    "version_max_exclusive": "2.2.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-107.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-108",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "superseded",
+    "claims": [],
+    "path": "datasets/northstar/EV-108.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-109",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-109.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "historical",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-110",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [
+      {
+        "action": "delete_invoice_archives",
+        "rule": "must_not",
+        "citation": {
+          "start_line": 3,
+          "end_line": 3,
+          "quote": "Do not delete invoice archives during accounting maintenance.",
+          "source_sha256": "d4a36e856ecbbe4f33dc4cd3ce85e6560f44c6f5802fda6a6618110dd1ea2efc"
+        }
+      }
+    ],
+    "path": "datasets/northstar/EV-110.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "prohibition",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-111",
+    "title": "identity-service operational evidence",
+    "revision": 1,
+    "service": "identity-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-111.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "historical",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-200",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-200.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-201",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-201.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-202",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [
+      {
+        "action": "disable_signature_verification",
+        "rule": "must_not",
+        "citation": {
+          "start_line": 3,
+          "end_line": 3,
+          "quote": "Do not disable signature verification during authentication signing key failures.",
+          "source_sha256": "905c4e86229ddfb21f7e8371e2f48700bf607775ffb79b35ba14ec58c41798b5"
+        }
+      }
+    ],
+    "path": "datasets/northstar/EV-202.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "prohibition",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-203",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-203.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "historical",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-204",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-204.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "monitoring",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-205",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-205.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          503
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-206",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "staging",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-206.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-207",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.1.0",
+    "version_max_exclusive": "2.2.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-207.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-208",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "superseded",
+    "claims": [],
+    "path": "datasets/northstar/EV-208.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-209",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-209.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "historical",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-210",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [
+      {
+        "action": "delete_invoice_archives",
+        "rule": "must_not",
+        "citation": {
+          "start_line": 3,
+          "end_line": 3,
+          "quote": "Do not delete invoice archives during accounting maintenance.",
+          "source_sha256": "8215fa980e6bb17ba74c9da981f10640b326572a0ddc6d21feb6de4bd2f86c90"
+        }
+      }
+    ],
+    "path": "datasets/northstar/EV-210.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "prohibition",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-211",
+    "title": "billing-service operational evidence",
+    "revision": 1,
+    "service": "billing-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [],
+    "path": "datasets/northstar/EV-211.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "historical",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-300",
+    "title": "gateway-service operational evidence",
+    "revision": 1,
+    "service": "gateway-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [
+      {
+        "action": "restart_gateway",
+        "rule": "must",
+        "citation": {
+          "start_line": 3,
+          "end_line": 3,
+          "quote": "Restart gateway workers immediately.",
+          "source_sha256": "0bf27ac6fca13718ec0b8d4cafd0c3c5bc29e6f985137e0f7206baf05be1f9f9"
+        }
+      }
+    ],
+    "path": "datasets/northstar/EV-300.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "procedure",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "EV-301",
+    "title": "gateway-service operational evidence",
+    "revision": 1,
+    "service": "gateway-service",
+    "environment": "production",
+    "version_min": "2.4.0",
+    "version_max_exclusive": "2.5.0",
+    "key_rotation_enabled": true,
+    "allowed_roles": [
+      "platform",
+      "security"
+    ],
+    "metadata_verified": true,
+    "status": "approved",
+    "claims": [
+      {
+        "action": "restart_gateway",
+        "rule": "must_not",
+        "citation": {
+          "start_line": 3,
+          "end_line": 3,
+          "quote": "Do not restart gateway workers before diagnostics.",
+          "source_sha256": "9b68ed6a8e882230dab5b6663b638cac343f41c2c2909cee4a9996f5ade593ae"
+        }
+      }
+    ],
+    "path": "datasets/northstar/EV-301.md",
+    "evidence_profile": {
+      "schema_version": 1,
+      "http_scope": {
+        "mode": "only",
+        "codes": [
+          401
+        ]
+      },
+      "units": [
+        {
+          "role": "prohibition",
+          "start_line": 3,
+          "end_line": 3
+        }
+      ]
+    }
+  }
+]

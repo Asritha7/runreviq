@@ -48,7 +48,7 @@ def evidence_passages(content, metadata):
                    source_sha256=digest, evidence_role=unit['role'], role_reviewed=True)
 
 
-def search(*, role, question, dbname='opslens', **context):
+def search(*, role, question, dbname='opslens', _diagnostics=None, _assemble=True, **context):
     if role not in ROLES or not isinstance(question, str) or not 1 <= len(question.strip()) <= 500:
         raise ValueError('Invalid search input')
     requested_codes = http_terms(question)
@@ -79,6 +79,8 @@ def search(*, role, question, dbname='opslens', **context):
         result.update(passages=[], retrieval_method=RETRIEVAL_METHOD,
                       http_status_context=context.get('http_status'),
                       http_status_source='provided' if explicit_status is not None else 'question' if context.get('http_status') is not None else 'unknown')
+        if _diagnostics is not None:
+            _diagnostics.update(selection=result.copy(), effective_context=dict(context, role=role), candidates=[], rankable=[], qualified=[], pool=[])
         if result['status'] != 'selected':
             return result
         candidates = []
@@ -157,12 +159,14 @@ def search(*, role, question, dbname='opslens', **context):
             ranking_query = normalized
         # Executable/universal requests retain the stricter missing-concept gate.
         coverage_floor = .50 if re.search(r'\b(?:commands?|sql|every|universal|exactly)\b', question, re.I) else .35
-        hits = [] if excluded_only else rank([candidates[i] for i in rankable], ranking_query,
+        qualified = [] if excluded_only else rank([candidates[i] for i in rankable], ranking_query,
                                              [terms[i][0] for i in rankable], [terms[i][1] for i in rankable],
                                              policy_terms=[terms[i][3] for i in rankable], coverage_floor=coverage_floor, query_groups=query_groups,
-                                             limit=20 if any(p['role_reviewed'] for p in candidates) else 5)
-        if any(p['role_reviewed'] for p in candidates):
-            hits = bundle(hits)
+                                             limit=max(1,len(candidates)) if _diagnostics is not None else 20 if any(p['role_reviewed'] for p in candidates) else 5)
+        pool = qualified[:20 if any(p['role_reviewed'] for p in candidates) else 5]
+        hits = bundle(pool) if _assemble and any(p['role_reviewed'] for p in candidates) else pool[:5]
+        if _diagnostics is not None:
+            _diagnostics.update(candidates=candidates, rankable=[candidates[i] for i in rankable], qualified=qualified, pool=pool)
         metadata_by_id = {d['id']: d for d in documents}
         for hit in hits:
             doc = metadata_by_id[hit['document_id']]

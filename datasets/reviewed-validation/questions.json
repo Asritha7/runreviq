@@ -1,0 +1,1298 @@
+[
+  {
+    "id": "Q-001",
+    "question": "How should I inspect signing key propagation and cached identifiers?",
+    "category": "procedure",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-100",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-101",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-002",
+    "question": "Which cached key identifiers should I compare?",
+    "category": "procedure",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-100",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-101",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-003",
+    "question": "May I disable signature verification during authentication failures?",
+    "category": "prohibition",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-102",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-004",
+    "question": "What restrictions apply to disabling signature verification?",
+    "category": "prohibition",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-102",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-005",
+    "question": "Did an earlier incident involve delayed signing key propagation?",
+    "category": "historical",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-103",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-006",
+    "question": "Can a past propagation incident confirm the current cause?",
+    "category": "historical",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-103",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-007",
+    "question": "Where should I inspect authentication error rates?",
+    "category": "monitoring",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-104",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-008",
+    "question": "Does the monitoring documentation contain live metrics?",
+    "category": "monitoring",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-104",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-009",
+    "question": "Inspect signing key propagation while checking error rates in the monitoring dashboard.",
+    "category": "complementary",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-100",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-101",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-104",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-010",
+    "question": "Compare cached key identifiers while respecting the prohibition on disabling signature verification.",
+    "category": "complementary",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-100",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-101",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-102",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-011",
+    "question": "What caused the earlier clock drift authentication incident?",
+    "category": "different_cause",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-111",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-012",
+    "question": "Can I delete invoice archives during accounting maintenance?",
+    "category": "different_action",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-110",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-013",
+    "question": "For HTTP 503, how do I inspect upstream saturation?",
+    "category": "http",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 503
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-105",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-014",
+    "question": "How do I reset the cache during staging recovery exercises?",
+    "category": "environment",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "staging",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-106",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-015",
+    "question": "Should version 2.1 workers restart immediately?",
+    "category": "version",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.1.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-107",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-016",
+    "question": "What did the confidential investigation find about the handling defect?",
+    "category": "authorized_security",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "security",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-109",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-017",
+    "question": "What did the confidential investigation find about the internal handling defect?",
+    "category": "restricted",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-018",
+    "question": "What is the live CPU temperature of the host?",
+    "category": "no_evidence",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-019",
+    "question": "How do I tune the unrelated banana submarine?",
+    "category": "no_evidence",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-020",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "missing_http",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": null
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-021",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "missing_rotation",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": null,
+      "http_status": 401
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-022",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "unauthorized",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "intern",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-023",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "version_mismatch",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-024",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "http_mismatch",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 404
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-025",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "rotation_mismatch",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": false,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-026",
+    "question": "For HTTP 401, compare cached signing key identifiers.",
+    "category": "http_in_question",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": null
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-100",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-101",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-027",
+    "question": "Inspect signing key propagation.",
+    "category": "wrong_service",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "unknown-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-028",
+    "question": "Inspect the monitoring dashboard for error rates.",
+    "category": "monitoring_paraphrase",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "identity-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-104",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-029",
+    "question": "How should I inspect signing key propagation and cached identifiers?",
+    "category": "procedure",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-200",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-201",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-030",
+    "question": "Which cached key identifiers should I compare?",
+    "category": "procedure",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-200",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-201",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-031",
+    "question": "May I disable signature verification during authentication failures?",
+    "category": "prohibition",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-202",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-032",
+    "question": "What restrictions apply to disabling signature verification?",
+    "category": "prohibition",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-202",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-033",
+    "question": "Did an earlier incident involve delayed signing key propagation?",
+    "category": "historical",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-203",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-034",
+    "question": "Can a past propagation incident confirm the current cause?",
+    "category": "historical",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-203",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-035",
+    "question": "Where should I inspect authentication error rates?",
+    "category": "monitoring",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-204",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-036",
+    "question": "Does the monitoring documentation contain live metrics?",
+    "category": "monitoring",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-204",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-037",
+    "question": "Inspect signing key propagation while checking error rates in the monitoring dashboard.",
+    "category": "complementary",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-200",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-201",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-204",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-038",
+    "question": "Compare cached key identifiers while respecting the prohibition on disabling signature verification.",
+    "category": "complementary",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-200",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-201",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-202",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-039",
+    "question": "What caused the earlier clock drift authentication incident?",
+    "category": "different_cause",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-211",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-040",
+    "question": "Can I delete invoice archives during accounting maintenance?",
+    "category": "different_action",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-210",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-041",
+    "question": "For HTTP 503, how do I inspect upstream saturation?",
+    "category": "http",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 503
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-205",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-042",
+    "question": "How do I reset the cache during staging recovery exercises?",
+    "category": "environment",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "staging",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-206",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-043",
+    "question": "Should version 2.1 workers restart immediately?",
+    "category": "version",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.1.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-207",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-044",
+    "question": "What did the confidential investigation find about the handling defect?",
+    "category": "authorized_security",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "security",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-209",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-045",
+    "question": "What did the confidential investigation find about the internal handling defect?",
+    "category": "restricted",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-046",
+    "question": "What is the live CPU temperature of the host?",
+    "category": "no_evidence",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-047",
+    "question": "How do I tune the unrelated banana submarine?",
+    "category": "no_evidence",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-048",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "missing_http",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": null
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-049",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "missing_rotation",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": null,
+      "http_status": 401
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-050",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "unauthorized",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "intern",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-051",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "version_mismatch",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "3.0.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-052",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "http_mismatch",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 404
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-053",
+    "question": "Inspect authentication signing key propagation.",
+    "category": "rotation_mismatch",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": false,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-054",
+    "question": "For HTTP 401, compare cached signing key identifiers.",
+    "category": "http_in_question",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": null
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-200",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      },
+      {
+        "document_id": "EV-201",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-055",
+    "question": "Inspect signing key propagation.",
+    "category": "wrong_service",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "unknown-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-056",
+    "question": "Inspect the monitoring dashboard for error rates.",
+    "category": "monitoring_paraphrase",
+    "rationale": "Synthetic development gold labels frozen before comparative execution.",
+    "context": {
+      "role": "platform",
+      "service": "billing-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "selected",
+    "expected_passages": [
+      {
+        "document_id": "EV-204",
+        "revision": 1,
+        "start_line": 3,
+        "end_line": 3
+      }
+    ]
+  },
+  {
+    "id": "Q-057",
+    "question": "Should I restart gateway workers?",
+    "category": "conflict",
+    "rationale": "Opposing normalized claims share scope; unknown scope needs clarification.",
+    "context": {
+      "role": "platform",
+      "service": "gateway-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 401
+    },
+    "expected_status": "conflict",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-058",
+    "question": "Should I restart gateway workers?",
+    "category": "conflict_scope",
+    "rationale": "Opposing normalized claims share scope; unknown scope needs clarification.",
+    "context": {
+      "role": "platform",
+      "service": "gateway-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": null
+    },
+    "expected_status": "needs_context_or_review",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-059",
+    "question": "Should I restart gateway workers?",
+    "category": "conflict_scope",
+    "rationale": "Opposing normalized claims share scope; unknown scope needs clarification.",
+    "context": {
+      "role": "platform",
+      "service": "gateway-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 503
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  },
+  {
+    "id": "Q-060",
+    "question": "Should I restart gateway workers?",
+    "category": "conflict_scope",
+    "rationale": "Opposing normalized claims share scope; unknown scope needs clarification.",
+    "context": {
+      "role": "platform",
+      "service": "gateway-service",
+      "software_version": "2.4.0",
+      "environment": "production",
+      "key_rotation_enabled": true,
+      "http_status": 404
+    },
+    "expected_status": "insufficient_evidence",
+    "expected_passages": []
+  }
+]

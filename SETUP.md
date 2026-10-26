@@ -278,3 +278,7 @@ No migration or re-ingestion is needed for optional evidence profiles; immutable
 The v5 search backend accepts optional HTTP status context and returns typed evidence bundles. Legacy documents need no migration. To activate typed retrieval for a document, save its profile, obtain independent approval, and publish a new revision; do not edit published metadata in place. See [retrieval behavior and regression limits](docs/reviewed-evidence.md#retrieval-and-precision-boundaries).
 
 Merge the reviewed-profile contract, retrieval, then workspace PRs in that order before restarting the API. These changes do not update live document classifications automatically. Follow the [workspace walkthrough](docs/reviewed-evidence.md#workspace-walkthrough) for new approved revisions. The selector CLI also accepts `--http-status 401`; omitting it preserves unknown context.
+
+## Reviewed evidence validation
+
+Run `.venv/bin/python -m runreviq.evaluate_reviewed --validate-only` to check the new frozen fixture without connecting to PostgreSQL. Run with `--report-only` instead to compare three configurations in disposable databases; redirect output to `.local/reviewed-validation-v1.json`. No API restart, migration, access assignment or live corpus update is needed. See [comparison definitions and limitations](docs/reviewed-validation.md).
