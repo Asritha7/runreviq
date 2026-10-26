@@ -1,8 +1,9 @@
 """External scenarios are isolated evidence fixtures, not answer-generation tests."""
 import os
 import unittest
+from unittest.mock import patch
 
-from runreviq.evaluate_external import load_fixture, run, integrity_ok
+from runreviq.evaluate_external import load_fixture, run, integrity_ok, verify_quotes
 
 
 class ExternalFixtureTests(unittest.TestCase):
@@ -18,8 +19,27 @@ class ExternalFixtureTests(unittest.TestCase):
                     self.assertNotIn(scenario['expected'], content)
                     self.assertEqual(doc['service'], scenario['context']['service'])
 
+    def test_citation_status_distinguishes_absent_verified_and_failed(self):
+        import hashlib
+        empty = dict(passages=[], conflict_details=[])
+        with patch('runreviq.evaluate_external.load_authorized_revision') as loader:
+            self.assertEqual(verify_quotes(empty, 'platform', 'unused'), 'not_applicable')
+            loader.assert_not_called()
+            content = 'Exact source.'
+            hit = dict(document_id='RB-1', revision=1, start_line=1, end_line=1,
+                       quote=content, source_sha256=hashlib.sha256(content.encode()).hexdigest())
+            loader.return_value = dict(content=content, is_current=True, guidance_status='active')
+            result = dict(passages=[hit], conflict_details=[])
+            self.assertEqual(verify_quotes(result, 'platform', 'unused'), 'verified')
+            hit['quote'] = 'Invented source.'
+            self.assertEqual(verify_quotes(result, 'platform', 'unused'), 'failed')
+            loader.return_value = None
+            self.assertEqual(verify_quotes(result, 'platform', 'unused'), 'failed')
+        self.assertTrue(integrity_ok(dict(results=[dict(id='S01', citation_integrity='not_applicable')])))
+        self.assertFalse(integrity_ok(dict(results=[dict(id='S01', citation_integrity='failed')])))
+
     def test_integrity_exit_does_not_ignore_access_failure(self):
-        result = dict(id='S10', citation_integrity=True, platform_disclosure_absent=True,
+        result = dict(id='S10', citation_integrity='verified', platform_disclosure_absent=True,
                       platform_revision_denied=True, revoked_revision_denied=True,
                       revoked_search_disclosure_absent=True)
         self.assertTrue(integrity_ok(dict(results=[result])))

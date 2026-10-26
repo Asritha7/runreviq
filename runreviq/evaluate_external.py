@@ -33,15 +33,17 @@ def verify_quotes(result, role, dbname):
     for detail in result['conflict_details']:
         for document in detail['documents']:
             quotes.extend(document['citations'])
+    if not quotes:
+        return 'not_applicable'
     for hit in quotes:
         revision = load_authorized_revision(role, hit['document_id'], hit['revision'], dbname=dbname)
         if not revision or not revision['is_current'] or revision['guidance_status'] != 'active':
-            return False
+            return 'failed'
         content = revision['content']
         if (hit['quote'] != '\n'.join(content.splitlines()[hit['start_line']-1:hit['end_line']])
                 or hit['source_sha256'] != hashlib.sha256(content.encode()).hexdigest()):
-            return False
-    return True
+            return 'failed'
+    return 'verified'
 
 
 def evaluate_scenario(scenario, root, batches, dbname):
@@ -65,7 +67,9 @@ def evaluate_scenario(scenario, root, batches, dbname):
         report['security_search'] = security_result
         report['quotation_count'] += len(security_result['passages'])
         report['security_revision_available'] = load_authorized_revision('security', 'SEC-1001', 1, dbname=dbname) is not None
-        report['citation_integrity'] &= verify_quotes(security_result, 'security', dbname)
+        statuses = {report['citation_integrity'], verify_quotes(security_result, 'security', dbname)}
+        report['citation_integrity'] = ('failed' if 'failed' in statuses else
+                                       'verified' if 'verified' in statuses else 'not_applicable')
         restricted = batches[0][0]
         source = (root / restricted['path']).read_text().splitlines()[2]
         platform_text = json.dumps(result)
@@ -106,7 +110,7 @@ def run():
 
 def integrity_ok(report):
     for result in report['results']:
-        if not result['citation_integrity']:
+        if result['citation_integrity'] not in {'verified', 'not_applicable'}:
             return False
         if result['id'] == 'S10' and not all(result[key] for key in
                 ('platform_disclosure_absent', 'platform_revision_denied',
