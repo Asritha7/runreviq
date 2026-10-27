@@ -73,6 +73,7 @@ Question search now filters current authorized sources and applies the existing 
 ## Java migration boundary
 
 The production-workflow prototype remains implemented in Python. A parallel Java
-selector and health-only Spring Boot scaffold now live in `backend/`; they do not
-connect to PostgreSQL or serve the existing frontend. See [migration plan](java-migration.md)
-for implemented scope, parity checks, and pending authentication/storage stages.
+selector and opt-in Google/demo authentication endpoints now live in `backend/`; they
+do not connect to PostgreSQL or serve the existing frontend. Java uses separate,
+process-local sessions and reloads private role mappings on every identity request. See [migration plan](java-migration.md)
+for implemented scope, parity checks, and pending storage stages. See [Java authentication](java-authentication.md) for its security boundary.
