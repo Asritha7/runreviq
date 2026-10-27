@@ -124,9 +124,13 @@ Selection/search accept optional `http_status` (strict integer 100–599 or null
 ## Java migration identity endpoints
 
 The API above describes the working Python product. Java on loopback port 8081 now
-implements only `/auth/config`, `/auth/google/login`, `/auth/google/callback`,
+implements `/auth/config`, `/auth/google/login`, `/auth/google/callback`,
 `/auth/session`, `/auth/logout`, `/v1/me`, and `/health`. Authentication defaults to
-`disabled`; Google or demo mode requires explicit configuration. All data/search/
-authoring routes remain denied. Identity response shapes match Python, but Java uses
+`disabled`; Google or demo mode requires explicit configuration. With database access enabled, `/v1/select` and `/v1/documents/{id}/revisions/{revision}`
+use the existing response contracts. Search and authoring routes remain denied. Identity response shapes match Python, but Java uses
 separate cookie names and an explicitly configured loopback origin. See
 [Java authentication](java-authentication.md) before enabling it; this is not a cutover.
+
+Java database reads use current restricted PostgreSQL identities and validate stored
+checksums/citations before returning data. Missing and hidden revisions share a 404;
+configuration, integrity and database failures produce a fixed 503. See [persistence](java-persistence.md).

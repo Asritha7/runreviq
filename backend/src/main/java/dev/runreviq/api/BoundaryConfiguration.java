@@ -1,6 +1,7 @@
 package dev.runreviq.api;
 
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -18,17 +19,22 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/** Identity endpoints only; data APIs remain denied until persistence migration. */
+/** Identity endpoints plus explicitly enabled, authenticated evidence reads. */
 @Configuration
 public class BoundaryConfiguration {
     @Bean
-    SecurityFilterChain security(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests(a -> a
+    SecurityFilterChain security(HttpSecurity http, @Value("${runreviq.database.enabled:false}") boolean databaseEnabled) throws Exception {
+        return http.authorizeHttpRequests(a -> {
+                if (databaseEnabled) {
+                    a.requestMatchers(HttpMethod.POST, "/v1/select").permitAll();
+                    a.requestMatchers(HttpMethod.GET, "/v1/documents/*/revisions/*").permitAll();
+                }
+                a
                 .requestMatchers(HttpMethod.GET, "/health", "/auth/config", "/auth/google/login", "/auth/google/callback", "/auth/session", "/v1/me").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll().anyRequest().denyAll())
-                // Logout has the existing strict Origin + custom-header guard in AuthService.
+                .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll().anyRequest().denyAll(); })
+                // Logout and enabled selection enforce the strict Origin/header guard for Google sessions.
                 // Spring's CSRF checks remain enabled everywhere else, with no CORS grants.
-                .csrf(c -> c.ignoringRequestMatchers("/auth/logout"))
+                .csrf(c -> c.ignoringRequestMatchers(databaseEnabled ? new String[]{"/auth/logout", "/v1/select"} : new String[]{"/auth/logout"}))
                 .requestCache(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new LoopbackBoundary(), AuthorizationFilter.class)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -60,9 +66,9 @@ public class BoundaryConfiguration {
     @RestController
     static class HealthController {
         @GetMapping("/health")
-        Map<String, String> health() {
-            return Map.of("status", "ok", "runtime", "java", "stage", "identity-migration",
-                    "operational_api", "disabled");
+        Map<String, String> health(@Value("${runreviq.database.enabled:false}") boolean enabled) {
+            return Map.of("status", "ok", "runtime", "java", "stage", "persistence-migration",
+                    "operational_api", enabled ? "evidence-reads" : "disabled");
         }
     }
 }

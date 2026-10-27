@@ -28,7 +28,7 @@ is not authentication or database authorization. Evidence-profile constructors c
 structure; source quote, line-bound, citation hash and publication checks still belong
 to the existing Python implementation until explicitly ported. Java exact version
 inputs currently use ASCII digits; Python's internal helper also accepts Unicode
-numeric digits. Neither supports prereleases. No Java data endpoint exists yet.
+numeric digits. Neither supports prereleases. Java now exposes the opt-in read endpoints described in stage 3.
 
 ## Stage 2 — identity implementation
 
@@ -37,17 +37,27 @@ Google code exchange uses PKCE and browser-bound state/nonce. RS256 signatures a
 required identity claims are checked before an opaque, expiring session is created.
 Private role mappings and demo keys are reloaded on every identity request. Logout
 requires the exact configured Origin and `X-Runreviq-Request: 1` and revokes the
-server-side session. Data routes remain blocked. See [identity configuration and tests](java-authentication.md).
+server-side session. Data routes were blocked at stage 2; stage 3 enables only selection/revision reads. See [identity configuration and tests](java-authentication.md).
 
 Offline token, HTTP and revocation tests are implemented. Live Google sign-in on Java
 has not been performed; a registered Java callback is a manual smoke-test prerequisite.
 No existing Google settings, credentials or Python sessions are changed by this stage.
 
+## Stage 3 — JDBC evidence reads
+
+Implemented: authenticated selection and revision reads through separate restricted
+PostgreSQL accounts, read-only snapshot transactions, current RLS enforcement and
+content/metadata/citation integrity checks. Python/Java HTTP parity and isolation tests
+run against a fresh disposable database. Database access defaults to disabled; existing
+runtime and migrations are unchanged. See [Java persistence](java-persistence.md).
+
+Authoring and publication writes remain in stage 4; no Java ingestion or schema migration
+owner is introduced. Live Google-to-Java sign-in remains a separate manual smoke-test gate.
+
 ## Remaining stages and acceptance gates
 
 | Stage | Work | Required proof before use |
 | --- | --- | --- |
-| 3: persistence | JDBC repositories using restricted PostgreSQL roles and transaction-scoped authorization | RLS isolation, rollback, concurrent writes, immutable revisions and exact checksum compatibility |
 | 4: authoring | Drafts, metadata proposals, independent review, publication and withdrawal | Owner privacy, reviewer/publisher separation, stale-review rejection, history and idempotency parity |
 | 5: retrieval | Authorized passage retrieval, reviewed profiles, typed bundles and evidence responses | Same applicability/abstention semantics, citation support and held-out evaluation through a Java HTTP adapter |
 | 6: cutover | Existing frontend served by Java; operational tooling, documentation and rollback | Full end-to-end parity, live sign-in smoke test, no unauthorized disclosures, reproducible evaluation and explicit cutover review |
@@ -65,7 +75,7 @@ user-authored evaluation questions and expected outcomes outside ingestion.
 ## Runtime and rollback
 
 Port 8000 continues to serve the working Python product. Port 8081 is deliberately
-a separate engineering server with no UI or database. Its identity endpoints can be
+a separate engineering server with no UI. Identity and restricted database reads can be
 enabled explicitly; Google requires an additional registered callback for that port.
 Keep the existing port-8000 OAuth callback throughout migration. Do not switch users to Java until
 the operational stages pass. Preserve the Python entry point and existing database

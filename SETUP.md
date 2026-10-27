@@ -283,7 +283,7 @@ Merge the reviewed-profile contract, retrieval, then workspace PRs in that order
 
 The working Python application remains on port 8000. Java is an optional development
 server on loopback port 8081. Authentication is disabled by default; it has no workspace
-UI or database connection yet. Google/demo identity endpoints can be enabled explicitly
+UI yet. Database reads are separately disabled by default. Google/demo identity endpoints can be enabled explicitly
 using the [Java authentication guide](docs/java-authentication.md). Keep the working
 Python Google callback on port 8000 unchanged.
 
@@ -300,3 +300,6 @@ first use, verifies the Maven distribution checksum, and caches them under `~/.m
 ```
 
 See [Java migration stages and cutover gates](docs/java-migration.md).
+
+For opt-in Java PostgreSQL reads and disposable integration checks, see
+[Java persistence setup](docs/java-persistence.md). The existing database and Python runtime remain unchanged.

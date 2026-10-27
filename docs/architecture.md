@@ -74,6 +74,10 @@ Question search now filters current authorized sources and applies the existing 
 
 The production-workflow prototype remains implemented in Python. A parallel Java
 selector and opt-in Google/demo authentication endpoints now live in `backend/`; they
-do not connect to PostgreSQL or serve the existing frontend. Java uses separate,
+now support opt-in JDBC selection/revision reads but do not serve the existing frontend. Java uses separate,
 process-local sessions and reloads private role mappings on every identity request. See [migration plan](java-migration.md)
-for implemented scope, parity checks, and pending storage stages. See [Java authentication](java-authentication.md) for its security boundary.
+for implemented scope, parity checks, and pending authoring and retrieval stages. See [Java authentication](java-authentication.md) for its security boundary.
+
+The JDBC adapter uses a fresh restricted reader connection and repeatable-read transaction
+for each operation, validates stored integrity after RLS filtering, and executes no
+schema or publication writes. See [Java persistence](java-persistence.md).

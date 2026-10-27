@@ -76,6 +76,15 @@ jobs:
         run: .venv/bin/python -m unittest discover -s tests -v
       - name: Run browser interaction logic tests
         run: node --test tests/web.test.cjs
+      - name: Set up Java for JDBC integration
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+      - name: Verify Java reads against a disposable PostgreSQL database
+        run: .venv/bin/python scripts/test_java_database.py
       - name: Check Java parity fixture against Python
         run: .venv/bin/python scripts/export_java_parity.py --check
 
