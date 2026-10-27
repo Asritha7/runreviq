@@ -81,3 +81,7 @@ for implemented scope, parity checks, and pending authoring and retrieval stages
 The JDBC adapter uses a fresh restricted reader connection and repeatable-read transaction
 for each operation, validates stored integrity after RLS filtering, and executes no
 schema or publication writes. See [Java persistence](java-persistence.md).
+
+The Java draft adapter separately uses the restricted draft writer and transaction-local
+owner scope. Advisory locks serialize quotas and review revisions under READ COMMITTED;
+it cannot publish evidence. See [Java authoring](java-authoring.md).

@@ -24,6 +24,7 @@ class JdbcGoogleIntegrationTest {
     @LocalServerPort int port;
     @DynamicPropertySource static void properties(DynamicPropertyRegistry r) {
         r.add("runreviq.auth.mode",()->"google");r.add("runreviq.auth.config-path",()->JdbcIntegrationTest.dir().resolve("google.json").toString());
+        r.add("runreviq.drafts.enabled",()->"true");r.add("runreviq.drafts.config-path",()->JdbcIntegrationTest.dir().resolve("drafts.json").toString());
         r.add("runreviq.database.enabled",()->"true");r.add("runreviq.database.config-path",()->JdbcIntegrationTest.dir().resolve("readers.json").toString());
     }
     @Test void googleIdentityRoleAndOriginGuardRealDatabaseReads() throws Exception {
@@ -42,11 +43,24 @@ class JdbcGoogleIntegrationTest {
         }
         var hidden=client.send(HttpRequest.newBuilder(URI.create(base+"/v1/documents/SEC-021/revisions/1")).build(),HttpResponse.BodyHandlers.ofString());
         assertEquals(404,hidden.statusCode());
+        String draftId=null;
+        for(boolean origin:List.of(false,true)) {
+            var request=HttpRequest.newBuilder(URI.create(base+"/v1/drafts?filename=google.md")).header("Content-Type","text/markdown").POST(HttpRequest.BodyPublishers.ofString("# Source\nInspect keys."));
+            if(origin)request.header("Origin","http://127.0.0.1:8081").header("X-Runreviq-Request","1");
+            var response=client.send(request.build(),HttpResponse.BodyHandlers.ofString());assertEquals(origin?201:403,response.statusCode(),response.body());
+            if(origin)draftId=StoredEvidence.JSON.readTree(response.body()).get("id").asString();
+        }
+        String draftPath=base+"/v1/drafts/"+draftId;
+        assertEquals(200,client.send(HttpRequest.newBuilder(URI.create(draftPath)).build(),HttpResponse.BodyHandlers.ofString()).statusCode());
         Path config=JdbcIntegrationTest.dir().resolve("google.json");String saved=Files.readString(config);
         try {
             Files.writeString(config,saved.replace("\"test-subject\": \"platform\"",""));
             var revoked=client.send(HttpRequest.newBuilder(URI.create(base+"/v1/documents/RB-042/revisions/1")).build(),HttpResponse.BodyHandlers.ofString());
             assertEquals(403,revoked.statusCode());
+            assertEquals(403,client.send(HttpRequest.newBuilder(URI.create(draftPath)).build(),HttpResponse.BodyHandlers.ofString()).statusCode());
         } finally {Files.writeString(config,saved);}
+        var logout=HttpRequest.newBuilder(URI.create(base+"/auth/logout")).header("Origin","http://127.0.0.1:8081").header("X-Runreviq-Request","1").POST(HttpRequest.BodyPublishers.noBody()).build();
+        assertEquals(204,client.send(logout,HttpResponse.BodyHandlers.ofString()).statusCode());
+        assertEquals(401,client.send(HttpRequest.newBuilder(URI.create(draftPath)).build(),HttpResponse.BodyHandlers.ofString()).statusCode());
     }
 }

@@ -51,14 +51,22 @@ content/metadata/citation integrity checks. Python/Java HTTP parity and isolatio
 run against a fresh disposable database. Database access defaults to disabled; existing
 runtime and migrations are unchanged. See [Java persistence](java-persistence.md).
 
-Authoring and publication writes remain in stage 4; no Java ingestion or schema migration
+Stage 4a adds private draft writes and owner metadata reviews; independent review and publication remain in stage 4b; no Java ingestion or schema migration
 owner is introduced. Live Google-to-Java sign-in remains a separate manual smoke-test gate.
+
+## Stage 4a — private drafts and metadata review
+
+Implemented as a separate opt-in boundary: owner-private Markdown uploads, explicit
+metadata proposals, source-aware profile validation and append-only review saves with
+stale-revision rejection. Real database/HTTP tests cover privacy, concurrency and
+Python/Java interoperability. See [Java authoring](java-authoring.md).
+Submission, independent decisions, publication and withdrawal remain unported.
 
 ## Remaining stages and acceptance gates
 
 | Stage | Work | Required proof before use |
 | --- | --- | --- |
-| 4: authoring | Drafts, metadata proposals, independent review, publication and withdrawal | Owner privacy, reviewer/publisher separation, stale-review rejection, history and idempotency parity |
+| 4b: controlled publication | Submission, independent review, publication and withdrawal | Owner privacy, reviewer/publisher separation, stale-review rejection, history and idempotency parity |
 | 5: retrieval | Authorized passage retrieval, reviewed profiles, typed bundles and evidence responses | Same applicability/abstention semantics, citation support and held-out evaluation through a Java HTTP adapter |
 | 6: cutover | Existing frontend served by Java; operational tooling, documentation and rollback | Full end-to-end parity, live sign-in smoke test, no unauthorized disclosures, reproducible evaluation and explicit cutover review |
 
