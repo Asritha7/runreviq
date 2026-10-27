@@ -125,3 +125,12 @@ HTTP token endpoint verifies bounded responses, redirect rejection and code exch
 parameters. Session tests cover browser binding, replay, expiry, role refresh/revocation,
 client rotation, logout, origin/Host checks, configuration failure and demo-mode isolation.
 A live Google browser sign-in is still required before production-workflow cutover.
+
+## Java JDBC integration
+
+Run `RUNREVIQ_TEST_DATABASE=1 .venv/bin/python scripts/test_java_database.py`. This
+creates and removes its own database, then runs HTTP parity and security checks for
+both demo keys and Google sessions, RLS isolation, historical/current policy, withdrawal,
+checksum serialization, corrupted sources, rejected writes and snapshot consistency.
+The Java unit job skips these classes without the harness; the PostgreSQL CI job
+executes them explicitly. No test writes target the live application database.

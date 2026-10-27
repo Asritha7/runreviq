@@ -18,7 +18,7 @@ public final class PrivateConfiguration {
     public record DemoKey(String subject, String role, String token) {
         @Override public String toString() { return "DemoKey[redacted]"; }
     }
-    private static JsonNode read(Path path) {
+    public static JsonNode readOwnerOnly(Path path) {
         try {
             if (!Files.isRegularFile(path, LinkOption.NOFOLLOW_LINKS)) throw new IllegalArgumentException();
             var permissions = Files.getPosixFilePermissions(path, LinkOption.NOFOLLOW_LINKS);
@@ -43,7 +43,7 @@ public final class PrivateConfiguration {
     }
     public static Google google(Path path) {
         try {
-            var n = read(path);
+            var n = readOwnerOnly(path);
             fields(n, Set.of("client_id", "client_secret", "allowed_subjects"));
             var assignments = n.get("allowed_subjects");
             if (!assignments.isObject()) throw new IllegalArgumentException();
@@ -58,7 +58,7 @@ public final class PrivateConfiguration {
     }
     public static List<DemoKey> demo(Path path) {
         try {
-            var n = read(path);
+            var n = readOwnerOnly(path);
             if (n == null || !n.isArray() || n.isEmpty()) throw new IllegalArgumentException();
             var records = new ArrayList<DemoKey>();
             Set<String> subjects = new HashSet<>(), tokens = new HashSet<>();
