@@ -2,6 +2,8 @@
 
 Find applicable fictional operational guidance and question-matching source passages, before adding AI generation.
 
+The Java backend migration has started in `backend/`. The working product still runs on Python; Java currently provides the deterministic selector and a health-only server. Python benchmarks remain in place. See the [migration stages](docs/java-migration.md).
+
 ## Documentation
 
 - [Setup and local commands](SETUP.md)

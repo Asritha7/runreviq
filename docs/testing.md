@@ -106,3 +106,13 @@ External evaluation coverage checks strict case/context types, inaccessible or i
 ## v4 regression checks
 
 The full suite now checks the external evidence targets alongside existing context/conflict/access invariants. New tests cover code-free diagnostic evidence, incompatible HTTP-only restrictions even when another code is mentioned, strict identifiers, matching context versions, restricted source exclusion, query-clause body requirements and relevance-gated prohibition priority. Comparison tests check the frozen baseline denominators and refuse corpus changes. These are tuned development regressions; see [measured limits](context-sensitive-retrieval.md).
+
+## Java migration checks
+
+Run `./backend/mvnw -f backend/pom.xml verify` and
+`.venv/bin/python scripts/export_java_parity.py --check` from the repository root.
+The Java suite compares complete selector responses against 324 frozen Python
+outputs and checks denied HTTP routes plus domain validation. These are regression
+checks, not independent evidence of retrieval quality. The fixture is test-only and
+must never be ingested as product evidence. Regenerate with the exporter only after
+reviewing intentional behavior changes. Existing Python/SQL and browser tests remain required.
