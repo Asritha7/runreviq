@@ -15,6 +15,8 @@ sys.path.insert(0, str(ROOT))
 from psycopg import sql
 from runreviq.database import bootstrap, connect, credentials, ingest, load_authorized_documents, load_authorized_revision
 from runreviq.selector import load_documents, select
+from runreviq import drafts
+from scripts.export_java_authoring_parity import SOURCE
 
 
 def private(path, data):
@@ -44,6 +46,7 @@ def main():
         with tempfile.TemporaryDirectory(prefix='runreviq-java-db-') as folder:
             directory = Path(folder)
             secrets = credentials()
+            private(directory / 'drafts.json', {'database': name, 'draft_password': secrets['DRAFTS_PASSWORD']})
             private(directory / 'readers.json', {'database': name, 'reader_passwords': {r: secrets[f'READER_{r.upper()}_PASSWORD'] for r in ('platform','security','intern')}})
             # Admin credentials are exclusively a test helper, guarded by this exact generated DB name.
             private(directory / 'admin.json', {'database': name, 'password': secrets['POSTGRES_PASSWORD']})
@@ -60,10 +63,22 @@ def main():
             samples = [{'z': '\\"\n\r\t\b\f\x00\x7f café 🔑\u2028', '\U00010000': [True,None,123456789012345678901], '\ue000': 'unicode ordering'}, {}, [], {'lines': 'a\r\nb\x85c\u2029'}]
             canonical = [{'value': v, 'encoded': json.dumps(v,sort_keys=True), 'sha256': hashlib.sha256(json.dumps(v,sort_keys=True).encode()).hexdigest()} for v in samples]
             private(directory / 'expected.json',dict(cases=cases,revisions=revisions,canonical=canonical))
+            owner = drafts.owner_key('demo', 'python-java-interop')
+            draft = drafts.create_draft(owner, 'python.md', SOURCE, dbname=name)
+            metadata = dict(title='Example', service='identity-service', environment='production', version_min='2.4.0', version_max_exclusive='2.5.0', key_rotation_enabled='none')
+            drafts.save_review(owner, draft['id'], 0, metadata, dbname=name)
+            private(directory / 'draft-interop.json', {'owner': owner, 'draft': drafts.get_draft(owner, draft['id'], dbname=name)})
             environment = dict(os.environ, RUNREVIQ_JDBC_TEST_DIR=str(directory), RUNREVIQ_JDBC_TEST_DATABASE=name)
-            result = subprocess.run([str(ROOT/'backend/mvnw'), '-f', str(ROOT/'backend/pom.xml'), '-B', '-ntp', '-Dtest=JdbcIntegrationTest,JdbcGoogleIntegrationTest', 'test'],cwd=ROOT,env=environment)
+            result = subprocess.run([str(ROOT/'backend/mvnw'), '-f', str(ROOT/'backend/pom.xml'), '-B', '-ntp', '-Dtest=JdbcIntegrationTest,JdbcGoogleIntegrationTest,DraftIntegrationTest', 'test'],cwd=ROOT,env=environment)
             if result.returncode:
                 raise SystemExit(result.returncode)
+            # Java appended revision 2 to this Python-authored draft; Python must read it unchanged.
+            readback = drafts.get_draft(owner, draft['id'], dbname=name)
+            assert readback['content'] == SOURCE
+            assert readback['proposal'] == draft['proposal']
+            assert readback['review']['revision'] == 2
+            assert readback['review']['validated_metadata']['title'] == 'Java reviewed title'
+            print('Python read back the Java-authored review with original source/proposal intact.')
     finally:
         if created:
             assert name.startswith('opslens_java_test_')

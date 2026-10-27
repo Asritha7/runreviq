@@ -44,7 +44,7 @@ Authenticated `POST /v1/select` and `GET /v1/documents/{id}/revisions/{revision}
 existing Python JSON contract. Selection fields are strictly typed; extra fields,
 including a claimed role, are rejected. Authentication precedes body parsing and SQL.
 Google sessions retain exact-Origin/custom-header checks for POST; demo mode requires
-a bearer credential. Other data APIs remain denied. Both authentication and database
+a bearer credential. Private drafts have a separate opt-in [authoring adapter](java-authoring.md); other data APIs remain denied. Both authentication and database
 reads must be explicitly enabled; default startup does not open PostgreSQL.
 
 ## Optional local setup
@@ -98,5 +98,5 @@ runs unit/security/parity tests and skips integration classes when the harness's
 temporary configuration is absent. A skipped integration suite is not a database pass.
 Python and Java parity establishes compatibility, not independent retrieval quality.
 
-Next: migrate private authoring/review/publication writes with their separate operator
-accounts, transaction locks, idempotency rules and immutable revision guarantees.
+Stage 4a now provides [private drafts and metadata review](java-authoring.md) with a
+separate restricted writer. Independent decisions/publication remain the next increment.

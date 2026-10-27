@@ -1,0 +1,1606 @@
+{
+  "extraction": [
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "b89b0da9c68579f2d1be50cb0c08285c919ab23b58bb3eb8a315f4152fe1ef1a",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Example runbook\r\n\r\n## Applicability\r\nservice: identity-service\r\nenvironment: production\r\nversion_min: 2.4.0\r\nversion_max_exclusive: 2.5.0\r\nkey_rotation_enabled: true\r\n\r\n## Procedure\r\nInspect JWKS errors before restart.\r\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "1f25fb384d14192a3287328814e0e2f14005ff558a616571371eb5ba5b2a3b6e",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Example runbook\u0085\u0085## Applicability\u0085service: identity-service\u0085environment: production\u0085version_min: 2.4.0\u0085version_max_exclusive: 2.5.0\u0085key_rotation_enabled: true\u0085\u0085## Procedure\u0085Inspect JWKS errors before restart.\u0085",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "a9ce66aa0cb9fee78225e2b7d474203345499390df9f0d19d98576629f525308",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n\n# Another title\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "862cf1fcc7668f0b93b31fb4a82e35c722d69ab126b29227df700c67e19f958b",
+        "review_required": true,
+        "proposed_metadata": {
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            },
+            {
+              "value": "Another title",
+              "line": 13,
+              "quote": "# Another title"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": [
+          {
+            "field": "title",
+            "reason": "missing_or_ambiguous"
+          }
+        ]
+      }
+    },
+    {
+      "source": "# Runbook\nMaybe production for 2.4?",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "3b579616674d74e5b169047ea73a199e3151bcf358dc0cb64687beec9b1e8434",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Runbook"
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Runbook",
+              "line": 1,
+              "quote": "# Runbook"
+            }
+          ],
+          "service": [],
+          "environment": [],
+          "version_min": [],
+          "version_max_exclusive": [],
+          "key_rotation_enabled": []
+        },
+        "issues": [
+          {
+            "field": "service",
+            "reason": "missing"
+          },
+          {
+            "field": "environment",
+            "reason": "missing"
+          },
+          {
+            "field": "version_min",
+            "reason": "missing"
+          },
+          {
+            "field": "version_max_exclusive",
+            "reason": "missing"
+          },
+          {
+            "field": "key_rotation_enabled",
+            "reason": "missing"
+          }
+        ]
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "ee2d34d9e2596f0a1f373df16951ff1630967509af2bb2a47f03ce1fe265194d",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            },
+            {
+              "raw": "production",
+              "line": 6,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 7,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 8,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 9,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": [
+          {
+            "field": "environment",
+            "reason": "ambiguous"
+          }
+        ]
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.6.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "ca51bfc2bfdef864a3d5ad674e97758447e83a4faf34153d9533f33e4647c831",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.6.0",
+              "line": 6,
+              "quote": "version_min: 2.6.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": [
+          {
+            "field": "version_range",
+            "reason": "empty_or_inverted"
+          }
+        ]
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\n\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "1330be4bdb1ac1ccffafdd47797fc7e1e0d5b692ce5598a5c616a1975fc1a318",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0"
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": []
+        },
+        "issues": [
+          {
+            "field": "key_rotation_enabled",
+            "reason": "missing"
+          }
+        ]
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: none\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "9bc860cb3fa41deefb7ca791149134cfb0b06c0b06fe0bc162caf017834956b8",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": null
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "none",
+              "line": 8,
+              "quote": "key_rotation_enabled: none"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: false\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "ff5d2b38f6c1f597bc1bdc6833d81ca5acee419fe12ba3e5e2ef8dd215af27ba",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": false
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "false",
+              "line": 8,
+              "quote": "key_rotation_enabled: false"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\nallowed_roles: security\nstatus: approved\nmetadata_verified: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "73eb3e9368b26fbc0f3172df4950111f0e86cbd8e12c1675cb2e96e29ead1c50",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n\n```\n# False title\n## Applicability\nenvironment: staging\n```",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "4f92e2b866c07d353c33117651f20e2f6db7b0b1a3dc85e2ded965559217f328",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Caf\u00e9 \ud83d\udd11\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "b9efd450df52d529a4069ddea1d74d34a7ff17fd6dab02838d77bb902e2baa30",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Caf\u00e9 \ud83d\udd11",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Caf\u00e9 \ud83d\udd11",
+              "line": 1,
+              "quote": "# Caf\u00e9 \ud83d\udd11"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\n- service: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "24d8439205bddedd62f85042c0b82381defc68c074c437db030be89af76fb69c",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "- service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": []
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "a90f922781f7e29208ae1740fa98c7753202ec66307a9719ecefa62f60138698",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4",
+              "line": 6,
+              "quote": "version_min: 2.4"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": [
+          {
+            "field": "version_min",
+            "reason": "invalid_value"
+          }
+        ]
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: unknown\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "7fb4b84dcf5529907a6ac0cdc4b3363425db07a6694492b9e9e645663e556b11",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "unknown",
+              "line": 5,
+              "quote": "environment: unknown"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": [
+          {
+            "field": "environment",
+            "reason": "invalid_value"
+          }
+        ]
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: two services\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "734479a9695e5cc0cf3b1edcb755c99dee85a2b5c07471761422f0b208202b99",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "two services",
+              "line": 4,
+              "quote": "service: two services"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "true",
+              "line": 8,
+              "quote": "key_rotation_enabled: true"
+            }
+          ]
+        },
+        "issues": [
+          {
+            "field": "service",
+            "reason": "invalid_value"
+          }
+        ]
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: maybe\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "expected": {
+        "schema_version": 1,
+        "extractor": "explicit-markdown-v1",
+        "source_sha256": "036ddc75d707e43cdc378f7bbef80ebd0732b80142149dd6a0872b74ad22be3e",
+        "review_required": true,
+        "proposed_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0"
+        },
+        "provenance": {
+          "title": [
+            {
+              "value": "Example runbook",
+              "line": 1,
+              "quote": "# Example runbook"
+            }
+          ],
+          "service": [
+            {
+              "raw": "identity-service",
+              "line": 4,
+              "quote": "service: identity-service"
+            }
+          ],
+          "environment": [
+            {
+              "raw": "production",
+              "line": 5,
+              "quote": "environment: production"
+            }
+          ],
+          "version_min": [
+            {
+              "raw": "2.4.0",
+              "line": 6,
+              "quote": "version_min: 2.4.0"
+            }
+          ],
+          "version_max_exclusive": [
+            {
+              "raw": "2.5.0",
+              "line": 7,
+              "quote": "version_max_exclusive: 2.5.0"
+            }
+          ],
+          "key_rotation_enabled": [
+            {
+              "raw": "maybe",
+              "line": 8,
+              "quote": "key_rotation_enabled: maybe"
+            }
+          ]
+        },
+        "issues": [
+          {
+            "field": "key_rotation_enabled",
+            "reason": "invalid_value"
+          }
+        ]
+      }
+    }
+  ],
+  "reviews": [
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "none"
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "none"
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": null
+        },
+        "issues": [],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "2.6.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.6.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "key_rotation_enabled": true
+        },
+        "issues": [
+          {
+            "field": "version_range",
+            "reason": "empty_or_inverted"
+          }
+        ],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "\u0085 Caf\u00e9 \ud83d\udd11 \u00a0",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "\u0085 Caf\u00e9 \ud83d\udd11 \u00a0",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "title": "Caf\u00e9 \ud83d\udd11",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [
+          {
+            "field": "title",
+            "reason": "missing"
+          }
+        ],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "",
+        "environment": "production",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [
+          {
+            "field": "service",
+            "reason": "missing"
+          }
+        ],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [
+          {
+            "field": "environment",
+            "reason": "missing"
+          }
+        ],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [
+          {
+            "field": "version_min",
+            "reason": "missing"
+          }
+        ],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [
+          {
+            "field": "version_max_exclusive",
+            "reason": "missing"
+          }
+        ],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": ""
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": ""
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0"
+        },
+        "issues": [
+          {
+            "field": "key_rotation_enabled",
+            "reason": "missing"
+          }
+        ],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "invalid",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true"
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "invalid",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true"
+        },
+        "validated_metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [
+          {
+            "field": "environment",
+            "reason": "invalid_value"
+          }
+        ],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    },
+    {
+      "source": "# Example runbook\n\n## Applicability\nservice: identity-service\nenvironment: production\nversion_min: 2.4.0\nversion_max_exclusive: 2.5.0\nkey_rotation_enabled: true\n\n## Procedure\nInspect JWKS errors before restart.\n",
+      "metadata": {
+        "title": "Example runbook",
+        "service": "identity-service",
+        "environment": "production",
+        "version_min": "2.4.0",
+        "version_max_exclusive": "2.5.0",
+        "key_rotation_enabled": "true",
+        "evidence_profile": {
+          "schema_version": 1,
+          "http_scope": {
+            "mode": "only",
+            "codes": [
+              401
+            ]
+          },
+          "units": [
+            {
+              "role": "procedure",
+              "start_line": 11,
+              "end_line": 11
+            }
+          ]
+        }
+      },
+      "expected": {
+        "metadata": {
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": "true",
+          "evidence_profile": {
+            "schema_version": 1,
+            "http_scope": {
+              "mode": "only",
+              "codes": [
+                401
+              ]
+            },
+            "units": [
+              {
+                "role": "procedure",
+                "start_line": 11,
+                "end_line": 11
+              }
+            ]
+          }
+        },
+        "validated_metadata": {
+          "evidence_profile": {
+            "schema_version": 1,
+            "http_scope": {
+              "mode": "only",
+              "codes": [
+                401
+              ]
+            },
+            "units": [
+              {
+                "role": "procedure",
+                "start_line": 11,
+                "end_line": 11
+              }
+            ]
+          },
+          "title": "Example runbook",
+          "service": "identity-service",
+          "environment": "production",
+          "version_min": "2.4.0",
+          "version_max_exclusive": "2.5.0",
+          "key_rotation_enabled": true
+        },
+        "issues": [],
+        "review_required": true,
+        "status": "in_progress"
+      }
+    }
+  ]
+}

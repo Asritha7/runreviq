@@ -134,3 +134,11 @@ both demo keys and Google sessions, RLS isolation, historical/current policy, wi
 checksum serialization, corrupted sources, rejected writes and snapshot consistency.
 The Java unit job skips these classes without the harness; the PostgreSQL CI job
 executes them explicitly. No test writes target the live application database.
+
+## Java private draft checks
+
+The Maven unit suite includes frozen Python extraction/review parity; check freshness with
+`.venv/bin/python scripts/export_java_authoring_parity.py --check`. The disposable Java
+database harness also runs draft HTTP/SQL tests, concurrent quota/review races and a
+Python → Java → Python draft/review round trip. Google integration uses an offline
+identity-provider substitute. See [Java authoring](java-authoring.md) for scope and limits.

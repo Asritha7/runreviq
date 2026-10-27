@@ -26,7 +26,7 @@ workspace remains on port 8000. Java does not yet serve the UI. Optional JDBC ev
   comparison and reloaded per request. Google cookies are not demo credentials;
   bearer keys do not bypass Google mode. There is no automatic fallback.
 
-Spring Security permits the listed identity routes and explicitly enabled evidence reads; the controller
+Spring Security permits the listed identity routes and explicitly enabled evidence reads/private draft routes; the controller
 then requires `AuthService.principal` for identity reads. Unimplemented data routes
 are denied even after login. Enabled evidence reads use this same identity boundary
 before a role-specific JDBC connection; their separate RLS tests are described in
@@ -50,7 +50,7 @@ After a manual login smoke test, inspect `/auth/session` or `/v1/me` directly.
 A future UI migration will make the landing page usable.
 
 Logout is protected by the existing frontend contract: exact configured `Origin`
-and `X-Runreviq-Request: 1`. Logout and explicitly enabled `/v1/select` are excluded from Spring's token-based
+and `X-Runreviq-Request: 1`. Logout, explicitly enabled `/v1/select`, and enabled draft upload/review-save routes are excluded from Spring's token-based
 CSRF check; Google-mode service calls enforce both headers instead. Other unsafe routes
 remain denied. No cross-origin grants are installed, Host must be `127.0.0.1`,
 forwarded headers are ignored, responses are non-cacheable and referrers suppressed.

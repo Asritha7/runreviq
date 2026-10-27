@@ -2,13 +2,14 @@
 
 Find applicable fictional operational guidance and question-matching source passages, before adding AI generation.
 
-The Java backend migration has started in `backend/`. The working product still runs on Python; Java currently provides the deterministic selector and opt-in identity endpoints (Google OIDC or local demo keys); opt-in JDBC evidence selection and revision reads are also implemented. The UI, authoring workflows and passage search remain in Python. Python benchmarks remain in place. See the [migration stages](docs/java-migration.md).
+The Java backend migration has started in `backend/`. The working product still runs on Python; Java currently provides the deterministic selector and opt-in identity endpoints (Google OIDC or local demo keys); opt-in JDBC evidence selection and revision reads are also implemented. Java also supports separately enabled private drafts and owner metadata review. The UI, independent review/publication workflows and passage search remain in Python. Python benchmarks remain in place. See the [migration stages](docs/java-migration.md).
 
 ## Documentation
 
 - [Setup and local commands](SETUP.md)
 - [Architecture and current scope](docs/architecture.md)
 - [Java evidence reads and database isolation](docs/java-persistence.md)
+- [Java private drafts and metadata review](docs/java-authoring.md)
 - [Browser workspace and access controls](docs/web-interface.md)
 - [API request and response contract](docs/api.md)
 - [Private draft upload and preview](docs/drafts.md)

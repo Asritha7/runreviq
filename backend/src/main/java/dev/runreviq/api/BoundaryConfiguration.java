@@ -23,8 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Configuration
 public class BoundaryConfiguration {
     @Bean
-    SecurityFilterChain security(HttpSecurity http, @Value("${runreviq.database.enabled:false}") boolean databaseEnabled) throws Exception {
+    SecurityFilterChain security(HttpSecurity http, @Value("${runreviq.database.enabled:false}") boolean databaseEnabled,
+            @Value("${runreviq.drafts.enabled:false}") boolean draftsEnabled) throws Exception {
+        var csrfExceptions=new java.util.ArrayList<String>();csrfExceptions.add("/auth/logout");
+        if(databaseEnabled)csrfExceptions.add("/v1/select");
+        if(draftsEnabled){csrfExceptions.add("/v1/drafts");csrfExceptions.add("/v1/drafts/*/review");}
         return http.authorizeHttpRequests(a -> {
+                if (draftsEnabled) {
+                    a.requestMatchers(HttpMethod.GET, "/v1/drafts", "/v1/drafts/*").permitAll();
+                    a.requestMatchers(HttpMethod.POST, "/v1/drafts", "/v1/drafts/*/review").permitAll();
+                }
                 if (databaseEnabled) {
                     a.requestMatchers(HttpMethod.POST, "/v1/select").permitAll();
                     a.requestMatchers(HttpMethod.GET, "/v1/documents/*/revisions/*").permitAll();
@@ -32,9 +40,9 @@ public class BoundaryConfiguration {
                 a
                 .requestMatchers(HttpMethod.GET, "/health", "/auth/config", "/auth/google/login", "/auth/google/callback", "/auth/session", "/v1/me").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll().anyRequest().denyAll(); })
-                // Logout and enabled selection enforce the strict Origin/header guard for Google sessions.
+                // Logout and all enabled POST controllers enforce the strict Origin/header guard for Google sessions.
                 // Spring's CSRF checks remain enabled everywhere else, with no CORS grants.
-                .csrf(c -> c.ignoringRequestMatchers(databaseEnabled ? new String[]{"/auth/logout", "/v1/select"} : new String[]{"/auth/logout"}))
+                .csrf(c -> c.ignoringRequestMatchers(csrfExceptions.toArray(String[]::new)))
                 .requestCache(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new LoopbackBoundary(), AuthorizationFilter.class)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
