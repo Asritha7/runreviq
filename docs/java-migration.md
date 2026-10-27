@@ -2,14 +2,14 @@
 
 The agreed destination is a Java product backend with Python retained for offline
 benchmarks initially. The browser remains HTML/CSS/JavaScript and PostgreSQL remains
-the database. The running Python application is unchanged by this first stage.
+the database. The running Python application is unchanged by these migration stages.
 
 Python supported a compact prototype and rapid evaluation. Java is a reasonable
 choice for developing this product alongside Java learning and work. Changing the
 language does not itself improve retrieval accuracy or make evidence trustworthy.
 Both stacks can run locally without paid APIs.
 
-## Stage 1 — implemented in this branch
+## Stage 1 — merged in PR #27
 
 - Spring Boot 4.1.2, Java 25 language target, Maven 3.9.12 checksum-pinned wrapper.
 - Framework-independent typed versions, operational context, evidence profiles,
@@ -20,21 +20,33 @@ Both stacks can run locally without paid APIs.
   abstention and evidence references as the Python selector.
 - 324 full-response comparison cases across the original synthetic catalog and a
   separate HTTP-scoped derivative. Existing source documents remain unchanged.
-- A health-only server bound to `127.0.0.1:8081`; other routes are denied, default
-  password login is disabled, and CSRF protection remains enabled.
+- A server bound to `127.0.0.1:8081`, initially health-only. Stage 2 adds identity
+  endpoints; data routes remain denied and password login remains disabled.
 
 The selector accepts trusted domain objects, not arbitrary HTTP input. Role filtering
 is not authentication or database authorization. Evidence-profile constructors check
 structure; source quote, line-bound, citation hash and publication checks still belong
 to the existing Python implementation until explicitly ported. Java exact version
 inputs currently use ASCII digits; Python's internal helper also accepts Unicode
-numeric digits. Neither supports prereleases. No Java operational endpoint exists yet.
+numeric digits. Neither supports prereleases. No Java data endpoint exists yet.
+
+## Stage 2 — identity implementation
+
+Java now supports explicit `google`, `demo`, or default `disabled` authentication.
+Google code exchange uses PKCE and browser-bound state/nonce. RS256 signatures and
+required identity claims are checked before an opaque, expiring session is created.
+Private role mappings and demo keys are reloaded on every identity request. Logout
+requires the exact configured Origin and `X-Runreviq-Request: 1` and revokes the
+server-side session. Data routes remain blocked. See [identity configuration and tests](java-authentication.md).
+
+Offline token, HTTP and revocation tests are implemented. Live Google sign-in on Java
+has not been performed; a registered Java callback is a manual smoke-test prerequisite.
+No existing Google settings, credentials or Python sessions are changed by this stage.
 
 ## Remaining stages and acceptance gates
 
 | Stage | Work | Required proof before use |
 | --- | --- | --- |
-| 2: identity | Google OIDC, opaque server sessions, current subject-role mapping, logout, expiry, CSRF and local access-key mode | Invalid callbacks denied; revocation/expiry immediately enforced; no role trusted from client input; existing UI contracts preserved |
 | 3: persistence | JDBC repositories using restricted PostgreSQL roles and transaction-scoped authorization | RLS isolation, rollback, concurrent writes, immutable revisions and exact checksum compatibility |
 | 4: authoring | Drafts, metadata proposals, independent review, publication and withdrawal | Owner privacy, reviewer/publisher separation, stale-review rejection, history and idempotency parity |
 | 5: retrieval | Authorized passage retrieval, reviewed profiles, typed bundles and evidence responses | Same applicability/abstention semantics, citation support and held-out evaluation through a Java HTTP adapter |
@@ -53,8 +65,9 @@ user-authored evaluation questions and expected outcomes outside ingestion.
 ## Runtime and rollback
 
 Port 8000 continues to serve the working Python product. Port 8081 is deliberately
-a separate engineering server with no UI, authentication integration or database.
-No Google OAuth setting needs changing for stage 1. Do not switch users to Java until
+a separate engineering server with no UI or database. Its identity endpoints can be
+enabled explicitly; Google requires an additional registered callback for that port.
+Keep the existing port-8000 OAuth callback throughout migration. Do not switch users to Java until
 the operational stages pass. Preserve the Python entry point and existing database
 through cutover so application rollback does not require destructive data migration.
 

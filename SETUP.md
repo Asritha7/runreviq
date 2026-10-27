@@ -282,8 +282,10 @@ Merge the reviewed-profile contract, retrieval, then workspace PRs in that order
 ## Java migration development
 
 The working Python application remains on port 8000. Java is an optional development
-server on loopback port 8081, with only `GET /health` enabled; it has no workspace UI
-or database connection yet. Do not change the Google callback URL for this scaffold.
+server on loopback port 8081. Authentication is disabled by default; it has no workspace
+UI or database connection yet. Google/demo identity endpoints can be enabled explicitly
+using the [Java authentication guide](docs/java-authentication.md). Keep the working
+Python Google callback on port 8000 unchanged.
 
 Use JDK 25 or 26 and the committed Maven Wrapper (Maven 3.9.12). No global Maven
 installation or system Python changes are needed. CI uses JDK 25; local verification
@@ -293,7 +295,7 @@ first use, verifies the Maven distribution checksum, and caches them under `~/.m
 ```sh
 ./backend/mvnw -f backend/pom.xml --batch-mode --no-transfer-progress verify
 .venv/bin/python scripts/export_java_parity.py --check
-# Optional health-only development server; stop with Ctrl-C:
+# Optional development server with authentication disabled; stop with Ctrl-C:
 ./backend/mvnw -f backend/pom.xml spring-boot:run
 ```
 

@@ -120,3 +120,13 @@ Publisher-only list/history/source/withdrawal routes live under `/v1/publication
 ## Reviewed evidence and HTTP context
 
 Selection/search accept optional `http_status` (strict integer 100–599 or null); search rejects disagreement with an HTTP code in the question. Review metadata accepts an optional `evidence_profile`. Publication permits empty claims only for approved profiles with units, and prohibition units still require cited `must_not` claims. Revisions expose their stored profile. See [the schema, search fields and conservative missing-context behavior](reviewed-evidence.md).
+
+## Java migration identity endpoints
+
+The API above describes the working Python product. Java on loopback port 8081 now
+implements only `/auth/config`, `/auth/google/login`, `/auth/google/callback`,
+`/auth/session`, `/auth/logout`, `/v1/me`, and `/health`. Authentication defaults to
+`disabled`; Google or demo mode requires explicit configuration. All data/search/
+authoring routes remain denied. Identity response shapes match Python, but Java uses
+separate cookie names and an explicitly configured loopback origin. See
+[Java authentication](java-authentication.md) before enabling it; this is not a cutover.

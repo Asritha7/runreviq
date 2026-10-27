@@ -116,3 +116,12 @@ outputs and checks denied HTTP routes plus domain validation. These are regressi
 checks, not independent evidence of retrieval quality. The fixture is test-only and
 must never be ingested as product evidence. Regenerate with the exporter only after
 reviewing intentional behavior changes. Existing Python/SQL and browser tests remain required.
+
+Java authentication tests run without Google accounts, private local files or paid
+services. HTTP tests use temporary owner-only credentials and a fake provider; token
+tests separately verify real RSA signatures, strict claim types, audience/issuer/
+nonce/time validation, missing claims, duplicate claims and wrong signatures. A local
+HTTP token endpoint verifies bounded responses, redirect rejection and code exchange
+parameters. Session tests cover browser binding, replay, expiry, role refresh/revocation,
+client rotation, logout, origin/Host checks, configuration failure and demo-mode isolation.
+A live Google browser sign-in is still required before production-workflow cutover.
