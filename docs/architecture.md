@@ -69,3 +69,10 @@ A separate append-only `document_withdrawals` table records retirement of specif
 ## Lexical passage retrieval
 
 Question search now filters current authorized sources and applies the existing selector before ranking exact passages with PostgreSQL English full-text search. Authorization, lifecycle and content share a read-only database snapshot. Vectors are computed per request; no separately persisted search index is maintained. This is a small-corpus baseline, not vector retrieval or answer generation. See [search and evaluation](search.md).
+
+## Java migration boundary
+
+The production-workflow prototype remains implemented in Python. A parallel Java
+selector and health-only Spring Boot scaffold now live in `backend/`; they do not
+connect to PostgreSQL or serve the existing frontend. See [migration plan](java-migration.md)
+for implemented scope, parity checks, and pending authentication/storage stages.

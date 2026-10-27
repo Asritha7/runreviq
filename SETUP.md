@@ -278,3 +278,23 @@ No migration or re-ingestion is needed for optional evidence profiles; immutable
 The v5 search backend accepts optional HTTP status context and returns typed evidence bundles. Legacy documents need no migration. To activate typed retrieval for a document, save its profile, obtain independent approval, and publish a new revision; do not edit published metadata in place. See [retrieval behavior and regression limits](docs/reviewed-evidence.md#retrieval-and-precision-boundaries).
 
 Merge the reviewed-profile contract, retrieval, then workspace PRs in that order before restarting the API. These changes do not update live document classifications automatically. Follow the [workspace walkthrough](docs/reviewed-evidence.md#workspace-walkthrough) for new approved revisions. The selector CLI also accepts `--http-status 401`; omitting it preserves unknown context.
+
+## Java migration development
+
+The working Python application remains on port 8000. Java is an optional development
+server on loopback port 8081, with only `GET /health` enabled; it has no workspace UI
+or database connection yet. Do not change the Google callback URL for this scaffold.
+
+Use JDK 25 or 26 and the committed Maven Wrapper (Maven 3.9.12). No global Maven
+installation or system Python changes are needed. CI uses JDK 25; local verification
+also runs on the existing JDK 26. The wrapper downloads Maven and dependencies on
+first use, verifies the Maven distribution checksum, and caches them under `~/.m2`.
+
+```sh
+./backend/mvnw -f backend/pom.xml --batch-mode --no-transfer-progress verify
+.venv/bin/python scripts/export_java_parity.py --check
+# Optional health-only development server; stop with Ctrl-C:
+./backend/mvnw -f backend/pom.xml spring-boot:run
+```
+
+See [Java migration stages and cutover gates](docs/java-migration.md).
