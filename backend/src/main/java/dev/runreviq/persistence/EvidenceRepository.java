@@ -9,21 +9,28 @@ public final class EvidenceRepository {
     private final ReaderConnections readers;
     public EvidenceRepository(ReaderConnections readers) { this.readers=readers; }
     public List<EvidenceDocument> current(String role) {
-        return readers.read(role,connection -> {
-            var documents=new ArrayList<EvidenceDocument>();
-            try(var query=connection.prepareStatement("""
-                SELECT v.document_id, v.revision, v.metadata::text, v.content, v.checksum, d.allowed_roles
-                FROM opslens.documents d JOIN opslens.document_versions v
-                  ON v.document_id=d.id AND v.revision=d.current_revision
-                WHERE NOT EXISTS (SELECT 1 FROM opslens.document_withdrawals w
-                  WHERE w.document_id=d.id AND w.revision=d.current_revision)
-                ORDER BY d.id
-                """); var rows=query.executeQuery()) {
-                while(rows.next()) documents.add(StoredEvidence.validate(StoredEvidence.JSON.readTree(rows.getString(3)),
-                        rows.getString(4),rows.getString(5),rows.getString(1),rows.getInt(2),roles(rows.getArray(6))));
-            }
-            return List.copyOf(documents);
-        });
+        return readers.read(role,connection -> snapshot(connection).stream().map(Source::document).toList());
+    }
+    record Source(EvidenceDocument document,String content) {}
+    static List<Source> snapshot(Connection connection) throws Exception {
+        var documents=new ArrayList<Source>();
+        try(var query=connection.prepareStatement("""
+            SELECT v.document_id, v.revision, v.metadata::text, v.content, v.checksum, d.allowed_roles
+            FROM opslens.documents d JOIN opslens.document_versions v
+              ON v.document_id=d.id AND v.revision=d.current_revision
+            WHERE NOT EXISTS (SELECT 1 FROM opslens.document_withdrawals w
+              WHERE w.document_id=d.id AND w.revision=d.current_revision)
+            ORDER BY d.id
+            """); var rows=query.executeQuery()) {
+            while(rows.next()) documents.add(new Source(StoredEvidence.validate(StoredEvidence.JSON.readTree(rows.getString(3)),
+                    rows.getString(4),rows.getString(5),rows.getString(1),rows.getInt(2),roles(rows.getArray(6))),rows.getString(4)));
+        }
+        return List.copyOf(documents);
+    }
+    public Map<String,Object> search(String question,dev.runreviq.domain.SelectionContext context) {
+        // Validate/infer context before opening SQL; reader failures remain fixed 503s.
+        var request=SearchRepository.context(question,context);
+        return readers.read(context.role(),connection -> SearchRepository.search(connection,snapshot(connection),question,request,context.httpStatus()));
     }
     public Map<String,Object> revision(String role,String id,int revision) {
         if(id==null || !id.matches("[A-Z]+-[0-9]+") || revision<1) throw new IllegalArgumentException("Invalid revision");

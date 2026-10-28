@@ -27,7 +27,7 @@ public class BoundaryConfiguration {
             @Value("${runreviq.drafts.enabled:false}") boolean draftsEnabled,
             @Value("${runreviq.workflows.enabled:false}") boolean workflowsEnabled) throws Exception {
         var csrfExceptions=new java.util.ArrayList<String>();csrfExceptions.add("/auth/logout");
-        if(databaseEnabled)csrfExceptions.add("/v1/select");
+        if(databaseEnabled)csrfExceptions.addAll(java.util.List.of("/v1/select","/v1/search"));
         if(draftsEnabled){csrfExceptions.add("/v1/drafts");csrfExceptions.add("/v1/drafts/*/review");}
         if(workflowsEnabled)csrfExceptions.addAll(java.util.List.of("/v1/drafts/*/submit","/v1/submissions/*/decision","/v1/publications/*","/v1/publication-management/documents/*/withdraw"));
         return http.authorizeHttpRequests(a -> {
@@ -40,7 +40,7 @@ public class BoundaryConfiguration {
                     a.requestMatchers(HttpMethod.POST, "/v1/drafts", "/v1/drafts/*/review").permitAll();
                 }
                 if (databaseEnabled) {
-                    a.requestMatchers(HttpMethod.POST, "/v1/select").permitAll();
+                    a.requestMatchers(HttpMethod.POST, "/v1/select", "/v1/search").permitAll();
                     a.requestMatchers(HttpMethod.GET, "/v1/documents/*/revisions/*").permitAll();
                 }
                 a
