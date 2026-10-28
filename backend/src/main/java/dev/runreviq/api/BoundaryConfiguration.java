@@ -24,11 +24,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoundaryConfiguration {
     @Bean
     SecurityFilterChain security(HttpSecurity http, @Value("${runreviq.database.enabled:false}") boolean databaseEnabled,
-            @Value("${runreviq.drafts.enabled:false}") boolean draftsEnabled) throws Exception {
+            @Value("${runreviq.drafts.enabled:false}") boolean draftsEnabled,
+            @Value("${runreviq.workflows.enabled:false}") boolean workflowsEnabled) throws Exception {
         var csrfExceptions=new java.util.ArrayList<String>();csrfExceptions.add("/auth/logout");
         if(databaseEnabled)csrfExceptions.add("/v1/select");
         if(draftsEnabled){csrfExceptions.add("/v1/drafts");csrfExceptions.add("/v1/drafts/*/review");}
+        if(workflowsEnabled)csrfExceptions.addAll(java.util.List.of("/v1/drafts/*/submit","/v1/submissions/*/decision","/v1/publications/*","/v1/publication-management/documents/*/withdraw"));
         return http.authorizeHttpRequests(a -> {
+                if(workflowsEnabled){
+                    a.requestMatchers(HttpMethod.GET,"/v1/reviewer-access","/v1/publisher-access","/v1/drafts/*/submissions","/v1/submissions","/v1/submissions/*","/v1/publications/queue","/v1/publications/*","/v1/publication-management/documents","/v1/publication-management/documents/*","/v1/publication-management/documents/*/revisions/*").permitAll();
+                    a.requestMatchers(HttpMethod.POST,"/v1/drafts/*/submit","/v1/submissions/*/decision","/v1/publications/*","/v1/publication-management/documents/*/withdraw").permitAll();
+                }
                 if (draftsEnabled) {
                     a.requestMatchers(HttpMethod.GET, "/v1/drafts", "/v1/drafts/*").permitAll();
                     a.requestMatchers(HttpMethod.POST, "/v1/drafts", "/v1/drafts/*/review").permitAll();

@@ -21,7 +21,7 @@ class BoundaryTest {
         assertEquals(200, health.statusCode());
         assertTrue(health.body().contains("disabled"));
         assertTrue(health.headers().allValues("set-cookie").isEmpty());
-        for (String path : new String[]{"/", "/search", "/documents", "/auth/google/login", "/actuator/env", "/v1/drafts", "/v1/drafts/00000000-0000-0000-0000-000000000001", "/v1/drafts/00000000-0000-0000-0000-000000000001/review"}) {
+        for (String path : new String[]{"/", "/search", "/documents", "/auth/google/login", "/actuator/env", "/v1/submissions", "/v1/publications/queue", "/v1/reviewer-access", "/v1/publisher-access", "/v1/publication-management/documents", "/v1/drafts", "/v1/drafts/00000000-0000-0000-0000-000000000001", "/v1/drafts/00000000-0000-0000-0000-000000000001/review"}) {
             assertEquals(403, request(path,false).statusCode(),path);
             assertEquals(403, request(path,true).statusCode(),path);
         }

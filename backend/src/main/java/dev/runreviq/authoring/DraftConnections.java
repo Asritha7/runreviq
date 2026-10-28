@@ -54,6 +54,11 @@ public final class DraftConnections {
                 if(count!=2)throw DraftFailure.unavailable();
             }
             try(var r=q.executeQuery("""
+                SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+                WHERE n.nspname='opslens' AND c.relname IN ('draft_submissions','submission_decisions','publications')
+                AND c.relrowsecurity AND c.relforcerowsecurity
+                """)){r.next();if(r.getInt(1)!=3)throw DraftFailure.unavailable();}
+            try(var r=q.executeQuery("""
                 SELECT EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
                 WHERE n.nspname='opslens' AND c.relname IN ('documents','document_versions','publications','document_withdrawals','submission_decisions')
                 AND has_table_privilege(current_user,c.oid,'INSERT,UPDATE,DELETE,TRUNCATE'))

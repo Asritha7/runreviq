@@ -127,7 +127,7 @@ The API above describes the working Python product. Java on loopback port 8081 n
 implements `/auth/config`, `/auth/google/login`, `/auth/google/callback`,
 `/auth/session`, `/auth/logout`, `/v1/me`, and `/health`. Authentication defaults to
 `disabled`; Google or demo mode requires explicit configuration. With database access enabled, `/v1/select` and `/v1/documents/{id}/revisions/{revision}`
-use the existing response contracts. Search, submission and publication routes remain denied. Separately enabled private draft routes are documented in [Java authoring](java-authoring.md). Identity response shapes match Python, but Java uses
+use the existing response contracts. Search remains denied. Submission, review, publication and withdrawal are separately enabled through [Java workflows](java-workflows.md). Separately enabled private draft routes are documented in [Java authoring](java-authoring.md). Identity response shapes match Python, but Java uses
 separate cookie names and an explicitly configured loopback origin. See
 [Java authentication](java-authentication.md) before enabling it; this is not a cutover.
 

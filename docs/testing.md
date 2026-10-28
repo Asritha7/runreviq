@@ -142,3 +142,14 @@ The Maven unit suite includes frozen Python extraction/review parity; check fres
 database harness also runs draft HTTP/SQL tests, concurrent quota/review races and a
 Python → Java → Python draft/review round trip. Google integration uses an offline
 identity-provider substitute. See [Java authoring](java-authoring.md) for scope and limits.
+
+## Java workflow checks
+
+The disposable Java harness also runs submission, review, publication and withdrawal
+HTTP/JDBC tests after the existing read/draft suite. Tests compare Python-created
+publication responses and checksums, then verify Python can read a Java withdrawal.
+Concurrency tests exercise single-use decisions and idempotent publication; an injected
+SQL failure proves publication rollback. Operator allowlist revocation, self-review,
+source-backed claims, supersession, current permissions and Google Origin/logout are
+covered. These tests use a fresh database and offline identity provider, not live Google
+or the product database. See [Java workflows](java-workflows.md).
