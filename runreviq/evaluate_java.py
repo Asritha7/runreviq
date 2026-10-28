@@ -24,6 +24,7 @@ from runreviq.selector import select
 
 JAR = ROOT / 'backend/target/runreviq-backend-0.1.0-SNAPSHOT.jar'
 METHOD = 'postgres_english_reviewed_v5'
+METHODS = {'reviewed-v5': METHOD, 'focused-v6': 'postgres_english_focused_v6'}
 STATUSES = {'selected', 'conflict', 'needs_context_or_review', 'insufficient_evidence'}
 
 
@@ -61,9 +62,11 @@ def http_json(port, path, *, body=None, token=None):
 
 
 @contextmanager
-def java_runtime(dbname, directory, jar=JAR):
+def java_runtime(dbname, directory, jar=JAR, mode="reviewed-v5"):
     if not re.fullmatch(r'opslens_java_eval_[0-9a-f]{32}', dbname):
         raise EvaluationFailure('Refusing a non-evaluation database')
+    if mode not in METHODS:
+        raise EvaluationFailure('Unknown search mode')
     passwords = credentials()
     tokens = {role: secrets.token_urlsafe(40) for role in ('platform', 'security', 'intern')}
     private_json(directory / 'readers.json', dict(database=dbname, reader_passwords={r: passwords[f'READER_{r.upper()}_PASSWORD'] for r in tokens}))
@@ -72,7 +75,7 @@ def java_runtime(dbname, directory, jar=JAR):
     command = ['java', '-jar', str(jar), '--server.address=127.0.0.1', '--server.port=0',
                '--runreviq.auth.mode=demo', '--runreviq.auth.config-path=' + str(directory / 'auth.json'),
                '--runreviq.database.enabled=true', '--runreviq.database.config-path=' + str(directory / 'readers.json'),
-               '--runreviq.drafts.enabled=false', '--runreviq.workflows.enabled=false']
+               '--runreviq.drafts.enabled=false', '--runreviq.workflows.enabled=false', '--runreviq.search.mode=' + mode]
     log_path = directory / 'java.log'
     process = None
     try:
@@ -144,7 +147,7 @@ def authorized_sources(dbname, role):
     return {metadata['id']: (dict(metadata, allowed_roles=roles), content) for metadata, content, roles in rows}
 
 
-def assess_response(case, response, sources):
+def assess_response(case, response, sources, method=METHOD):
     """Validate structured references and exact evidence before scoring labels.
 
     Invalid responses are redacted from reports. This does not establish semantic
@@ -179,7 +182,7 @@ def assess_response(case, response, sources):
                 walk(value)
     try:
         require(isinstance(response.get('status'), str) and response['status'] in STATUSES, 'invalid_status')
-        require(response.get('retrieval_method') == METHOD, 'unexpected_retrieval_method')
+        require(response.get('retrieval_method') == method, 'unexpected_retrieval_method')
         hits, recommended = response['passages'], response['recommended_documents']
         require(isinstance(hits, list) and len(hits) <= 5, 'invalid_passage_count')
         require(isinstance(recommended, list), 'invalid_recommendations')
@@ -228,7 +231,7 @@ def summarize(results):
     return report
 
 
-def evaluate_http(port, tokens, dbname, cases, suite, fingerprint, external=False):
+def evaluate_http(port, tokens, dbname, cases, suite, fingerprint, external=False, mode="reviewed-v5"):
     results = []
     for case in cases:
         context = dict(case['context'])
@@ -236,11 +239,11 @@ def evaluate_http(port, tokens, dbname, cases, suite, fingerprint, external=Fals
         started = time.perf_counter()
         response = http_json(port, '/v1/search', body=dict(context, question=case['question']), token=tokens[role])
         elapsed = (time.perf_counter() - started) * 1000
-        result = assess_response(case, response, authorized_sources(dbname, role))
+        result = assess_response(case, response, authorized_sources(dbname, role), METHODS[mode])
         result['latency_ms'] = round(elapsed, 2)
         results.append(result)
     return dict(**summarize(results), suite=suite, runtime='java_http', dataset_sha256=fingerprint,
-                retrieval_method=METHOD, question_source='external' if external else 'built_in',
+                retrieval_method=METHODS[mode], question_source='external' if external else 'built_in',
                 independence='not_verified' if external else 'same_author_development',
                 categories={category: summarize([r for r in results if r['category'] == category]) for category in sorted({r['category'] for r in results})},
                 results=results)
@@ -254,6 +257,7 @@ def exit_code(report, report_only=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--search-mode', choices=sorted(METHODS), default='reviewed-v5', help='Trusted isolated server configuration, never a per-request override')
     parser.add_argument('--suite', choices=['regression','realistic','validation','paraphrase'], default='realistic')
     parser.add_argument('--questions', type=Path, help='External labels for the chosen corpus; never sent to the server')
     parser.add_argument('--validate-only', action='store_true', help='Validate and fingerprint without Java or PostgreSQL')
@@ -290,8 +294,9 @@ def main(argv=None):
             with evaluation_database() as name:
                 ingest(docs, root=root, dbname=name)
                 verify_corpus(name, records)
-                with java_runtime(name, directory, jar) as (port, tokens):
-                    report = evaluate_http(port, tokens, name, cases, args.suite, fingerprint, bool(args.questions))
+                with java_runtime(name, directory, jar, args.search_mode) as (port, tokens):
+                    options = {} if args.search_mode == 'reviewed-v5' else {'mode': args.search_mode}
+                    report = evaluate_http(port, tokens, name, cases, args.suite, fingerprint, bool(args.questions), **options)
             report['quality_gate'] = 'passed' if exit_code(report) == 0 else 'failed'
             report['java_jar_sha256'] = jar_hash
             report['metric_notes'] = {

@@ -322,3 +322,8 @@ Use `--validate-only` to validate external labels without starting Java or Postg
 See [quality metrics, isolation and known failures](docs/java-quality-evaluation.md).
 The default strict gate rejects missing or extra evidence; report-only never suppresses
 integrity failures. This does not connect the live UI to Java.
+
+For an isolated run of the optional Java precision candidate, use
+`.venv/bin/python -m runreviq.evaluate_java --suite realistic --search-mode focused-v6 --report-only`.
+A separately started Java instance can select it with `--runreviq.search.mode=focused-v6`;
+the default remains reviewed-v5. See [algorithm, comparison and remaining gates](docs/focused-retrieval.md).

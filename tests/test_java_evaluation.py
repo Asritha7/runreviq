@@ -185,8 +185,21 @@ class JavaHttpEvaluationIntegrationTests(unittest.TestCase):
             self.assertEqual(evaluation.main(['--suite','realistic','--report-only']),0)
         report=json.loads(out.getvalue())
         self.assertEqual(report['cases'],50);self.assertEqual(report['runtime'],'java_http');self.assertEqual(report['integrity_failures'],0)
-        self.assertEqual(report['quality_gate'],'failed')
-        self.assertLess(report['precision_at_returned_5'],1);self.assertLess(report['exact_evidence_set_passed'],50)
+        self.assertEqual(report['quality_gate'],'passed' if report['exact_evidence_set_passed']==50 else 'failed')
+        self.assertTrue(0<=report['precision_at_returned_5']<=1)
         with evaluation.connect(dbname='postgres') as conn:
             self.assertIsNone(conn.execute('SELECT 1 FROM pg_database WHERE datname=%s',(observed['dbname'],)).fetchone())
         with self.assertRaises(evaluation.EvaluationFailure): evaluation.http_json(observed['port'],'/health')
+
+    def test_focused_candidate_preserves_targets_on_frozen_development_suites(self):
+        from runreviq.compare_java import compare
+        for suite in ('regression','realistic','validation','paraphrase'):
+            with self.subTest(suite=suite):
+                out=io.StringIO()
+                with redirect_stdout(out):
+                    self.assertEqual(evaluation.main(['--suite',suite,'--search-mode','focused-v6','--report-only']),0)
+                report=json.loads(out.getvalue())
+                baseline=json.loads((evaluation.ROOT/'datasets/java-evaluation'/f'{suite}-v5.json').read_text())
+                comparison=compare(baseline,report)
+                self.assertEqual(comparison['recall_status_or_integrity_regressions'],[])
+                self.assertGreaterEqual(report['precision_at_returned_5'],baseline['precision_at_returned_5'])

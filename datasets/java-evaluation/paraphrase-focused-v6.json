@@ -1,0 +1,521 @@
+{
+  "cases": 8,
+  "passed": 8,
+  "recall_at_5": 1.0,
+  "hit_rate_at_5": 1,
+  "precision_at_returned_5": 0.5416666666666666,
+  "mean_reciprocal_rank": 0.875,
+  "refusal_accuracy": 1,
+  "false_positive_rate": 0,
+  "citation_accuracy": 1,
+  "median_latency_ms": 22.13,
+  "p95_latency_ms": 141.89,
+  "precision_fixed_at_5": 0.2,
+  "exact_evidence_set_passed": 5,
+  "integrity_failures": 0,
+  "suite": "paraphrase",
+  "runtime": "java_http",
+  "dataset_sha256": "b47639296cb9653a7f9e59c6dcf3ebd60a9d55dde86ba7bacdaf9eb0121b2813",
+  "retrieval_method": "postgres_english_focused_v6",
+  "question_source": "built_in",
+  "independence": "same_author_development",
+  "categories": {
+    "paraphrase_probe": {
+      "cases": 8,
+      "passed": 8,
+      "recall_at_5": 1.0,
+      "hit_rate_at_5": 1,
+      "precision_at_returned_5": 0.5416666666666666,
+      "mean_reciprocal_rank": 0.875,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": 1,
+      "median_latency_ms": 22.13,
+      "p95_latency_ms": 141.89,
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set_passed": 5,
+      "integrity_failures": 0
+    }
+  },
+  "results": [
+    {
+      "id": "P01",
+      "category": "paraphrase_probe",
+      "question": "Queued jobs repeatedly retry; what should we investigate?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare task arrival rate with worker completion rate and inspect retry counts. Identify whether a small group of poison messages repeatedly fails. Review the downstream dependency error rate before adding more workers and amplifying load.",
+          "source_sha256": "508b67423e8787a7999202d6480dc95c7a6d9212c5f94fd82d9dc2ccea888730",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "QUE-401",
+          "revision": 1,
+          "title": "Worker queue backlog",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": true,
+      "recall": 1.0,
+      "precision": 1.0,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 141.89
+    },
+    {
+      "id": "P02",
+      "category": "paraphrase_probe",
+      "question": "Which checks confirm that cache recovery is working?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 19,
+          "end_line": 19,
+          "quote": "Validate hit ratio, eviction rate and backend latency together after an approved change. This procedure does not authorize deleting the authoritative datastore, and it does not establish a universal expiry duration for every workload.",
+          "source_sha256": "910d9fc87993e6959792d51b3afdda66ce99739fb277635d419b078ac8e525e5",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "title": "Cache memory pressure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 19,
+          "end_line": 19,
+          "quote": "After the approved cancellation, verify that waiting transactions progress and no replacement blocker appears. A short-lived decrease in latency alone is not proof of recovery. This procedure does not authorize changing database durability settings.",
+          "source_sha256": "d6f17ec2afa6816803f7d6b7f6602fa8f27a55ef19d02a08aca7db8f26dc531f",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-202",
+          "revision": 1,
+          "title": "Transaction lock investigation",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare JWKS refresh failures and signing key identifiers on failing and healthy replicas. Check whether the issuer publishes the new public key before the verifier refreshes its cache. Preserve one redacted failure sample from each replica without copying bearer tokens.",
+          "source_sha256": "fe832bb5dea07d13cf6b683b5953ae0dd83949af011d11f2b239e55128805e44",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "title": "Signing key propagation",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 19,
+          "end_line": 19,
+          "quote": "After the approved cancellation, verify that waiting transactions progress and no replacement blocker appears. A short-lived decrease in latency alone is not proof of recovery. This procedure does not authorize changing database durability settings.",
+          "source_sha256": "d6f17ec2afa6816803f7d6b7f6602fa8f27a55ef19d02a08aca7db8f26dc531f",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-202",
+          "revision": 1,
+          "title": "Transaction lock investigation",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare JWKS refresh failures and signing key identifiers on failing and healthy replicas. Check whether the issuer publishes the new public key before the verifier refreshes its cache. Preserve one redacted failure sample from each replica without copying bearer tokens.",
+          "source_sha256": "fe832bb5dea07d13cf6b683b5953ae0dd83949af011d11f2b239e55128805e44",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "title": "Signing key propagation",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 41.98
+    },
+    {
+      "id": "P03",
+      "category": "paraphrase_probe",
+      "question": "How should we inspect new instances that remain unready?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 7,
+          "end_line": 7,
+          "quote": "A fictional Harbor rollout leaves new replicas unready while old replicas continue serving traffic. Record the rollout revision, probe result and last successful deployment. Distinguish process startup failure from an application that is running but cannot serve requests.",
+          "source_sha256": "6e5d14beda79686a94489beeef560578cd53d6421b4152d1c6ee8244492455d1",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DEP-301",
+          "revision": 1,
+          "title": "Deployment readiness failure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Inspect readiness probe responses, startup logs and dependency connectivity on one new replica. Compare configuration names and secret references with the previous revision without displaying secret values. Check whether the readiness endpoint incorrectly requires an optional downstream service.",
+          "source_sha256": "6e5d14beda79686a94489beeef560578cd53d6421b4152d1c6ee8244492455d1",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DEP-301",
+          "revision": 1,
+          "title": "Deployment readiness failure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare JWKS refresh failures and signing key identifiers on failing and healthy replicas. Check whether the issuer publishes the new public key before the verifier refreshes its cache. Preserve one redacted failure sample from each replica without copying bearer tokens.",
+          "source_sha256": "fe832bb5dea07d13cf6b683b5953ae0dd83949af011d11f2b239e55128805e44",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "title": "Signing key propagation",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "rank": 2,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 7,
+          "end_line": 7,
+          "quote": "A fictional Harbor rollout leaves new replicas unready while old replicas continue serving traffic. Record the rollout revision, probe result and last successful deployment. Distinguish process startup failure from an application that is running but cannot serve requests.",
+          "source_sha256": "6e5d14beda79686a94489beeef560578cd53d6421b4152d1c6ee8244492455d1",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DEP-301",
+          "revision": 1,
+          "title": "Deployment readiness failure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare JWKS refresh failures and signing key identifiers on failing and healthy replicas. Check whether the issuer publishes the new public key before the verifier refreshes its cache. Preserve one redacted failure sample from each replica without copying bearer tokens.",
+          "source_sha256": "fe832bb5dea07d13cf6b683b5953ae0dd83949af011d11f2b239e55128805e44",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "AUTH-101",
+          "revision": 1,
+          "title": "Signing key propagation",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 22.13
+    },
+    {
+      "id": "P04",
+      "category": "paraphrase_probe",
+      "question": "Which counts show database connection exhaustion?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Inspect active, idle and waiting connection counts in the application pool. Compare the pool limit with the database connection budget across all replicas. Look for transactions that hold a connection after their request has finished.",
+          "source_sha256": "8d408654c25649471d7e539dc1e142c92fca090c8d72d93ddbc14d9df067c063",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-201",
+          "revision": 1,
+          "title": "Database connection pool exhaustion",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "Reduce admitted request concurrency with incident-lead approval while the owner investigates leaked connections. Increasing every replica pool can exhaust the database globally. Capture the oldest transaction age and its owning component before any intervention.",
+          "source_sha256": "8d408654c25649471d7e539dc1e142c92fca090c8d72d93ddbc14d9df067c063",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-201",
+          "revision": 1,
+          "title": "Database connection pool exhaustion",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.5,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "Reduce admitted request concurrency with incident-lead approval while the owner investigates leaked connections. Increasing every replica pool can exhaust the database globally. Capture the oldest transaction age and its owning component before any intervention.",
+          "source_sha256": "8d408654c25649471d7e539dc1e142c92fca090c8d72d93ddbc14d9df067c063",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-201",
+          "revision": 1,
+          "title": "Database connection pool exhaustion",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 22.13
+    },
+    {
+      "id": "P05",
+      "category": "paraphrase_probe",
+      "question": "How do I diagnose HTTP 503 errors?",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "withheld": true,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [],
+      "retrieved": [],
+      "precision_fixed_at_5": 0.0,
+      "exact_evidence_set": true,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 23.15
+    },
+    {
+      "id": "P06",
+      "category": "paraphrase_probe",
+      "question": "Which audit record contains UNKNOWN-900?",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "withheld": true,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [],
+      "retrieved": [],
+      "precision_fixed_at_5": 0.0,
+      "exact_evidence_set": true,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 18.45
+    },
+    {
+      "id": "P07",
+      "category": "paraphrase_probe",
+      "question": "How do I configure database durability?",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "withheld": true,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [],
+      "retrieved": [],
+      "precision_fixed_at_5": 0.0,
+      "exact_evidence_set": true,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 19.25
+    },
+    {
+      "id": "P08",
+      "category": "paraphrase_probe",
+      "question": "What instructions cover certificate renewal?",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "withheld": true,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [],
+      "retrieved": [],
+      "precision_fixed_at_5": 0.0,
+      "exact_evidence_set": true,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 17.39
+    }
+  ],
+  "quality_gate": "failed",
+  "java_jar_sha256": "483fceae20fd9a6d977ae5321f85de96498d3a8483505bc6b7816179c62123e9",
+  "metric_notes": {
+    "quality_gate": "Strict exact labeled evidence set and expected status for every case; unlabeled passages count as extra under these labels.",
+    "passed": "Correct status and all labeled passages retrieved; extra irrelevant passages do not fail this outcome.",
+    "exact_evidence_set_passed": "Correct outcome with no missing or extra passages.",
+    "precision_at_returned_5": "Mean positive-case labeled hits divided by returned passages; empty returns score zero.",
+    "precision_fixed_at_5": "Mean positive-case distinct labeled hits divided by five, including empty slots.",
+    "integrity": "Structured reference authorization, current sources, applicability and exact quotes/hashes; not semantic entailment.",
+    "latency": "Local HTTP request time, excluding build/startup and evaluator integrity reads; not a load benchmark."
+  }
+}

@@ -101,3 +101,8 @@ A separate [Java HTTP quality evaluator](java-quality-evaluation.md) now scores 
 evidence targets in an isolated runtime. Its realistic development report still fails
 the strict relevance gate despite matching all expected outcomes; migration parity
 remains distinct from effectiveness.
+
+An optional server-configured [focused-v6 candidate](focused-retrieval.md) changes only
+lexical scoring/selection. The default remains reviewed-v5, with its original frozen
+full-response parity checks. Neither candidate selection nor benchmark expectations
+can be supplied by an HTTP caller.

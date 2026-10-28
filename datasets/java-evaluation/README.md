@@ -23,3 +23,16 @@ material only; questions and target labels remain in the evaluator. Keep these r
 reports unchanged; record a new named report for an intentional algorithm/data revision.
 
 See [metric definitions and limitations](../../docs/java-quality-evaluation.md).
+
+## Focused-v6 candidate
+
+The original v5 reports remain unchanged. `validation-v5.json` adds the previously
+unrecorded validation-suite baseline. Each `*-focused-v6.json` report records the Java
+candidate on the identical suite, and each `*-v5-v6-comparison.json` records its paired
+metric deltas and per-case regressions. All inputs are existing development material.
+
+The candidate improves realistic precision to 70.57%, validation precision to 60.42%,
+and paraphrase precision to 54.17%, with no lost labeled evidence in these recorded
+comparisons. It still fails their strict exact-set gates and remains opt-in. Reproduce
+with `--search-mode focused-v6`; compare using `python -m runreviq.compare_java`.
+See [algorithm, measured trade-offs and tests](../../docs/focused-retrieval.md).

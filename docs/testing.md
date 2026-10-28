@@ -177,3 +177,13 @@ Unit tests cover distinct precision denominators, exact evidence sets, corrupted
 hidden references, conflict quotes, malformed responses, safe HTTP failures, UTF-8,
 label separation, preflight validation and cleanup on startup/bootstrap failures.
 See [evaluation semantics and limitations](java-quality-evaluation.md).
+
+## Focused Java retrieval candidate
+
+The existing Java search harness accepts `--search-mode focused-v6`. Default mode still
+compares complete responses against the frozen Python fixture. Focused mode checks
+unchanged context/applicability/conflict fields, exact source quotations and the same
+HTTP/SQL access boundaries, including typed-evidence roles. Both runs use disposable data.
+The Java quality integration test runs all four development suites in focused mode and
+compares against immutable v5 reports. Pure comparison tests reject changed fingerprints,
+labels, provenance, missing cases and inconsistent metrics. See [candidate limits](focused-retrieval.md).

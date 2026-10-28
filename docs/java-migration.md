@@ -88,6 +88,14 @@ and fails its strict gate on missing or extra evidence. Existing development res
 show substantial noise; they are not independent held-out validation. See
 [quality evaluation and measured limitations](java-quality-evaluation.md).
 
+## Stage 5c — optional focused retrieval
+
+Implemented: an opt-in Java scoring candidate that favors passage evidence, topic
+coverage and explicit diagnostic/verification intent. Paired same-input reports show
+better development precision without lost labeled evidence, but strict exact-set gates
+still fail on larger suites. The default remains reviewed-v5; independent validation
+and runtime cutover are pending. See [focused retrieval](focused-retrieval.md).
+
 ## Remaining stages and acceptance gates
 
 | Stage | Work | Required proof before use |

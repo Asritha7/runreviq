@@ -23,6 +23,7 @@ class SearchGoogleIntegrationTest {
     }
     @LocalServerPort int port;
     @DynamicPropertySource static void properties(DynamicPropertyRegistry r) {
+        r.add("runreviq.search.mode",SearchIntegrationTest::mode);
         r.add("runreviq.auth.mode",()->"google");r.add("runreviq.auth.config-path",()->JdbcIntegrationTest.dir().resolve("google.json").toString());
         r.add("runreviq.database.enabled",()->"true");r.add("runreviq.database.config-path",()->JdbcIntegrationTest.dir().resolve("readers.json").toString());
     }

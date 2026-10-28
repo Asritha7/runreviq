@@ -1,0 +1,782 @@
+{
+  "cases": 12,
+  "passed": 12,
+  "recall_at_5": 1.0,
+  "hit_rate_at_5": 1,
+  "precision_at_returned_5": 0.6041666666666666,
+  "mean_reciprocal_rank": 0.9375,
+  "refusal_accuracy": 1,
+  "false_positive_rate": 0,
+  "citation_accuracy": 1,
+  "median_latency_ms": 17.825000000000003,
+  "p95_latency_ms": 145.62,
+  "precision_fixed_at_5": 0.2,
+  "exact_evidence_set_passed": 6,
+  "integrity_failures": 0,
+  "suite": "validation",
+  "runtime": "java_http",
+  "dataset_sha256": "1dc4b4f3f5b36396be256987d9b4b2838092a6a651a0250306b800eea4f016e6",
+  "retrieval_method": "postgres_english_focused_v6",
+  "question_source": "built_in",
+  "independence": "same_author_development",
+  "categories": {
+    "validation": {
+      "cases": 12,
+      "passed": 12,
+      "recall_at_5": 1.0,
+      "hit_rate_at_5": 1,
+      "precision_at_returned_5": 0.6041666666666666,
+      "mean_reciprocal_rank": 0.9375,
+      "refusal_accuracy": 1,
+      "false_positive_rate": 0,
+      "citation_accuracy": 1,
+      "median_latency_ms": 17.825000000000003,
+      "p95_latency_ms": 145.62,
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set_passed": 6,
+      "integrity_failures": 0
+    }
+  },
+  "results": [
+    {
+      "id": "V01",
+      "category": "validation",
+      "question": "What observations show that workers are catching up with arriving tasks?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare task arrival rate with worker completion rate and inspect retry counts. Identify whether a small group of poison messages repeatedly fails. Review the downstream dependency error rate before adding more workers and amplifying load.",
+          "source_sha256": "508b67423e8787a7999202d6480dc95c7a6d9212c5f94fd82d9dc2ccea888730",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "QUE-401",
+          "revision": 1,
+          "title": "Worker queue backlog",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 19,
+          "end_line": 19,
+          "quote": "Recovery requires the oldest message age to decrease while successful completions exceed arrivals. Confirm that quarantined work has an owner and a replay plan. This procedure does not specify message ordering guarantees or exactly-once delivery.",
+          "source_sha256": "508b67423e8787a7999202d6480dc95c7a6d9212c5f94fd82d9dc2ccea888730",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "QUE-401",
+          "revision": 1,
+          "title": "Worker queue backlog",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.5,
+      "rank": 2,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare task arrival rate with worker completion rate and inspect retry counts. Identify whether a small group of poison messages repeatedly fails. Review the downstream dependency error rate before adding more workers and amplifying load.",
+          "source_sha256": "508b67423e8787a7999202d6480dc95c7a6d9212c5f94fd82d9dc2ccea888730",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "QUE-401",
+          "revision": 1,
+          "title": "Worker queue backlog",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 145.62
+    },
+    {
+      "id": "V02",
+      "category": "validation",
+      "question": "Do old binaries support records written by the new release?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Before rollback, check database schema compatibility, migration reversibility and whether old binaries can read records written by the new release. Review the last known healthy artifact identifier and the release owner decision. Do not assume every deployment is reversible.",
+          "source_sha256": "37c8a00ce71d952a2298756277426e01837dce01773c99ba25638ea44fd1b112",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DEP-302",
+          "revision": 1,
+          "title": "Release rollback decision",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "If compatibility is confirmed, obtain release-owner approval and roll back a limited group before widening the change. Watch request errors, latency and data validation checks. Stop if old binaries reject newly written records or recovery indicators worsen.",
+          "source_sha256": "37c8a00ce71d952a2298756277426e01837dce01773c99ba25638ea44fd1b112",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DEP-302",
+          "revision": 1,
+          "title": "Release rollback decision",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.5,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "If compatibility is confirmed, obtain release-owner approval and roll back a limited group before widening the change. Watch request errors, latency and data validation checks. Stop if old binaries reject newly written records or recovery indicators worsen.",
+          "source_sha256": "37c8a00ce71d952a2298756277426e01837dce01773c99ba25638ea44fd1b112",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DEP-302",
+          "revision": 1,
+          "title": "Release rollback decision",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 31.05
+    },
+    {
+      "id": "V03",
+      "category": "validation",
+      "question": "What should I do when resolver answers differ across workloads?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare DNS answers from a failing workload and a healthy workload. Inspect resolver configuration, search suffixes and the authoritative service record. Check whether a recent service rename left clients using an old hostname.",
+          "source_sha256": "056e77c161d176cc9e9521acb4b75c0a5ac4ed60262fddf2eea3222da1f35d1c",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "NET-601",
+          "revision": 1,
+          "title": "Service discovery resolution",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 7,
+          "end_line": 7,
+          "quote": "Fictional Harbor clients cannot resolve a downstream service name, while direct connectivity to a known healthy endpoint works. Record the queried hostname and resolver response code. A timeout and a nonexistent-name response require different investigation.",
+          "source_sha256": "056e77c161d176cc9e9521acb4b75c0a5ac4ed60262fddf2eea3222da1f35d1c",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "NET-601",
+          "revision": 1,
+          "title": "Service discovery resolution",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.5,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 7,
+          "end_line": 7,
+          "quote": "Fictional Harbor clients cannot resolve a downstream service name, while direct connectivity to a known healthy endpoint works. Record the queried hostname and resolver response code. A timeout and a nonexistent-name response require different investigation.",
+          "source_sha256": "056e77c161d176cc9e9521acb4b75c0a5ac4ed60262fddf2eea3222da1f35d1c",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "NET-601",
+          "revision": 1,
+          "title": "Service discovery resolution",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 24.71
+    },
+    {
+      "id": "V04",
+      "category": "validation",
+      "question": "Which timestamp fields help investigate token validation failures?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare the verifier clock with the trusted time source and inspect the not-before and expiry timestamps from a redacted token record. If the offset exceeds the configured tolerance, investigate time synchronization. Never log the raw token or its signature.",
+          "source_sha256": "a57f80f51a5da1dcf7d53754e31699a64b11278178710e5afe2d0682e827154e",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "title": "Token clock skew",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 7,
+          "end_line": 7,
+          "quote": "In the fictional Harbor service, requests fail immediately after hosts resume from maintenance. Token validation reports that a token is not yet valid or has expired. Record timestamps in UTC and compare one healthy host with one failing host.",
+          "source_sha256": "a57f80f51a5da1dcf7d53754e31699a64b11278178710e5afe2d0682e827154e",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "title": "Token clock skew",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.5,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 7,
+          "end_line": 7,
+          "quote": "In the fictional Harbor service, requests fail immediately after hosts resume from maintenance. Token validation reports that a token is not yet valid or has expired. Record timestamps in UTC and compare one healthy host with one failing host.",
+          "source_sha256": "a57f80f51a5da1dcf7d53754e31699a64b11278178710e5afe2d0682e827154e",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "AUTH-102",
+          "revision": 1,
+          "title": "Token clock skew",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 23.48
+    },
+    {
+      "id": "V05",
+      "category": "validation",
+      "question": "What approval is needed before quarantining poison messages?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "With queue-owner approval, quarantine identified poison messages while preserving their identifiers for investigation. Increase worker concurrency only if downstream capacity is available. Do not purge the queue or acknowledge unfinished tasks to hide the backlog.",
+          "source_sha256": "508b67423e8787a7999202d6480dc95c7a6d9212c5f94fd82d9dc2ccea888730",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "QUE-401",
+          "revision": 1,
+          "title": "Worker queue backlog",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": true,
+      "recall": 1.0,
+      "precision": 1.0,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 19.38
+    },
+    {
+      "id": "V06",
+      "category": "validation",
+      "question": "How should I check a suspected leaked database connection?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Inspect active, idle and waiting connection counts in the application pool. Compare the pool limit with the database connection budget across all replicas. Look for transactions that hold a connection after their request has finished.",
+          "source_sha256": "8d408654c25649471d7e539dc1e142c92fca090c8d72d93ddbc14d9df067c063",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-201",
+          "revision": 1,
+          "title": "Database connection pool exhaustion",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "Reduce admitted request concurrency with incident-lead approval while the owner investigates leaked connections. Increasing every replica pool can exhaust the database globally. Capture the oldest transaction age and its owning component before any intervention.",
+          "source_sha256": "8d408654c25649471d7e539dc1e142c92fca090c8d72d93ddbc14d9df067c063",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-201",
+          "revision": 1,
+          "title": "Database connection pool exhaustion",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.5,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "Reduce admitted request concurrency with incident-lead approval while the owner investigates leaked connections. Increasing every replica pool can exhaust the database globally. Capture the oldest transaction age and its owning component before any intervention.",
+          "source_sha256": "8d408654c25649471d7e539dc1e142c92fca090c8d72d93ddbc14d9df067c063",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-201",
+          "revision": 1,
+          "title": "Database connection pool exhaustion",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 18.14
+    },
+    {
+      "id": "V07",
+      "category": "validation",
+      "question": "What should I preserve before cancelling a database blocker?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "Ask the database owner to approve cancellation of the identified blocker only after checking rollback impact. Killing all database sessions can cause a larger outage. Preserve the blocking chain before cancellation so the underlying cause can be reviewed.",
+          "source_sha256": "d6f17ec2afa6816803f7d6b7f6602fa8f27a55ef19d02a08aca7db8f26dc531f",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "DB-202",
+          "revision": 1,
+          "title": "Transaction lock investigation",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": true,
+      "recall": 1.0,
+      "precision": 1.0,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 17.45
+    },
+    {
+      "id": "V08",
+      "category": "validation",
+      "question": "How do I confirm a cache change helped without overloading the backend?",
+      "passed": true,
+      "expected_status": "selected",
+      "actual_status": "selected",
+      "withheld": false,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [
+        true,
+        true,
+        true
+      ],
+      "retrieved": [
+        {
+          "start_line": 19,
+          "end_line": 19,
+          "quote": "Validate hit ratio, eviction rate and backend latency together after an approved change. This procedure does not authorize deleting the authoritative datastore, and it does not establish a universal expiry duration for every workload.",
+          "source_sha256": "910d9fc87993e6959792d51b3afdda66ce99739fb277635d419b078ac8e525e5",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "title": "Cache memory pressure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "Ask the cache owner to review bounded cache admission or expiry changes. Confirm database capacity before reducing cache retention, because additional misses increase backend load. Do not flush the entire cache during peak traffic as a diagnostic shortcut.",
+          "source_sha256": "910d9fc87993e6959792d51b3afdda66ce99739fb277635d419b078ac8e525e5",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "title": "Cache memory pressure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare eviction counts with memory saturation and identify whether unusually large values or a changed key distribution appeared. Inspect expiry settings on a representative sample without copying customer payloads. Check whether expired entries are being refreshed too aggressively.",
+          "source_sha256": "910d9fc87993e6959792d51b3afdda66ce99739fb277635d419b078ac8e525e5",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "title": "Cache memory pressure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "precision_fixed_at_5": 0.2,
+      "exact_evidence_set": false,
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "rank": 1,
+      "missing": [],
+      "irrelevant": [
+        {
+          "start_line": 15,
+          "end_line": 15,
+          "quote": "Ask the cache owner to review bounded cache admission or expiry changes. Confirm database capacity before reducing cache retention, because additional misses increase backend load. Do not flush the entire cache during peak traffic as a diagnostic shortcut.",
+          "source_sha256": "910d9fc87993e6959792d51b3afdda66ce99739fb277635d419b078ac8e525e5",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "title": "Cache memory pressure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        },
+        {
+          "start_line": 11,
+          "end_line": 11,
+          "quote": "Compare eviction counts with memory saturation and identify whether unusually large values or a changed key distribution appeared. Inspect expiry settings on a representative sample without copying customer payloads. Check whether expired entries are being refreshed too aggressively.",
+          "source_sha256": "910d9fc87993e6959792d51b3afdda66ce99739fb277635d419b078ac8e525e5",
+          "evidence_role": "unclassified",
+          "role_reviewed": false,
+          "document_id": "CACHE-501",
+          "revision": 1,
+          "title": "Cache memory pressure",
+          "usage_note": "Evidence type has not been reviewed; inspect the full source before acting.",
+          "applicability": {
+            "service": "harbor",
+            "environment": "production",
+            "version_min": "3.0.0",
+            "version_max_exclusive": "3.1.0",
+            "key_rotation_enabled": true,
+            "http_scope": null
+          }
+        }
+      ],
+      "latency_ms": 17.51
+    },
+    {
+      "id": "V09",
+      "category": "validation",
+      "question": "How do I renew a service certificate automatically?",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "withheld": true,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [],
+      "retrieved": [],
+      "precision_fixed_at_5": 0.0,
+      "exact_evidence_set": true,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 16.89
+    },
+    {
+      "id": "V10",
+      "category": "validation",
+      "question": "What shell command resets a forgotten password?",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "withheld": true,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [],
+      "retrieved": [],
+      "precision_fixed_at_5": 0.0,
+      "exact_evidence_set": true,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 15.53
+    },
+    {
+      "id": "V11",
+      "category": "validation",
+      "question": "How much memory does every cache need?",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "withheld": true,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [],
+      "retrieved": [],
+      "precision_fixed_at_5": 0.0,
+      "exact_evidence_set": true,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 16.08
+    },
+    {
+      "id": "V12",
+      "category": "validation",
+      "question": "Which exact SQL statement fixes the schema migration?",
+      "passed": true,
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "withheld": true,
+      "integrity_ok": true,
+      "integrity_errors": [],
+      "citation_checks": [],
+      "retrieved": [],
+      "precision_fixed_at_5": 0.0,
+      "exact_evidence_set": true,
+      "recall": null,
+      "precision": 0.0,
+      "rank": null,
+      "missing": [],
+      "irrelevant": [],
+      "latency_ms": 16.11
+    }
+  ],
+  "quality_gate": "failed",
+  "java_jar_sha256": "483fceae20fd9a6d977ae5321f85de96498d3a8483505bc6b7816179c62123e9",
+  "metric_notes": {
+    "quality_gate": "Strict exact labeled evidence set and expected status for every case; unlabeled passages count as extra under these labels.",
+    "passed": "Correct status and all labeled passages retrieved; extra irrelevant passages do not fail this outcome.",
+    "exact_evidence_set_passed": "Correct outcome with no missing or extra passages.",
+    "precision_at_returned_5": "Mean positive-case labeled hits divided by returned passages; empty returns score zero.",
+    "precision_fixed_at_5": "Mean positive-case distinct labeled hits divided by five, including empty slots.",
+    "integrity": "Structured reference authorization, current sources, applicability and exact quotes/hashes; not semantic entailment.",
+    "latency": "Local HTTP request time, excluding build/startup and evaluator integrity reads; not a load benchmark."
+  }
+}

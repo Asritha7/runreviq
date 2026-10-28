@@ -118,3 +118,12 @@ before recording the initial report. Improve relevance on a separate development
 then remeasure the frozen evaluation split. The Java frontend rehearsal, real Google
 sign-in, and explicit runtime/rollback review remain pending; this command does not
 perform a cutover.
+
+## Optional focused candidate
+
+`--search-mode focused-v6` explicitly configures the isolated Java server for the
+precision candidate; the default is `reviewed-v5`. The evaluator checks the selected
+method in every response. Use `python -m runreviq.compare_java BASELINE CANDIDATE` to
+compare reports only on identical frozen sources/questions/labels. See
+[focused retrieval](focused-retrieval.md) for measured gains and limits; the original
+v5 reports above remain historical baselines.

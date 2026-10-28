@@ -7,7 +7,12 @@ import java.util.*;
 
 public final class EvidenceRepository {
     private final ReaderConnections readers;
-    public EvidenceRepository(ReaderConnections readers) { this.readers=readers; }
+    private final boolean focused;
+    public EvidenceRepository(ReaderConnections readers) { this(readers,"reviewed-v5"); }
+    public EvidenceRepository(ReaderConnections readers,String mode) {
+        if(!Set.of("reviewed-v5","focused-v6").contains(mode))throw new IllegalArgumentException("Unknown search mode");
+        this.readers=readers;this.focused=mode.equals("focused-v6");
+    }
     public List<EvidenceDocument> current(String role) {
         return readers.read(role,connection -> snapshot(connection).stream().map(Source::document).toList());
     }
@@ -30,7 +35,7 @@ public final class EvidenceRepository {
     public Map<String,Object> search(String question,dev.runreviq.domain.SelectionContext context) {
         // Validate/infer context before opening SQL; reader failures remain fixed 503s.
         var request=SearchRepository.context(question,context);
-        return readers.read(context.role(),connection -> SearchRepository.search(connection,snapshot(connection),question,request,context.httpStatus()));
+        return readers.read(context.role(),connection -> SearchRepository.search(connection,snapshot(connection),question,request,context.httpStatus(),focused));
     }
     public Map<String,Object> revision(String role,String id,int revision) {
         if(id==null || !id.matches("[A-Z]+-[0-9]+") || revision<1) throw new IllegalArgumentException("Invalid revision");
