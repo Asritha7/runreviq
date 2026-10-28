@@ -79,11 +79,20 @@ comparisons cover 108 cases; separate HTTP/SQL security checks cover revocation,
 withdrawal, corruption and request boundaries. See [Java search](java-search.md).
 This establishes migration parity, not independent relevance or production readiness.
 
+## Stage 5b — Java HTTP quality measurement
+
+Implemented: an offline runner builds Java and starts an isolated demo-authenticated
+HTTP server against a disposable source-only database. It scores labeled evidence,
+checks structured references/citations, reports fixed and returned-result precision,
+and fails its strict gate on missing or extra evidence. Existing development results
+show substantial noise; they are not independent held-out validation. See
+[quality evaluation and measured limitations](java-quality-evaluation.md).
+
 ## Remaining stages and acceptance gates
 
 | Stage | Work | Required proof before use |
 | --- | --- | --- |
-| 5: quality gate | Retrieval implementation and frozen parity complete; independent quality evaluation pending | Separate held-out evaluation through a Java HTTP adapter before cutover |
+| 5: quality gate | Java HTTP evaluator implemented; realistic/paraphrase development suites fail the strict relevance gate; independent evaluation pending | New held-out evaluation and evidence of acceptable usefulness before cutover |
 | 6: cutover | Existing frontend served by Java; operational tooling, documentation and rollback | Full end-to-end parity, live sign-in smoke test, no unauthorized disclosures, reproducible evaluation and explicit cutover review |
 
 Keep PostgreSQL migrations under the existing Python migration owner initially.

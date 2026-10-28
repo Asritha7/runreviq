@@ -315,3 +315,10 @@ For Java passage search, the existing reader adapter also enables `POST /v1/sear
 See [Java search requests, boundaries and parity checks](docs/java-search.md). Run
 `RUNREVIQ_TEST_DATABASE=1 .venv/bin/python scripts/test_java_search.py` to compare full
 responses in a disposable database. This does not switch the port-8000 workspace to Java.
+
+To evaluate Java retrieval against labeled targets in its own temporary runtime, run
+`.venv/bin/python -m runreviq.evaluate_java --suite realistic --report-only`.
+Use `--validate-only` to validate external labels without starting Java or PostgreSQL.
+See [quality metrics, isolation and known failures](docs/java-quality-evaluation.md).
+The default strict gate rejects missing or extra evidence; report-only never suppresses
+integrity failures. This does not connect the live UI to Java.

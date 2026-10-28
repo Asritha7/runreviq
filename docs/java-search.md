@@ -96,3 +96,8 @@ small-corpus retrieval with no embeddings, LLM, general semantic contradiction d
 live monitoring, or operational action execution. Query and output sizes are bounded;
 source scanning and ranking still scale with the authorized corpus. Production load and
 retrieval quality need separate evaluation before cutover.
+
+A separate [Java HTTP quality evaluator](java-quality-evaluation.md) now scores labeled
+evidence targets in an isolated runtime. Its realistic development report still fails
+the strict relevance gate despite matching all expected outcomes; migration parity
+remains distinct from effectiveness.
