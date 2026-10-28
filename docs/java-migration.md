@@ -25,8 +25,8 @@ Both stacks can run locally without paid APIs.
 
 The selector accepts trusted domain objects, not arbitrary HTTP input. Role filtering
 is not authentication or database authorization. Evidence-profile constructors check
-structure; source quote, line-bound, citation hash and publication checks still belong
-to the existing Python implementation until explicitly ported. Java exact version
+structure. Source quote, line-bound and citation hash checks were subsequently ported
+in stage 3, with publication checks in stage 4b. Java exact version
 inputs currently use ASCII digits; Python's internal helper also accepts Unicode
 numeric digits. Neither supports prereleases. Java now exposes the opt-in read endpoints described in stage 3.
 
@@ -51,7 +51,7 @@ content/metadata/citation integrity checks. Python/Java HTTP parity and isolatio
 run against a fresh disposable database. Database access defaults to disabled; existing
 runtime and migrations are unchanged. See [Java persistence](java-persistence.md).
 
-Stage 4a adds private draft writes and owner metadata reviews; independent review and publication remain in stage 4b; no Java ingestion or schema migration
+Stage 4a adds private draft writes and owner metadata reviews; stage 4b adds independent review and publication; no Java ingestion or schema migration
 owner is introduced. Live Google-to-Java sign-in remains a separate manual smoke-test gate.
 
 ## Stage 4a — private drafts and metadata review
@@ -60,13 +60,20 @@ Implemented as a separate opt-in boundary: owner-private Markdown uploads, expli
 metadata proposals, source-aware profile validation and append-only review saves with
 stale-revision rejection. Real database/HTTP tests cover privacy, concurrency and
 Python/Java interoperability. See [Java authoring](java-authoring.md).
-Submission, independent decisions, publication and withdrawal remain unported.
+Submission, independent decisions, publication and withdrawal are separately enabled in stage 4b.
+
+## Stage 4b — controlled publication
+
+Implemented: owner submissions, independent reviewer decisions, explicit publication,
+publisher history/revision inspection and withdrawal. Separate operator allowlists and
+SQL logins retain the Python policy. Integration tests cover concurrency, rollback,
+RLS, current authorization and cross-language publication checksum/history parity.
+See [Java workflows](java-workflows.md). The live Python application is unchanged.
 
 ## Remaining stages and acceptance gates
 
 | Stage | Work | Required proof before use |
 | --- | --- | --- |
-| 4b: controlled publication | Submission, independent review, publication and withdrawal | Owner privacy, reviewer/publisher separation, stale-review rejection, history and idempotency parity |
 | 5: retrieval | Authorized passage retrieval, reviewed profiles, typed bundles and evidence responses | Same applicability/abstention semantics, citation support and held-out evaluation through a Java HTTP adapter |
 | 6: cutover | Existing frontend served by Java; operational tooling, documentation and rollback | Full end-to-end parity, live sign-in smoke test, no unauthorized disclosures, reproducible evaluation and explicit cutover review |
 
@@ -91,3 +98,36 @@ through cutover so application rollback does not require destructive data migrat
 
 The evaluation-only PR #26 is separate from this migration branch and is not merged
 by this change. No local secrets, database data or downloaded toolchains are committed.
+
+## Python product-backend retirement checklist
+
+These are pending cutover gates, not capabilities established by the current migration:
+
+- Complete Java passage search and compare full HTTP responses on frozen fixtures,
+  including abstention, conflicts, source ranges, restricted evidence and withdrawal.
+- Evaluate retrieval quality separately on held-out questions. Preserve PR #26's
+  frozen report and known ranking misses; a parity pass must not become a relevance claim.
+- Connect the existing frontend to an isolated Java instance and exercise author,
+  independent reviewer, publisher and reader flows. Complete a real Google sign-in,
+  expiry/logout and access-revocation smoke test before changing the active runtime.
+- Choose one product runtime as the only live backend, with an explicit cutover review.
+  Preserve the last working Python release, private configuration and a non-destructive
+  rollback procedure; rehearse switching back against a disposable database first.
+- After the agreed observation period and rollback review, remove the Python product
+  server from normal startup and CI product-release responsibilities. Retain Python
+  offline evaluators, frozen fixtures and any migration/bootstrap commands still owned
+  by Python. Separately resolve ownership of remaining shared Python libraries before
+  deleting code they depend on; do not maintain two live product implementations indefinitely.
+
+## Authorization contract and future generated answers
+
+Current identity/assignment checks happen at request entry. Database snapshot and
+transaction semantics mean committed revocation affects subsequent requests rather
+than retroactively cancelling work already in flight. This is documented behavior,
+not immediate cancellation or a guarantee against every revocation/delivery race.
+
+Generated answers are not implemented. Before introducing them, define and test
+revalidation of identity, current source permissions, withdrawal and source versions
+before delivering an answer or reusing a stored one. Withhold stale derived answers
+until regenerated from currently authorized evidence. Decide explicitly how streaming
+and mid-delivery revocation work; checking once before generation is not sufficient.

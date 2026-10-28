@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT))
 from psycopg import sql
 from runreviq.database import bootstrap, connect, credentials, ingest, load_authorized_documents, load_authorized_revision
 from runreviq.selector import load_documents, select
-from runreviq import drafts
+from runreviq import drafts, submissions, publications, lifecycle
 from scripts.export_java_authoring_parity import SOURCE
 
 
@@ -46,6 +46,10 @@ def main():
         with tempfile.TemporaryDirectory(prefix='runreviq-java-db-') as folder:
             directory = Path(folder)
             secrets = credentials()
+            private(directory / 'review-db.json', {'database': name, 'password': secrets['REVIEW_PASSWORD']})
+            private(directory / 'publish-db.json', {'database': name, 'password': secrets['PUBLISH_PASSWORD']})
+            private(directory / 'reviewers.json', {'demo': ['test-security'], 'google': ['test-subject']})
+            private(directory / 'publishers.json', {'demo': ['test-intern'], 'google': ['test-subject']})
             private(directory / 'drafts.json', {'database': name, 'draft_password': secrets['DRAFTS_PASSWORD']})
             private(directory / 'readers.json', {'database': name, 'reader_passwords': {r: secrets[f'READER_{r.upper()}_PASSWORD'] for r in ('platform','security','intern')}})
             # Admin credentials are exclusively a test helper, guarded by this exact generated DB name.
@@ -68,6 +72,27 @@ def main():
             metadata = dict(title='Example', service='identity-service', environment='production', version_min='2.4.0', version_max_exclusive='2.5.0', key_rotation_enabled='none')
             drafts.save_review(owner, draft['id'], 0, metadata, dbname=name)
             private(directory / 'draft-interop.json', {'owner': owner, 'draft': drafts.get_draft(owner, draft['id'], dbname=name)})
+            workflow_owner = drafts.owner_key('demo', 'workflow-python-owner')
+            workflow_reviewer = drafts.owner_key('demo', 'test-security')
+            workflow_publisher = drafts.owner_key('demo', 'test-intern')
+            workflow_source = '# Python workflow\nInspect JWKS before restart.\nDo not disable verification.\n'
+            workflow_draft = drafts.create_draft(workflow_owner, 'workflow.md', workflow_source, dbname=name)
+            drafts.save_review(workflow_owner, workflow_draft['id'], 0, metadata, dbname=name)
+            workflow_submission = submissions.submit(workflow_owner, workflow_draft['id'], 1, dbname=name)
+            submissions.decide(workflow_reviewer, workflow_submission['id'], 'approved', 'Checked source', dbname=name)
+            workflow_claims = [{'action': 'inspect_jwks', 'rule':'must', 'start_line':2, 'end_line':2}, {'action':'disable_verification','rule':'must_not','start_line':3,'end_line':3}]
+            workflow_publication = publications.publish(workflow_publisher, workflow_submission['id'], ['platform'], workflow_claims, True, dbname=name)
+            private(directory / 'workflow-interop.json', dict(owner=workflow_owner, reviewer=workflow_reviewer, publisher=workflow_publisher,
+                draft_id=workflow_draft['id'], submission_id=workflow_submission['id'], claims=workflow_claims,
+                own=submissions.own_submissions(workflow_owner,workflow_draft['id'],dbname=name),
+                detail=submissions.submission_detail(workflow_reviewer,workflow_submission['id'],dbname=name),
+                publish_detail=publications.detail(workflow_submission['id'],dbname=name), publication=workflow_publication,
+                history=lifecycle.history(workflow_publication['document_id'],dbname=name),
+                revision=lifecycle.revision(workflow_publication['document_id'],1,dbname=name)))
+            # Refresh read goldens after the synthetic interoperability publication.
+            for case in cases:
+                case['expected'] = select(load_authorized_documents(case['role'],dbname=name),role=case['role'],**case['context'])
+            (directory / 'expected.json').write_text(json.dumps(dict(cases=cases,revisions=revisions,canonical=canonical)))
             environment = dict(os.environ, RUNREVIQ_JDBC_TEST_DIR=str(directory), RUNREVIQ_JDBC_TEST_DATABASE=name)
             result = subprocess.run([str(ROOT/'backend/mvnw'), '-f', str(ROOT/'backend/pom.xml'), '-B', '-ntp', '-Dtest=JdbcIntegrationTest,JdbcGoogleIntegrationTest,DraftIntegrationTest', 'test'],cwd=ROOT,env=environment)
             if result.returncode:
@@ -79,6 +104,21 @@ def main():
             assert readback['review']['revision'] == 2
             assert readback['review']['validated_metadata']['title'] == 'Java reviewed title'
             print('Python read back the Java-authored review with original source/proposal intact.')
+            workflow_result = subprocess.run([str(ROOT/'backend/mvnw'), '-f', str(ROOT/'backend/pom.xml'), '-B', '-ntp', '-Dtest=WorkflowIntegrationTest,WorkflowGoogleIntegrationTest', 'test'],cwd=ROOT,env=environment)
+            if workflow_result.returncode:
+                raise SystemExit(workflow_result.returncode)
+            history = lifecycle.history(workflow_publication['document_id'], dbname=name)
+            assert history['revisions'][0]['status'] == 'withdrawn'
+            assert lifecycle.revision(workflow_publication['document_id'],1,dbname=name)['content'] == workflow_source
+            with connect(dbname=name) as conn:
+                published_rows = conn.execute("SELECT metadata,content,checksum FROM opslens.document_versions WHERE metadata->>'path' LIKE 'submission:%'").fetchall()
+            assert len(published_rows) > 1
+            for stored_metadata, stored_content, checksum in published_rows:
+                assert hashlib.sha256(json.dumps({'metadata': stored_metadata, 'content': stored_content}, sort_keys=True).encode()).hexdigest() == checksum
+                if stored_metadata['claims']:
+                    raw_claims = [dict(action=c['action'],rule=c['rule'],start_line=c['citation']['start_line'],end_line=c['citation']['end_line']) for c in stored_metadata['claims']]
+                    assert publications.prepare_claims(raw_claims, stored_content) == stored_metadata['claims']
+            print('Python verified all synthetic publication checksums/citations and the Java withdrawal.')
     finally:
         if created:
             assert name.startswith('opslens_java_test_')

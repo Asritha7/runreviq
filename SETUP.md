@@ -306,3 +306,7 @@ For opt-in Java PostgreSQL reads and disposable integration checks, see
 
 For separately enabled Java private drafts and metadata review, see
 [Java authoring setup](docs/java-authoring.md). The initializer is optional and never overwrites private configuration.
+
+For separately enabled Java submission, independent review, publication and withdrawal,
+see [Java workflow setup](docs/java-workflows.md). This requires the draft adapter,
+separate restricted database credentials and explicit reviewer/publisher allowlists.

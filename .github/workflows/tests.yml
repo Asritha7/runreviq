@@ -83,7 +83,7 @@ jobs:
           java-version: '25'
           cache: maven
           cache-dependency-path: backend/pom.xml
-      - name: Verify Java reads and drafts against a disposable PostgreSQL database
+      - name: Verify Java reads, drafts and workflows against a disposable PostgreSQL database
         run: .venv/bin/python scripts/test_java_database.py
       - name: Check Java authoring parity fixture against Python
         run: .venv/bin/python scripts/export_java_authoring_parity.py --check

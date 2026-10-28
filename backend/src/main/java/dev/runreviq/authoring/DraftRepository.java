@@ -49,7 +49,7 @@ public final class DraftRepository {
             }
         });
     }
-    private static Map<String,Object> latest(Connection c,UUID id,String content)throws SQLException {
+    static Map<String,Object> latest(Connection c,UUID id,String content)throws SQLException {
         try(var q=c.prepareStatement("SELECT revision,metadata::text,created_at FROM opslens.draft_reviews WHERE draft_id=? ORDER BY revision DESC LIMIT 1")){
             q.setObject(1,id);try(var r=q.executeQuery()){
                 if(!r.next())return null;

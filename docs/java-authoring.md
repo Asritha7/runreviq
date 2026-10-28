@@ -1,9 +1,8 @@
 # Java private drafts and metadata review
 
 Stage 4 is split at privilege boundaries. Stage 4a implements private uploads, listing,
-reading and append-only owner metadata review. Independent reviewer decisions,
-submission, publication, history and withdrawal remain Python workflows pending stage
-4b. Saving a metadata review does not approve a document or make it searchable.
+reading and append-only owner metadata review. [Stage 4b](java-workflows.md) separately enables independent reviewer decisions,
+submission, publication, history and withdrawal. Saving a metadata review does not approve a document or make it searchable.
 
 ## Routes and behavior
 

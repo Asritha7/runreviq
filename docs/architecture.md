@@ -76,7 +76,7 @@ The production-workflow prototype remains implemented in Python. A parallel Java
 selector and opt-in Google/demo authentication endpoints now live in `backend/`; they
 now support opt-in JDBC selection/revision reads but do not serve the existing frontend. Java uses separate,
 process-local sessions and reloads private role mappings on every identity request. See [migration plan](java-migration.md)
-for implemented scope, parity checks, and pending authoring and retrieval stages. See [Java authentication](java-authentication.md) for its security boundary.
+for implemented scope, parity checks, and pending retrieval and cutover stages. See [Java authentication](java-authentication.md) for its security boundary.
 
 The JDBC adapter uses a fresh restricted reader connection and repeatable-read transaction
 for each operation, validates stored integrity after RLS filtering, and executes no
@@ -85,3 +85,8 @@ schema or publication writes. See [Java persistence](java-persistence.md).
 The Java draft adapter separately uses the restricted draft writer and transaction-local
 owner scope. Advisory locks serialize quotas and review revisions under READ COMMITTED;
 it cannot publish evidence. See [Java authoring](java-authoring.md).
+
+The opt-in Java workflow adapter adds separate reviewer/publisher assignments and
+restricted SQL logins, sharing Python transaction locks and immutable publication
+checksums. It supports controlled publication and withdrawal without changing the live
+runtime or schema. See [Java workflows](java-workflows.md).
