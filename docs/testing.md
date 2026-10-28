@@ -165,3 +165,15 @@ Origin, assignment revocation and logout. Offline lexical tests cover source bou
 Unicode line breaks, scope exclusions, exact numeric restrictions, relevance gates, ties,
 policy priority and bundles. These are parity/security regressions, not an independent
 retrieval quality score. See [Java search](java-search.md) for the fixture update procedure.
+
+## Java HTTP quality evaluator checks
+
+`RUNREVIQ_TEST_JAVA_EVALUATION=1 .venv/bin/python -m unittest discover -s tests -p test_java_evaluation.py -v`
+runs metric/adversarial unit tests and an actual Java HTTP evaluation. The integration
+case builds the jar, verifies only source content entered its disposable database,
+checks the report exposes noisy retrieval, and confirms the owned process/database are
+removed. CI enables it after Java setup; ordinary Python-only runs skip that one case.
+Unit tests cover distinct precision denominators, exact evidence sets, corrupted or
+hidden references, conflict quotes, malformed responses, safe HTTP failures, UTF-8,
+label separation, preflight validation and cleanup on startup/bootstrap failures.
+See [evaluation semantics and limitations](java-quality-evaluation.md).
