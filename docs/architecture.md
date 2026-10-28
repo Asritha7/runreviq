@@ -74,9 +74,9 @@ Question search now filters current authorized sources and applies the existing 
 
 The production-workflow prototype remains implemented in Python. A parallel Java
 selector and opt-in Google/demo authentication endpoints now live in `backend/`; they
-now support opt-in JDBC selection/revision reads but do not serve the existing frontend. Java uses separate,
+now support opt-in JDBC selection/revision reads and passage search but do not serve the existing frontend. Java uses separate,
 process-local sessions and reloads private role mappings on every identity request. See [migration plan](java-migration.md)
-for implemented scope, parity checks, and pending retrieval and cutover stages. See [Java authentication](java-authentication.md) for its security boundary.
+for implemented scope, parity checks, and pending quality and cutover gates. See [Java authentication](java-authentication.md) for its security boundary.
 
 The JDBC adapter uses a fresh restricted reader connection and repeatable-read transaction
 for each operation, validates stored integrity after RLS filtering, and executes no
@@ -90,3 +90,8 @@ The opt-in Java workflow adapter adds separate reviewer/publisher assignments an
 restricted SQL logins, sharing Python transaction locks and immutable publication
 checksums. It supports controlled publication and withdrawal without changing the live
 runtime or schema. See [Java workflows](java-workflows.md).
+
+Java search loads and validates authorized current evidence and performs PostgreSQL English
+stemming in the same reader snapshot. The reviewed-v5 ranking port returns at most five exact
+source passages with evidence roles and applicability. Full HTTP response parity and security
+checks use disposable data; no live runtime is changed. See [Java retrieval](java-search.md).

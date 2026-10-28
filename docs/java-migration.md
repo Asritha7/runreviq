@@ -70,11 +70,20 @@ SQL logins retain the Python policy. Integration tests cover concurrency, rollba
 RLS, current authorization and cross-language publication checksum/history parity.
 See [Java workflows](java-workflows.md). The live Python application is unchanged.
 
+## Stage 5 — passage retrieval
+
+Implemented: authenticated `POST /v1/search` through the same restricted read-only
+snapshot as source selection. Java ports reviewed-v5 PostgreSQL stemming, lexical
+ranking, reviewed evidence bundles and exact source citations. Frozen full-response
+comparisons cover 108 cases; separate HTTP/SQL security checks cover revocation,
+withdrawal, corruption and request boundaries. See [Java search](java-search.md).
+This establishes migration parity, not independent relevance or production readiness.
+
 ## Remaining stages and acceptance gates
 
 | Stage | Work | Required proof before use |
 | --- | --- | --- |
-| 5: retrieval | Authorized passage retrieval, reviewed profiles, typed bundles and evidence responses | Same applicability/abstention semantics, citation support and held-out evaluation through a Java HTTP adapter |
+| 5: quality gate | Retrieval implementation and frozen parity complete; independent quality evaluation pending | Separate held-out evaluation through a Java HTTP adapter before cutover |
 | 6: cutover | Existing frontend served by Java; operational tooling, documentation and rollback | Full end-to-end parity, live sign-in smoke test, no unauthorized disclosures, reproducible evaluation and explicit cutover review |
 
 Keep PostgreSQL migrations under the existing Python migration owner initially.
@@ -101,10 +110,10 @@ by this change. No local secrets, database data or downloaded toolchains are com
 
 ## Python product-backend retirement checklist
 
-These are pending cutover gates, not capabilities established by the current migration:
+Track these cutover gates; completed migration parity is distinguished from pending quality and runtime checks:
 
-- Complete Java passage search and compare full HTTP responses on frozen fixtures,
-  including abstention, conflicts, source ranges, restricted evidence and withdrawal.
+- Java passage search and frozen full-response parity are implemented. Keep these checks
+  passing, including abstention, conflicts, source ranges, restricted evidence and withdrawal.
 - Evaluate retrieval quality separately on held-out questions. Preserve PR #26's
   frozen report and known ranking misses; a parity pass must not become a relevance claim.
 - Connect the existing frontend to an isolated Java instance and exercise author,

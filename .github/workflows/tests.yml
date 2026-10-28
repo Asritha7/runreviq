@@ -85,6 +85,8 @@ jobs:
           cache-dependency-path: backend/pom.xml
       - name: Verify Java reads, drafts and workflows against a disposable PostgreSQL database
         run: .venv/bin/python scripts/test_java_database.py
+      - name: Verify frozen Java search parity and access boundaries
+        run: .venv/bin/python scripts/test_java_search.py
       - name: Check Java authoring parity fixture against Python
         run: .venv/bin/python scripts/export_java_authoring_parity.py --check
       - name: Check Java parity fixture against Python

@@ -126,11 +126,16 @@ Selection/search accept optional `http_status` (strict integer 100–599 or null
 The API above describes the working Python product. Java on loopback port 8081 now
 implements `/auth/config`, `/auth/google/login`, `/auth/google/callback`,
 `/auth/session`, `/auth/logout`, `/v1/me`, and `/health`. Authentication defaults to
-`disabled`; Google or demo mode requires explicit configuration. With database access enabled, `/v1/select` and `/v1/documents/{id}/revisions/{revision}`
-use the existing response contracts. Search remains denied. Submission, review, publication and withdrawal are separately enabled through [Java workflows](java-workflows.md). Separately enabled private draft routes are documented in [Java authoring](java-authoring.md). Identity response shapes match Python, but Java uses
+`disabled`; Google or demo mode requires explicit configuration. With database access enabled, `/v1/select`, `/v1/search` and `/v1/documents/{id}/revisions/{revision}`
+use the existing response contracts. Submission, review, publication and withdrawal are separately enabled through [Java workflows](java-workflows.md). Separately enabled private draft routes are documented in [Java authoring](java-authoring.md). Identity response shapes match Python, but Java uses
 separate cookie names and an explicitly configured loopback origin. See
 [Java authentication](java-authentication.md) before enabling it; this is not a cutover.
 
 Java database reads use current restricted PostgreSQL identities and validate stored
 checksums/citations before returning data. Missing and hidden revisions share a 404;
 configuration, integrity and database failures produce a fixed 503. See [persistence](java-persistence.md).
+
+Java's optional reader adapter also exposes `POST /v1/search` with the shared passage
+response shape. It authenticates before input parsing, caps request bodies at 4096 bytes,
+and rejects trailing/duplicate JSON as well as extra fields. See [Java search](java-search.md)
+for enablement, exact citation checks, snapshot revocation semantics and validation limits.

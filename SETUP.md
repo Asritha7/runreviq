@@ -310,3 +310,8 @@ For separately enabled Java private drafts and metadata review, see
 For separately enabled Java submission, independent review, publication and withdrawal,
 see [Java workflow setup](docs/java-workflows.md). This requires the draft adapter,
 separate restricted database credentials and explicit reviewer/publisher allowlists.
+
+For Java passage search, the existing reader adapter also enables `POST /v1/search`.
+See [Java search requests, boundaries and parity checks](docs/java-search.md). Run
+`RUNREVIQ_TEST_DATABASE=1 .venv/bin/python scripts/test_java_search.py` to compare full
+responses in a disposable database. This does not switch the port-8000 workspace to Java.

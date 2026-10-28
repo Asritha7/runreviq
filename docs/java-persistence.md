@@ -1,8 +1,7 @@
 # Java PostgreSQL evidence reads
 
 The third migration stage adds JDBC repositories and opt-in authenticated selection
-and revision endpoints. It does not migrate ingestion, drafts, review, publication,
-withdrawal writes or passage search. The existing Python application remains on 8000;
+and revision endpoints. Later stages add private drafts/workflows and [passage search](java-search.md). Ingestion and schema ownership remain with Python. The existing Python application remains on 8000;
 Java remains on loopback 8081, without the workspace frontend.
 
 ## Database boundary
@@ -40,11 +39,11 @@ it does not retroactively cancel a response based on an already established snap
   passwords or exception details reach the client. Unlike the current Python revision
   reader, Java actively checks checksums on reads. This is a deliberate stricter check.
 
-Authenticated `POST /v1/select` and `GET /v1/documents/{id}/revisions/{revision}` use the
+Authenticated `POST /v1/select`, `POST /v1/search` and `GET /v1/documents/{id}/revisions/{revision}` use the
 existing Python JSON contract. Selection fields are strictly typed; extra fields,
 including a claimed role, are rejected. Authentication precedes body parsing and SQL.
 Google sessions retain exact-Origin/custom-header checks for POST; demo mode requires
-a bearer credential. Private drafts have a separate opt-in [authoring adapter](java-authoring.md); workflow APIs have their own [operator adapters](java-workflows.md); search remains denied. Both authentication and database
+a bearer credential. Private drafts have a separate opt-in [authoring adapter](java-authoring.md); workflow APIs have their own [operator adapters](java-workflows.md); search uses this reader adapter. Both authentication and database
 reads must be explicitly enabled; default startup does not open PostgreSQL.
 
 ## Optional local setup

@@ -2,7 +2,7 @@
 
 Stage 4b completes the Java authoring API after [private drafts](java-authoring.md).
 It is disabled by default and does not change the working Python app on port 8000.
-Java still has no workspace frontend or passage search. No paid services are used.
+Java still has no workspace frontend; [passage search](java-search.md) is available through the reader adapter. No paid services are used.
 
 ## What becomes possible
 
@@ -125,5 +125,5 @@ Python-created publications compare exactly in Java (including checksums and his
 and Python reads back a Java withdrawal and verifies all synthetic publication checksums/citations. This proves selected compatibility cases, not
 independent retrieval effectiveness or production readiness.
 
-Next is Java passage retrieval and complete evidence responses, followed by held-out
+Java passage retrieval is implemented in stage 5. Remaining gates include held-out
 HTTP evaluation and the separately reviewed frontend/runtime cutover.

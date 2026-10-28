@@ -153,3 +153,15 @@ SQL failure proves publication rollback. Operator allowlist revocation, self-rev
 source-backed claims, supersession, current permissions and Google Origin/logout are
 covered. These tests use a fresh database and offline identity provider, not live Google
 or the product database. See [Java workflows](java-workflows.md).
+
+## Java passage search checks
+
+Run `RUNREVIQ_TEST_DATABASE=1 .venv/bin/python scripts/test_java_search.py`. This separate
+harness imports only synthetic sources into a new disposable database, checks 108 frozen
+Python responses for freshness, and compares the full Java HTTP responses and citations.
+It additionally tests reader isolation, current revision/ACL/withdrawal behavior, snapshot
+consistency, visible/hidden corruption, missing RLS, strict input before SQL, and Google
+Origin, assignment revocation and logout. Offline lexical tests cover source boundaries,
+Unicode line breaks, scope exclusions, exact numeric restrictions, relevance gates, ties,
+policy priority and bundles. These are parity/security regressions, not an independent
+retrieval quality score. See [Java search](java-search.md) for the fixture update procedure.
