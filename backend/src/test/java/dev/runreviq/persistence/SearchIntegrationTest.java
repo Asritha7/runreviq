@@ -18,18 +18,30 @@ import tools.jackson.databind.node.ObjectNode;
 @EnabledIfEnvironmentVariable(named="RUNREVIQ_JDBC_TEST_DIR",matches=".+")
 class SearchIntegrationTest {
     @LocalServerPort int port;
-    @DynamicPropertySource static void properties(DynamicPropertyRegistry r){JdbcIntegrationTest.properties(r);}
+    @DynamicPropertySource static void properties(DynamicPropertyRegistry r){JdbcIntegrationTest.properties(r);r.add("runreviq.search.mode",SearchIntegrationTest::mode);}
+    static String mode(){return System.getenv().getOrDefault("RUNREVIQ_JDBC_SEARCH_MODE","reviewed-v5");}
     HttpResponse<String> request(String role,String body)throws Exception{
         var b=HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/v1/search")).header("Content-Type","application/json").POST(HttpRequest.BodyPublishers.ofString(body));
         if(role!=null)b.header("Authorization","Bearer "+role+"-test-"+"x".repeat(40));
         return HttpClient.newHttpClient().send(b.build(),HttpResponse.BodyHandlers.ofString());
     }
     static ObjectNode body(){return (ObjectNode)StoredEvidence.JSON.readTree("{\"question\":\"intermittent 401 errors\",\"service\":\"identity-service\",\"software_version\":\"2.4.0\",\"environment\":\"production\",\"key_rotation_enabled\":true}");}
-    @TestFactory Stream<DynamicTest> frozenFullResponseParity()throws Exception{
+    @TestFactory Stream<DynamicTest> frozenBaselineOrCandidateBoundaryChecks()throws Exception{
         var fixture=StoredEvidence.JSON.readTree(getClass().getResourceAsStream("/search-parity.json"));var tests=new ArrayList<DynamicTest>();
         for(var c:fixture.get("cases"))tests.add(DynamicTest.dynamicTest(c.get("id").asString(),()->{
             var b=(ObjectNode)c.get("context").deepCopy();String role=b.remove("role").asString();b.put("question",c.get("question").asString());
-            var r=request(role,b.toString());assertEquals(200,r.statusCode(),r.body());var actual=StoredEvidence.JSON.readTree(r.body());assertEquals(c.get("expected"),actual);
+            var r=request(role,b.toString());assertEquals(200,r.statusCode(),r.body());var actual=StoredEvidence.JSON.readTree(r.body());if(mode().equals("reviewed-v5"))assertEquals(c.get("expected"),actual);
+            else {
+                assertEquals("postgres_english_focused_v6",actual.get("retrieval_method").asString());
+                for(String key:List.of("applicable_documents","uncertain_documents","conflicts","conflict_details","questions","review_items","http_status_context","http_status_source"))assertEquals(c.get("expected").get(key),actual.get(key),key);
+                if(Set.of("reviewed-0","reviewed-3").contains(c.get("id").asString())) {
+                    var roles=new HashSet<String>();for(var p:actual.get("passages"))roles.add(p.get("evidence_role").asString());
+                    assertTrue(roles.containsAll(Set.of("procedure","prohibition","monitoring","historical")));
+                }
+                if(Set.of("conflict","needs_context_or_review").contains(c.get("expected").get("status").asString())){
+                    assertEquals(c.get("expected").get("status"),actual.get("status"));assertTrue(actual.get("passages").isEmpty());
+                }
+            }
             assertEquals("no-store",r.headers().firstValue("cache-control").orElseThrow());assertTrue(actual.get("passages").size()<=5);
             for(var p:actual.get("passages")){
                 var source=JdbcIntegrationTest.repository().revision(role,p.get("document_id").asString(),p.get("revision").asInt());assertNotNull(source);
@@ -43,7 +55,7 @@ class SearchIntegrationTest {
         assertEquals(401,request(null,"{").statusCode());
         var invalid=new ArrayList<String>(List.of("{}","[]","{"," ".repeat(4097),body()+" {}"));
         for(String q:List.of(""," ","x".repeat(501)," ".repeat(500)+"x"))invalid.add(body().put("question",q).toString());
-        invalid.add(body().put("role","security").toString());invalid.add(body().put("question",42).toString());invalid.add(body().put("http_status",503).toString());
+        invalid.add(body().put("role","security").toString());invalid.add(body().put("search_mode","focused-v6").toString());invalid.add(body().put("question",42).toString());invalid.add(body().put("http_status",503).toString());
         invalid.add(body().toString().replace("\"question\":","\"question\":\"JWKS\",\"question\":"));
         invalid.add(body().put("key_rotation_enabled","true").toString());invalid.add(body().put("http_status",true).toString());
         Path path=JdbcIntegrationTest.dir().resolve("readers.json");String saved=Files.readString(path);
@@ -79,7 +91,7 @@ class SearchIntegrationTest {
                 JdbcIntegrationTest.readers().read("platform",c->{
                     var sources=EvidenceRepository.snapshot(c);
                     update.execute("UPDATE opslens.documents SET allowed_roles=ARRAY['security'] WHERE id='RB-042'");
-                    var response=SearchRepository.search(c,sources,"intermittent 401 errors",context,null);
+                    var response=SearchRepository.search(c,sources,"intermittent 401 errors",context,null,mode().equals("focused-v6"));
                     assertTrue(((List<?>)response.get("recommended_documents")).contains("RB-042"));
                     try(var q=c.createStatement();var r=q.executeQuery("SHOW transaction_read_only")){r.next();assertEquals("on",r.getString(1));}
                     return null;

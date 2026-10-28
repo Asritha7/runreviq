@@ -1,0 +1,47 @@
+{
+  "dataset_sha256": "1dc4b4f3f5b36396be256987d9b4b2838092a6a651a0250306b800eea4f016e6",
+  "suite": "validation",
+  "independence": "same_author_development",
+  "metrics": {
+    "passed": {
+      "baseline": 12,
+      "candidate": 12,
+      "delta": 0
+    },
+    "exact_evidence_set_passed": {
+      "baseline": 4,
+      "candidate": 6,
+      "delta": 2
+    },
+    "recall_at_5": {
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0
+    },
+    "precision_at_returned_5": {
+      "baseline": 0.3854166666666667,
+      "candidate": 0.6041666666666666,
+      "delta": 0.21874999999999994
+    },
+    "precision_fixed_at_5": {
+      "baseline": 0.2,
+      "candidate": 0.2,
+      "delta": 0.0
+    },
+    "refusal_accuracy": {
+      "baseline": 1,
+      "candidate": 1,
+      "delta": 0
+    },
+    "integrity_failures": {
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0
+    }
+  },
+  "recall_status_or_integrity_regressions": [],
+  "newly_matched_outcomes": [],
+  "per_case_precision_regressions": [],
+  "candidate_strict_quality_gate": "failed",
+  "note": "Development comparison only. No automatic promotion or independent effectiveness claim."
+}

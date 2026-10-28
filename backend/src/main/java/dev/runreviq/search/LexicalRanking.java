@@ -42,8 +42,13 @@ public final class LexicalRanking {
     public static String query(String text){return String.join(" ",pattern("[\\w.-]+").matcher(text).results().map(m->m.group()).filter(w->!SCAFFOLD.contains(w.toLowerCase(Locale.ROOT))).toList());}
     public static Set<String> intersection(Collection<String> a,Collection<String> b){var r=new HashSet<>(a);r.retainAll(b);return r;}
     private static double weight(Collection<String> terms,Map<String,Double> weights){double sum=0;for(String t:new TreeSet<>(terms))sum+=weights.get(t);return sum;}
-    private record Scored(double score,int index,Map<String,Object> passage){}
+    private record Scored(double score,int index,Map<String,Object> passage,boolean intentMatch){}
     public static List<Map<String,Object>> rank(List<Map<String,Object>> candidates,List<String> queryTerms,List<List<String>> bodies,List<List<String>> contexts,List<List<String>> policies,double floor,List<List<String>> groups,int limit){
+        return rank(candidates,queryTerms,bodies,contexts,policies,floor,groups,limit,null,List.of());
+    }
+    /** Optional precision candidate. Eligibility and citation construction remain outside ranking. */
+    public static List<Map<String,Object>> rank(List<Map<String,Object>> candidates,List<String> queryTerms,List<List<String>> bodies,List<List<String>> contexts,List<List<String>> policies,double floor,List<List<String>> groups,int limit,String question,List<String> headings){
+        boolean focused=question!=null;
         var query=new TreeSet<>(queryTerms);if(query.isEmpty()||candidates.isEmpty())return List.of();
         var frequency=new HashMap<String,Integer>();var documentTerms=new HashMap<String,Set<String>>();
         var counts=new ArrayList<Map<String,Integer>>();double average=0;
@@ -55,6 +60,10 @@ public final class LexicalRanking {
         average/=candidates.size();if(average==0)average=1;
         var weights=new HashMap<String,Double>();for(String t:query)weights.put(t,Math.log(1+(candidates.size()+1.0)/(frequency.getOrDefault(t,0)+1)));
         double total=weight(query,weights);var scored=new ArrayList<Scored>();
+        var anchors=new HashSet<String>();for(var terms:contexts)anchors.addAll(terms);anchors.retainAll(query);
+        anchors.removeAll(Set.of("verifi","recover","approv","request","incident","failur","error","check","work","confirm","investig","respons","chang"));
+        boolean verification=focused&&((contains("\\b(?:verify|validate|confirm|checks?)\\b",question)&&contains("\\b(?:recovery|working|healthy|success|recovered)\\b",question))||contains("\\bwhen\\b.*\\bresume\\b",question)||contains("\\b(?:observations|indicators|signs|measurements)\\b.*\\b(?:show|indicate|demonstrate|confirm)\\b",question));
+        boolean investigation=focused&&!verification&&contains("\\b(?:investigate|inspect|compare|distinguish|diagnose|check)\\b",question);
         for(int i=0;i<candidates.size();i++){
             var body=counts.get(i);var matched=intersection(query,body.keySet());var terms=documentTerms.get((String)candidates.get(i).get("document_id"));
             double coverage=weight(intersection(query,terms),weights)/total;
@@ -62,12 +71,25 @@ public final class LexicalRanking {
             if(coverage<floor||weight(matched,weights)/total<.15)continue;
             double score=0;for(String t:new TreeSet<>(matched))score+=weights.get(t)*body.get(t)*2.2/(body.get(t)+1.2*(.25+.75*bodies.get(i).size()/average));
             score+=.60*weight(intersection(query,contexts.get(i)),weights);if(intersection(query,policies.get(i)).size()>=2)score*=1.25;
-            scored.add(new Scored(score*coverage,i,candidates.get(i)));
+            boolean intentMatch=false;
+            if(focused){
+                // Require passage evidence as before; title/heading support only adjusts relevance.
+                double bodyCoverage=weight(matched,weights)/total;
+                var local=new HashSet<>(body.keySet());local.addAll(contexts.get(i));
+                double anchorCoverage=anchors.isEmpty()?1:weight(intersection(anchors,local),weights)/weight(anchors,weights);
+                score*= (.5+.5*bodyCoverage)*(.5+anchorCoverage);
+                String heading=headings.get(i);
+                intentMatch=(verification&&contains("\\b(?:verification|validation|recovery|success)\\b",heading))
+                    ||(investigation&&contains("\\b(?:investigation|diagnostics?|troubleshooting)\\b",heading));
+                if(intentMatch)score*=2;
+                intentMatch=intentMatch&&anchorCoverage==1;
+            }
+            scored.add(new Scored(score*coverage,i,candidates.get(i),intentMatch));
         }
         scored.sort(Comparator.comparingDouble(Scored::score).reversed().thenComparingInt(Scored::index));
-        if(scored.isEmpty())return List.of();var selected=new ArrayList<Map<String,Object>>();var covered=new HashSet<String>();
+        if(scored.isEmpty())return List.of();var selected=new ArrayList<Map<String,Object>>();var covered=new HashSet<String>();var intentDocuments=new HashSet<Object>();
         for(var s:scored){var matched=intersection(query,counts.get(s.index).keySet());var fresh=new HashSet<>(matched);fresh.removeAll(covered);
-            if(s.score>=scored.getFirst().score*.40||(s.score>=scored.getFirst().score*.30&&!fresh.isEmpty())){selected.add(s.passage);covered.addAll(matched);}if(selected.size()==limit)break;
+            if(s.score>=scored.getFirst().score*(focused?.65:.40)||(s.score>=scored.getFirst().score*(focused?.45:.30)&&!fresh.isEmpty())||(focused&&s.intentMatch&&!intentDocuments.contains(s.passage.get("document_id"))&&s.score>=scored.getFirst().score*.30)){selected.add(s.passage);covered.addAll(matched);if(s.intentMatch)intentDocuments.add(s.passage.get("document_id"));}if(selected.size()==limit)break;
         }return selected;
     }
 }

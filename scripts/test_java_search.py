@@ -23,6 +23,7 @@ FIXTURE = ROOT / 'backend/src/test/resources/search-parity.json'
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--search-mode', choices=['reviewed-v5','focused-v6'], default='reviewed-v5')
     parser.add_argument('--update-fixture', action='store_true', help='Explicitly replace the frozen Python response fixture')
     args = parser.parse_args()
     if os.environ.get('RUNREVIQ_TEST_DATABASE') != '1':
@@ -98,7 +99,7 @@ def main():
             private(directory/'admin.json', dict(database=name,password=secrets['POSTGRES_PASSWORD']))
             private(directory/'auth.json', [dict(subject=f'test-{r}',role=r,token=r+'-test-'+'x'*40) for r in ('platform','security','intern')])
             private(directory/'google.json',dict(client_id='offline-client',client_secret='offline-test-secret',allowed_subjects={'test-subject':'platform'}))
-            environment = dict(os.environ,RUNREVIQ_JDBC_TEST_DIR=str(directory),RUNREVIQ_JDBC_TEST_DATABASE=name)
+            environment = dict(os.environ,RUNREVIQ_JDBC_TEST_DIR=str(directory),RUNREVIQ_JDBC_TEST_DATABASE=name,RUNREVIQ_JDBC_SEARCH_MODE=args.search_mode)
             result = subprocess.run([str(ROOT/'backend/mvnw'),'-f',str(ROOT/'backend/pom.xml'),'-B','-ntp','-Dtest=SearchIntegrationTest,SearchGoogleIntegrationTest','test'],cwd=ROOT,env=environment)
             if result.returncode:
                 raise SystemExit(result.returncode)

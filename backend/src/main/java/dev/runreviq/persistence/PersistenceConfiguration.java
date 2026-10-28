@@ -12,5 +12,5 @@ public class PersistenceConfiguration {
         if(path.isBlank()) throw new IllegalArgumentException("An explicit private reader config path is required");
         return new ReaderConnections(Path.of(path));
     }
-    @Bean EvidenceRepository evidenceRepository(ReaderConnections readers) {return new EvidenceRepository(readers);}
+    @Bean EvidenceRepository evidenceRepository(ReaderConnections readers,@Value("${runreviq.search.mode:reviewed-v5}") String mode) {return new EvidenceRepository(readers,mode);}
 }

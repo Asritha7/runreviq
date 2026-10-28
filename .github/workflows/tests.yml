@@ -87,6 +87,8 @@ jobs:
         run: .venv/bin/python scripts/test_java_database.py
       - name: Verify frozen Java search parity and access boundaries
         run: .venv/bin/python scripts/test_java_search.py
+      - name: Verify focused Java search access and citation boundaries
+        run: .venv/bin/python scripts/test_java_search.py --search-mode focused-v6
       - name: Evaluate Java HTTP retrieval quality in an isolated runtime
         run: RUNREVIQ_TEST_JAVA_EVALUATION=1 .venv/bin/python -m unittest discover -s tests -p test_java_evaluation.py -v
       - name: Check Java authoring parity fixture against Python
