@@ -87,6 +87,8 @@ jobs:
         run: .venv/bin/python scripts/test_java_database.py
       - name: Verify packaged Java workspace in a disposable runtime
         run: .venv/bin/python scripts/rehearse_java_workspace.py --verify-only
+      - name: Rehearse Java to Python rollback and Java recovery
+        run: .venv/bin/python scripts/test_runtime_rollback.py
       - name: Verify frozen Java search parity and access boundaries
         run: .venv/bin/python scripts/test_java_search.py
       - name: Verify focused Java search access and citation boundaries

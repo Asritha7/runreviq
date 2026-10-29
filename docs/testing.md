@@ -198,3 +198,12 @@ publication, permitted/denied search and withdrawal.
 from a temporary working directory and cleans up its process/database. These checks
 do not substitute for real browser workflows, real Google login or process rollback.
 See [rehearsal and acceptance gates](java-workspace-rehearsal.md).
+
+## Runtime acceptance and external packs
+
+`python scripts/test_runtime_rollback.py` executes a Java → Python → Java process
+switch with same-port fallback and a disposable database. CI runs this alongside
+the existing integration tests. `tests/test_external_pack.py` checks import hashes,
+source/gold separation and explicit handling of unsupported metadata without using
+the private external questions. The supplied evaluation outputs remain local only.
+See [acceptance evidence and evaluation limits](runtime-acceptance.md).

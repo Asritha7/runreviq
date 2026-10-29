@@ -11,6 +11,7 @@ The working product still runs on Python. Java HTTP quality evaluation is availa
 - [Setup and local commands](SETUP.md)
 - [Architecture and current scope](docs/architecture.md)
 - [Java evidence reads and database isolation](docs/java-persistence.md)
+- [Runtime acceptance, rollback and evaluation decisions](docs/runtime-acceptance.md)
 - [Isolated Java browser workspace rehearsal](docs/java-workspace-rehearsal.md)
 - [Java passage retrieval and full-response parity](docs/java-search.md)
 - [Java HTTP quality evaluation and measured limitations](docs/java-quality-evaluation.md)

@@ -335,3 +335,8 @@ workspace with fictional data on a random loopback port. It prints its URL and a
 temporary token-file path, and cleans up on Ctrl-C or timeout. This does not change the
 working port-8000 application. Use `--verify-only` for a packaged-server smoke test.
 See [rehearsal instructions and remaining cutover gates](docs/java-workspace-rehearsal.md).
+
+For an automated Java → Python → Java drill on a generated database, run
+`.venv/bin/python scripts/test_runtime_rollback.py`. It verifies the same-port Python
+fallback, stored revisions, reader permissions, Python edits and Java recovery.
+See [executed acceptance checks and remaining gates](docs/runtime-acceptance.md).
