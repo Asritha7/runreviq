@@ -207,3 +207,10 @@ the existing integration tests. `tests/test_external_pack.py` checks import hash
 source/gold separation and explicit handling of unsupported metadata without using
 the private external questions. The supplied evaluation outputs remain local only.
 See [acceptance evidence and evaluation limits](runtime-acceptance.md).
+
+The offline `scripts/diagnose_external_pack.py` command checks paired frozen external
+outputs and reports observable failure boundaries without calling the application.
+See [runtime acceptance](runtime-acceptance.md#frozen-output-diagnosis-30-october-2026)
+for usage and limitations. Synthetic tests cover mismatched fingerprints/artifacts,
+metadata blocks and the distinction between retrieving conflict evidence and detecting
+conflict. The external packs and diagnosis remain local-only.
