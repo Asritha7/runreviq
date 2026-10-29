@@ -20,6 +20,14 @@ from runreviq.selector import load_documents
 from runreviq.evaluate_java import JAR, evaluation_database, http_json, private_json
 
 
+def runtime_environment():
+    # Pass only runtime/platform settings, never shell credentials, Spring overrides,
+    # proxy configuration or JVM option injection variables.
+    allowed = ('PATH', 'JAVA_HOME', 'SystemRoot', 'SYSTEMROOT', 'WINDIR',
+               'TMPDIR', 'TEMP', 'TMP', 'LANG', 'LC_ALL', 'TZ')
+    return {key: os.environ[key] for key in allowed if key in os.environ}
+
+
 @contextmanager
 def workspace(database, folder):
     if not re.fullmatch(r'opslens_java_eval_[0-9a-f]{32}', database):
@@ -51,7 +59,7 @@ def workspace(database, folder):
     try:
         with (folder/'java.log').open('w') as log:
             os.chmod(folder/'java.log', 0o600)
-            process = subprocess.Popen(command, cwd=folder, stdout=log, stderr=subprocess.STDOUT)
+            process = subprocess.Popen(command, cwd=folder, env=runtime_environment(), stdout=log, stderr=subprocess.STDOUT)
             deadline = time.monotonic()+45
             while time.monotonic()<deadline:
                 if process.poll() is not None:

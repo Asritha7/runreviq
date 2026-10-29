@@ -24,7 +24,9 @@ With the existing local PostgreSQL service and Java toolchain available:
 The launcher builds Java, copies the JAR into a private temporary directory,
 creates a uniquely named disposable database, and imports fictional source fixtures.
 It generates temporary demo identities and restricted reader/author/reviewer/publisher
-configuration; no database administrator credential is passed to Java. It launches
+configuration. Java receives an allowlisted runtime environment, excluding shell
+credentials, Spring overrides and JVM option injection variables; no database
+administrator credential is passed to Java. It launches
 on a randomly assigned loopback port and prints that URL and the path to its private
 `auth.json`. Open that file locally to copy a temporary token into the workspace.
 Do not share or commit these credentials.
