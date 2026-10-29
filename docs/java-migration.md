@@ -100,8 +100,9 @@ and runtime cutover are pending. See [focused retrieval](focused-retrieval.md).
 
 Implemented: optional Java serving of the shared browser assets, a disposable demo
 launcher, packaged-asset checks and an HTTP workflow with the web adapter enabled.
-Real-browser workflow acceptance, live Google validation and process-switch rollback
-remain separate gates. See [workspace rehearsal](java-workspace-rehearsal.md).
+Synthetic real-browser workflow acceptance and a disposable process-switch rollback
+now have executed evidence; live Google and release operational checks remain gates.
+See [acceptance evidence](runtime-acceptance.md). See [workspace rehearsal](java-workspace-rehearsal.md).
 
 ## Remaining stages and acceptance gates
 
@@ -129,8 +130,8 @@ Keep the existing port-8000 OAuth callback throughout migration. Do not switch u
 the operational stages pass. Preserve the Python entry point and existing database
 through cutover so application rollback does not require destructive data migration.
 
-The evaluation-only PR #26 is separate from this migration branch and is not merged
-by this change. No local secrets, database data or downloaded toolchains are committed.
+The evaluation-only PR #26 was archived and closed without merging its Python-only
+controls; see [disposition and acceptance evidence](runtime-acceptance.md). No local secrets, database data or downloaded toolchains are committed.
 
 ## Python product-backend retirement checklist
 

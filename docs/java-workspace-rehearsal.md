@@ -79,15 +79,22 @@ opened the cited RB-042 revision, selected dark mode and disconnected. Evidence 
 the source viewer cleared on disconnect. This is a narrow smoke check, not the full
 browser author/reviewer/publisher lifecycle or a real Google login.
 
+## Follow-up acceptance
+
+The full synthetic browser author/reviewer/publisher workflow and a same-port
+Java → Python → Java process drill were subsequently executed. See
+[runtime acceptance](runtime-acceptance.md) for exact coverage, limits and results.
+The earlier checks above remain their original, narrower evidence.
+
 ## Remaining cutover gates
 
-1. Exercise the full workflow in a real browser, including failed requests, role
-   switching, dark mode, source viewing and clearing evidence on logout.
+1. Repeat the accepted synthetic browser workflow for the release artifact, including
+   failed requests and session handling with the intended identity provider.
 2. Use a separate isolated Google configuration and register the exact rehearsal
    callback. Preserve the port-8000 callback. Test real login, logout, expiration and
    revoked assignment; never copy production role assignments into a public fixture.
-3. Rehearse switching Java to the retained Python runtime against disposable data;
-   check source, draft and publication visibility before and after switching.
+3. Extend the executed disposable process-switch drill to the retained release artifact,
+   operational failures and in-flight request handling.
 4. Review independent retrieval results and the explicit cutover decision before
    changing the working application's startup or port. Keep the last working Python
    release and private configuration available for rollback.
