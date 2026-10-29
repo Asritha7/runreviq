@@ -28,6 +28,7 @@ class WorkflowIntegrationTest {
     static LifecycleRepository lifecycle(){return new LifecycleRepository(publishConnection());}
     static DraftRepository drafts(){return DraftIntegrationTest.repo();}
     @DynamicPropertySource static void properties(DynamicPropertyRegistry r){
+        r.add("runreviq.web.enabled",()->"true");
         r.add("runreviq.auth.mode",()->"demo");r.add("runreviq.auth.config-path",()->dir().resolve("auth.json").toString());
         r.add("runreviq.drafts.enabled",()->"true");r.add("runreviq.drafts.config-path",()->dir().resolve("drafts.json").toString());
         r.add("runreviq.workflows.enabled",()->"true");r.add("runreviq.workflows.reviewer-config-path",()->dir().resolve("review-db.json").toString());
@@ -47,7 +48,18 @@ class WorkflowIntegrationTest {
     static UUID submitted(String owner)throws Exception{return UUID.fromString((String)submissions().submit(owner,draft(owner),1).get("id"));}
     static UUID approved(String owner)throws Exception{var id=submitted(owner);submissions().decide(actor("security"),id,"approved","Checked source");return id;}
     @Test void fullHttpFlowPreservesSourceAndEnforcesSeparatePermissions()throws Exception {
-        String owner=actor("platform");var draft=draft(owner);String path="/v1/drafts/"+draft;
+        // Start with the same public shell and HTTP upload used by the browser.
+        var shell=request("/",null,null);assertEquals(200,shell.statusCode());assertTrue(shell.body().contains("/assets/app.js"));
+        assertEquals(200,request("/assets/app.js",null,null).statusCode());
+        assertEquals("demo",ok("/auth/config",null,null,200).get("mode").asString());
+        ok("/v1/me",null,null,401);ok("/v1/me","platform",null,200);
+        var upload=HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/v1/drafts?filename=rehearsal.md"))
+            .header("Authorization","Bearer platform-test-"+"x".repeat(40)).header("Content-Type","text/markdown")
+            .POST(HttpRequest.BodyPublishers.ofString("# Source\nInspect JWKS before restart.\nDo not disable verification.\n")).build();
+        var created=HttpClient.newHttpClient().send(upload,HttpResponse.BodyHandlers.ofString());assertEquals(201,created.statusCode(),created.body());
+        String path="/v1/drafts/"+DraftRepository.JSON.readTree(created.body()).get("id").asString();
+        var metadata=(tools.jackson.databind.node.ObjectNode)DraftIntegrationTest.metadata();metadata.put("service","workspace-rehearsal");
+        ok(path+"/review","platform",Map.of("expected_revision",0,"metadata",metadata),200);
         ok(path+"/submit","security",Map.of("revision",1),404);
         var sub=ok(path+"/submit","platform",Map.of("revision",1),200);String id=sub.get("id").asString();
         assertEquals(sub,ok(path+"/submit","platform",Map.of("revision",1),200));
@@ -66,6 +78,10 @@ class WorkflowIntegrationTest {
         ok("/v1/publications/"+id,"intern",map("allowed_roles",List.of("intern"),"claims",claims(),"metadata_verified",true),409);
         var source=ok("/v1/documents/"+doc+"/revisions/1","platform",null,200);assertTrue(source.get("content").asString().contains("Inspect JWKS"));
         ok("/v1/documents/"+doc+"/revisions/1","intern",null,404); // Publishing permission is not reading permission.
+        var query=Map.of("question","Inspect JWKS before restart", "service","workspace-rehearsal", "software_version","2.4.0", "environment","production");
+        var search=ok("/v1/search","platform",query,200);assertEquals("selected",search.get("status").asString());
+        assertTrue(search.get("passages").toString().contains(doc));
+        assertFalse(ok("/v1/search","intern",query,200).toString().contains(doc));
         String manage="/v1/publication-management/documents/"+doc;
         ok(manage,"platform",null,403);ok(manage+"/revisions/1","intern",null,200);
         assertNotNull(ok(path+"/submissions","platform",null,200).get("submissions").get(0).get("publication"));
@@ -73,6 +89,7 @@ class WorkflowIntegrationTest {
         var retired=ok(manage+"/withdraw","intern",withdraw,200);assertEquals(retired,ok(manage+"/withdraw","intern",withdraw,200));
         ok(manage+"/withdraw","intern",Map.of("expected_revision",1,"reason","Different reason"),409);
         assertEquals("withdrawn",ok(manage,"intern",null,200).get("revisions").get(0).get("status").asString());
+        assertFalse(ok("/v1/search","platform",query,200).get("passages").toString().contains(doc));
         assertEquals(source.get("content"),ok("/v1/documents/"+doc+"/revisions/1","platform",null,200).get("content"));
         var selected=new EvidenceRepository(new ReaderConnections(dir().resolve("readers.json"))).current("platform");assertTrue(selected.stream().noneMatch(d->d.id().equals(doc)));
     }

@@ -12,5 +12,11 @@
     <dependency><groupId>org.springframework.security</groupId><artifactId>spring-security-oauth2-jose</artifactId></dependency>
     <dependency><groupId>org.postgresql</groupId><artifactId>postgresql</artifactId></dependency>
   </dependencies>
-  <build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin></plugins></build>
+  <build><resources>
+    <resource><directory>src/main/resources</directory></resource>
+    <!-- One source of browser assets for both runtimes; never copy private configuration. -->
+    <resource><directory>${project.basedir}/../runreviq/web</directory><targetPath>workspace</targetPath><filtering>false</filtering>
+      <includes><include>index.html</include><include>app.js</include><include>theme.js</include><include>app.css</include></includes>
+    </resource>
+  </resources><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin></plugins></build>
 </project>

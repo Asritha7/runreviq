@@ -96,6 +96,13 @@ better development precision without lost labeled evidence, but strict exact-set
 still fail on larger suites. The default remains reviewed-v5; independent validation
 and runtime cutover are pending. See [focused retrieval](focused-retrieval.md).
 
+## Stage 6a — isolated browser workspace
+
+Implemented: optional Java serving of the shared browser assets, a disposable demo
+launcher, packaged-asset checks and an HTTP workflow with the web adapter enabled.
+Real-browser workflow acceptance, live Google validation and process-switch rollback
+remain separate gates. See [workspace rehearsal](java-workspace-rehearsal.md).
+
 ## Remaining stages and acceptance gates
 
 | Stage | Work | Required proof before use |
@@ -116,7 +123,7 @@ user-authored evaluation questions and expected outcomes outside ingestion.
 ## Runtime and rollback
 
 Port 8000 continues to serve the working Python product. Port 8081 is deliberately
-a separate engineering server with no UI. Identity and restricted database reads can be
+a separate engineering server; its shared browser workspace requires explicit web enablement. Identity and restricted database reads can be
 enabled explicitly; Google requires an additional registered callback for that port.
 Keep the existing port-8000 OAuth callback throughout migration. Do not switch users to Java until
 the operational stages pass. Preserve the Python entry point and existing database

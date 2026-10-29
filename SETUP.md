@@ -327,3 +327,11 @@ For an isolated run of the optional Java precision candidate, use
 `.venv/bin/python -m runreviq.evaluate_java --suite realistic --search-mode focused-v6 --report-only`.
 A separately started Java instance can select it with `--runreviq.search.mode=focused-v6`;
 the default remains reviewed-v5. See [algorithm, comparison and remaining gates](docs/focused-retrieval.md).
+
+## Isolated Java browser workspace
+
+Run `.venv/bin/python scripts/rehearse_java_workspace.py` to create a temporary demo
+workspace with fictional data on a random loopback port. It prints its URL and a private
+temporary token-file path, and cleans up on Ctrl-C or timeout. This does not change the
+working port-8000 application. Use `--verify-only` for a packaged-server smoke test.
+See [rehearsal instructions and remaining cutover gates](docs/java-workspace-rehearsal.md).

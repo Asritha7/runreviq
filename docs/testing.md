@@ -187,3 +187,14 @@ HTTP/SQL access boundaries, including typed-evidence roles. Both runs use dispos
 The Java quality integration test runs all four development suites in focused mode and
 compares against immutable v5 reports. Pure comparison tests reject changed fingerprints,
 labels, provenance, missing cases and inconsistent metrics. See [candidate limits](focused-retrieval.md).
+
+## Java workspace rehearsal
+
+`WorkspaceTest` verifies byte-identical packaged assets, restrictive browser headers,
+route allowlisting and disabled APIs even when the shell is enabled. The existing
+disposable workflow suite now serves the shell and exercises HTTP upload through
+publication, permitted/denied search and withdrawal.
+`python scripts/rehearse_java_workspace.py --verify-only` checks the packaged JAR
+from a temporary working directory and cleans up its process/database. These checks
+do not substitute for real browser workflows, real Google login or process rollback.
+See [rehearsal and acceptance gates](java-workspace-rehearsal.md).

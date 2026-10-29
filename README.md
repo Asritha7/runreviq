@@ -4,13 +4,14 @@ Find applicable fictional operational guidance and question-matching source pass
 
 The Java backend migration is in `backend/`. It implements the deterministic selector, Google OIDC/demo authentication, restricted JDBC evidence reads and passage search, private drafts, independent review, publication and withdrawal. These adapters require explicit enablement.
 
-The working product still runs on Python. Java HTTP quality evaluation is available; the realistic development suite still fails its strict relevance gate. An opt-in Java focused candidate improves development-set precision; reviewed-v5 remains the default. The frontend/runtime cutover remains pending; Python offline benchmarks stay in place. See the [migration stages](docs/java-migration.md).
+The working product still runs on Python. Java HTTP quality evaluation is available; the realistic development suite still fails its strict relevance gate. An opt-in Java focused candidate improves development-set precision; reviewed-v5 remains the default. An isolated Java frontend rehearsal is available; the live runtime cutover remains pending; Python offline benchmarks stay in place. See the [migration stages](docs/java-migration.md).
 
 ## Documentation
 
 - [Setup and local commands](SETUP.md)
 - [Architecture and current scope](docs/architecture.md)
 - [Java evidence reads and database isolation](docs/java-persistence.md)
+- [Isolated Java browser workspace rehearsal](docs/java-workspace-rehearsal.md)
 - [Java passage retrieval and full-response parity](docs/java-search.md)
 - [Java HTTP quality evaluation and measured limitations](docs/java-quality-evaluation.md)
 - [Optional focused retrieval candidate and comparison](docs/focused-retrieval.md)
