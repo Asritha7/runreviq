@@ -128,3 +128,52 @@ before any future explanation delivery. Generated claims need semantic support c
 explicit uncertainty and fail-closed handling; exact quotations alone do not establish
 entailment. No generation implementation or live-default promotion is authorized by a
 benchmark improvement alone.
+
+## Frozen-output diagnosis (30 October 2026)
+
+PR #36 merged as `d7d43db`. A separate offline diagnostic step now verifies the pack
+fingerprint, paired Java artifact, case IDs and structured-integrity results before
+classifying the recorded outputs. It neither calls the live API nor re-runs ranking.
+
+```sh
+.venv/bin/python scripts/diagnose_external_pack.py \
+  --sources /absolute/path/to/source-directory \
+  --gold /absolute/path/to/questions_and_gold.json \
+  --first-run /absolute/path/to/private-first-run-directory \
+  --output /absolute/path/to/new-private-diagnosis-directory
+```
+
+Both modes have identical statuses and passage sets. The seven retrieval misses have
+required document IDs in the API's applicable-document list. This locates the failures
+after applicability selection; it does not prove whether passage extraction, exact-term
+filtering, exclusion rules, coverage thresholds or final ranking caused each miss.
+One further required-evidence case stops at context/metadata review, including an
+unsupported precondition on a competing document. Three retrieve all required passages,
+including the prose disagreement that is not reported as a conflict. The two cases
+without required passages remain semantically ungraded. Counts overlap where a case
+has both retrieved evidence and an unsupported semantic outcome.
+
+The private diagnosis records missing passage coordinates and relevant metadata adaptation
+limits, but does not copy questions or quotes. It is still private evaluation material;
+keep it outside the searchable corpus and Git. Output directories cannot be overwritten.
+The original first-run files and archives remain unchanged.
+
+### Implementation sequence after diagnosis
+
+1. Instrument the existing retrieval gates in a disposable test harness, recording
+   candidate presence, exact-term eligibility, query/body coverage and final selection.
+   Keep traces out of public API responses and logs; they may contain restricted evidence.
+   Verify diagnostics do not change responses before using them to attribute a failure.
+2. Handle arbitrary preconditions as a separate schema and publication-review design.
+   Preserve unknown values and require reviewed metadata; do not make unsupported
+   documents verified just to improve this benchmark. Prohibition claims likewise need
+   reviewed action semantics and source spans, not an inferred approval from prose.
+3. Compare a bounded local candidate against both frozen baselines. Start with measured
+   lexical failure causes; any embedding experiment needs a pinned local model, explicit
+   resource budget, no paid fallback and identical authorized/applicable candidates.
+   Report recall, optional-evidence adjudication, unauthorized output and latency together.
+4. Treat this pack as development data after tuning. Evaluate promotion on separately
+   reserved questions. Keep prose contradiction detection and generated explanation
+   support as separate capabilities; a retrieval improvement cannot certify either.
+
+No algorithm, approval state, live runtime or default mode changed during diagnosis.

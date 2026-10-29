@@ -340,3 +340,8 @@ For an automated Java → Python → Java drill on a generated database, run
 `.venv/bin/python scripts/test_runtime_rollback.py`. It verifies the same-port Python
 fallback, stored revisions, reader permissions, Python edits and Java recovery.
 See [executed acceptance checks and remaining gates](docs/runtime-acceptance.md).
+
+For existing private external-pack results, `scripts/diagnose_external_pack.py` produces
+an offline diagnosis without starting a server or changing data. It requires the original
+sources and gold key plus the paired result directory; see
+[the diagnosis instructions](docs/runtime-acceptance.md#frozen-output-diagnosis-30-october-2026).
