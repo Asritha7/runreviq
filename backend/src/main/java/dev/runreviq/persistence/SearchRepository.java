@@ -5,6 +5,8 @@ import dev.runreviq.search.*;
 import dev.runreviq.authoring.MetadataProposal;
 import java.sql.*;
 import java.util.*;
+import java.util.function.Consumer;
+import static dev.runreviq.search.RetrievalTrace.*;
 import java.util.regex.Pattern;
 import static dev.runreviq.search.LexicalRanking.*;
 
@@ -30,11 +32,18 @@ final class SearchRepository {
     }
     @SuppressWarnings("unchecked")
     static Map<String,Object> search(Connection c,List<EvidenceRepository.Source> sources,String question,SelectionContext context,Integer explicit,boolean focused)throws Exception{
+        return search(c,sources,question,context,explicit,focused,null);
+    }
+    @SuppressWarnings("unchecked")
+    static Map<String,Object> search(Connection c,List<EvidenceRepository.Source> sources,String question,SelectionContext context,Integer explicit,boolean focused,Consumer<Map<String,Object>> trace)throws Exception{
+        if(trace!=null)emit(trace,"authorized_snapshot","documents",sources.stream().map(s->Map.of("document_id",s.document().id(),"revision",s.document().revision(),"source_sha256",PythonJson.sha256(s.content()))).toList());
         var result=new LinkedHashMap<>(new ApplicabilitySelector().select(sources.stream().map(EvidenceRepository.Source::document).toList(),context));
         result.put("passages",List.of());result.put("retrieval_method",focused?"postgres_english_focused_v6":"postgres_english_reviewed_v5");result.put("http_status_context",context.httpStatus());result.put("http_status_source",explicit!=null?"provided":context.httpStatus()!=null?"question":"unknown");
+        if(trace!=null)emit(trace,"applicability","status",result.get("status"),"applicable_documents",result.get("applicable_documents"),"recommended_documents",result.get("recommended_documents"),"uncertain_documents",result.get("uncertain_documents"));
         if(!result.get("status").equals("selected"))return result;
         var recommended=(List<String>)result.get("recommended_documents");var candidates=new ArrayList<Map<String,Object>>();var byId=new HashMap<String,EvidenceRepository.Source>();
         for(var source:sources){byId.put(source.document().id(),source);if(recommended.contains(source.document().id()))candidates.addAll(Passages.extract(source.document(),source.content()));}
+        if(trace!=null)emit(trace,"candidate_generation","passages",candidates.stream().map(RetrievalTrace::key).toList());
         String scoring=pattern("(?<![\\w.-])"+Pattern.quote(context.service())+"(?![\\w.-])").matcher(question).replaceAll(" ");
         scoring=pattern("(?<![\\w.-])v?"+Pattern.quote(context.softwareVersion())+"(?![\\w.-])").matcher(scoring).replaceAll(" ");
         if(focused)scoring=pattern("\\bconfirms?\\b").matcher(scoring).replaceAll("verify");
@@ -52,6 +61,7 @@ final class SearchRepository {
             texts.add(normalize(searchable((String)p.get("quote"))));texts.add(normalize(source.document().title()+" "+heading));texts.add(normalize((String)p.get("quote")));texts.add(normalize(String.join(" ",actions)));
         }
         var terms=stem(c,texts);var required=exactTerms(question).stream().filter(t->!t.equals(context.softwareVersion())).toList();var codes=httpTerms(question);if(codes.isEmpty()&&context.httpStatus()!=null)codes=Set.of(context.httpStatus().toString());
+        if(trace!=null)emit(trace,"lexical_query","normalized_terms",normalized,"exact_terms",required,"http_codes",codes);
         var matching=new HashSet<String>();var codeFree=new HashSet<String>();
         for(var source:sources){var d=source.document();boolean reviewed=d.metadataVerified()&&d.profile()!=null&&d.profile().httpScope()!=null;
             var nonCodes=new ArrayList<>(required);nonCodes.removeAll(codes);
@@ -64,10 +74,15 @@ final class SearchRepository {
         var generic=new HashSet<>(codes);generic.addAll(Set.of("http","status","respons","error","failur"));var substantive=new HashSet<>(normalized);substantive.removeAll(generic);
         var rankingQuery=new ArrayList<>(normalized);rankingQuery.removeAll(codes);rankingQuery.remove("http");var meaningful=new HashSet<>(rankingQuery);meaningful.removeAll(generic);if(codes.isEmpty()||meaningful.size()<2)rankingQuery=new ArrayList<>(normalized);
         var rankable=new ArrayList<Map<String,Object>>();var bodies=new ArrayList<List<String>>();var contexts=new ArrayList<List<String>>();var policies=new ArrayList<List<String>>();var rankHeadings=new ArrayList<String>();
-        for(int i=0;i<candidates.size();i++){var p=candidates.get(i);if(matching.contains(p.get("document_id"))&&(!codeFree.contains(p.get("document_id"))||intersection(substantive,terms.get(i*4)).size()>=2)){rankable.add(p);bodies.add(terms.get(i*4));contexts.add(terms.get(i*4+1));policies.add(terms.get(i*4+3));rankHeadings.add(headings.get(i));}}
+        for(int i=0;i<candidates.size();i++){var p=candidates.get(i);
+            if(trace!=null)emit(trace,"lexical_gate","passage",key(p),"body_terms",terms.get(i*4),"full_quote_terms",terms.get(i*4+2),"context_terms",terms.get(i*4+1),"exact_match",matching.contains(p.get("document_id")),"http_code_absent",codeFree.contains(p.get("document_id")),"substantive_overlap",intersection(substantive,terms.get(i*4)),"decision",!matching.contains(p.get("document_id"))?"exact_terms":codeFree.contains(p.get("document_id"))&&intersection(substantive,terms.get(i*4)).size()<2?"http_substantive_overlap":"eligible");
+            if(matching.contains(p.get("document_id"))&&(!codeFree.contains(p.get("document_id"))||intersection(substantive,terms.get(i*4)).size()>=2)){rankable.add(p);bodies.add(terms.get(i*4));contexts.add(terms.get(i*4+1));policies.add(terms.get(i*4+3));rankHeadings.add(headings.get(i));}}
         boolean reviewed=candidates.stream().anyMatch(p->Boolean.TRUE.equals(p.get("role_reviewed")));
-        var hits=excluded?List.<Map<String,Object>>of():rank(rankable,rankingQuery,bodies,contexts,policies,contains("\\b(?:commands?|sql|every|universal|exactly)\\b",question)?.50:.35,groups,reviewed?20:5,focused?question:null,rankHeadings);
-        if(reviewed)hits=Passages.bundle(hits);
+        if(trace!=null)emit(trace,"exclusion_gate","excluded",excluded,"trigger_terms",intersection(normalized,mentioned));
+        var hits=excluded?List.<Map<String,Object>>of():rank(rankable,rankingQuery,bodies,contexts,policies,contains("\\b(?:commands?|sql|every|universal|exactly)\\b",question)?.50:.35,groups,reviewed?20:5,focused?question:null,rankHeadings,trace);
+        var beforeAssembly=trace==null?List.<Map<String,Object>>of():hits.stream().map(RetrievalTrace::key).toList();
+        if(reviewed)hits=Passages.bundle(hits,trace);
+        if(trace!=null)emit(trace,"assembly","reviewed_bundle",reviewed,"input",beforeAssembly,"output",hits.stream().map(RetrievalTrace::key).toList());
         for(var hit:hits){var d=byId.get((String)hit.get("document_id")).document();hit.put("usage_note",Passages.NOTES.get(hit.get("evidence_role")));
             var applicability=new LinkedHashMap<String,Object>();applicability.put("service",d.service());applicability.put("environment",d.environment());applicability.put("version_min",d.versionMin());applicability.put("version_max_exclusive",d.versionMaxExclusive());applicability.put("key_rotation_enabled",d.keyRotationEnabled());
             var scope=d.profile()==null?null:d.profile().httpScope();applicability.put("http_scope",scope==null?null:Map.of("mode",scope.mode(),"codes",scope.codes()));hit.put("applicability",applicability);
@@ -77,6 +92,7 @@ final class SearchRepository {
         result.put("evidence",((List<Map<String,Object>>)result.get("evidence")).stream().filter(e->selected.contains(e.get("document_id"))).toList());
         if(!hits.isEmpty())result.put("message","Found matching source passages. These are excerpts, not an answer or proof of the cause.");
         else {result.put("status","insufficient_evidence");result.put("message","No sufficiently relevant passages in approved guidance accessible for this context.");result.put("next_steps",List.of("Try concrete terms from the incident, check the context, or request an approved source."));}
+        if(trace!=null)emit(trace,"final","status",result.get("status"),"passages",hits.stream().map(RetrievalTrace::key).toList());
         return result;
     }
 }

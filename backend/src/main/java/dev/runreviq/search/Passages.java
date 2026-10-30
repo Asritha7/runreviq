@@ -4,6 +4,8 @@ import dev.runreviq.domain.EvidenceDocument;
 import dev.runreviq.persistence.*;
 import dev.runreviq.authoring.MetadataProposal;
 import java.util.*;
+import java.util.function.Consumer;
+import static dev.runreviq.search.RetrievalTrace.*;
 
 public final class Passages {
     private Passages() {}
@@ -35,9 +37,14 @@ public final class Passages {
         p.put("evidence_role",role);p.put("role_reviewed",reviewed);p.put("document_id",doc.id());p.put("revision",doc.revision());p.put("title",doc.title());return p;
     }
     public static List<Map<String,Object>> bundle(List<Map<String,Object>> hits){
+        return bundle(hits,null);
+    }
+    public static List<Map<String,Object>> bundle(List<Map<String,Object>> hits,Consumer<Map<String,Object>> trace){
         var unique=new ArrayList<Map<String,Object>>();var seen=new HashSet<List<String>>();
         for(var p:hits){var key=List.of((String)p.get("evidence_role"),LexicalRanking.pattern("[\\s\\x1c-\\x1f]+").matcher(MetadataProposal.strip((String)p.get("quote"))).replaceAll(" "));if(seen.add(key))unique.add(p);}
         var chosen=new ArrayList<Map<String,Object>>();for(String role:List.of("procedure","prohibition","monitoring","historical"))unique.stream().filter(p->role.equals(p.get("evidence_role"))).findFirst().ifPresent(chosen::add);
-        for(var p:unique){if(chosen.size()>=5)break;if(!chosen.contains(p))chosen.add(p);}return unique.stream().filter(chosen::contains).limit(5).toList();
+        for(var p:unique){if(chosen.size()>=5)break;if(!chosen.contains(p))chosen.add(p);}var result=unique.stream().filter(chosen::contains).limit(5).toList();
+        if(trace!=null)for(var p:hits)emit(trace,"assembly_decision","passage",key(p),"decision",result.contains(p)?"selected":!unique.contains(p)?"duplicate_role_quote":"bundle_limit");
+        return result;
     }
 }

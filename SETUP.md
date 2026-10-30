@@ -345,3 +345,9 @@ For existing private external-pack results, `scripts/diagnose_external_pack.py` 
 an offline diagnosis without starting a server or changing data. It requires the original
 sources and gold key plus the paired result directory; see
 [the diagnosis instructions](docs/runtime-acceptance.md#frozen-output-diagnosis-30-october-2026).
+
+For a disposable, read-only Java trace replay of those same outputs, use
+`scripts/trace_external_pack.py` with `--sources`, `--gold`, `--baseline` and a new
+`--output` directory. It requires PostgreSQL and Java/Maven; it does not start or modify
+the working web application. Keep traces private. See
+[isolated trace instructions](docs/retrieval-trace-findings.md#reproduction-and-isolation).

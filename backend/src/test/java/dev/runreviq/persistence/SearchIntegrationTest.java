@@ -42,6 +42,18 @@ class SearchIntegrationTest {
                     assertEquals(c.get("expected").get("status"),actual.get("status"));assertTrue(actual.get("passages").isEmpty());
                 }
             }
+            var ctx=c.get("context");
+            var selection=new dev.runreviq.domain.SelectionContext(role,ctx.get("service").asString(),ctx.get("software_version").asString(),ctx.get("environment").asString(),ctx.hasNonNull("key_rotation_enabled")?ctx.get("key_rotation_enabled").asBoolean():null,ctx.hasNonNull("http_status")?ctx.get("http_status").asInt():null);
+            JdbcIntegrationTest.readers().read(role,connection->{
+                var sources=EvidenceRepository.snapshot(connection);var trace=new ArrayList<Map<String,Object>>();var repeat=new ArrayList<Map<String,Object>>();
+                String question=c.get("question").asString();var inferred=SearchRepository.context(question,selection);
+                var observed=SearchRepository.search(connection,sources,question,inferred,selection.httpStatus(),mode().equals("focused-v6"),trace::add);
+                SearchRepository.search(connection,sources,question,inferred,selection.httpStatus(),mode().equals("focused-v6"),repeat::add);
+                assertTrue(actual.equals(StoredEvidence.JSON.readTree(StoredEvidence.JSON.writeValueAsString(observed))),"Trace changed HTTP response");
+                assertTrue(trace.equals(repeat),"Nondeterministic trace");
+                var authorized=new HashSet<String>();sources.forEach(s->authorized.add(s.document().id()));OfflineTraceTest.checkReferences(trace,authorized);
+                return null;
+            });
             assertEquals("no-store",r.headers().firstValue("cache-control").orElseThrow());assertTrue(actual.get("passages").size()<=5);
             for(var p:actual.get("passages")){
                 var source=JdbcIntegrationTest.repository().revision(role,p.get("document_id").asString(),p.get("revision").asInt());assertNotNull(source);
@@ -55,6 +67,7 @@ class SearchIntegrationTest {
         assertEquals(401,request(null,"{").statusCode());
         var invalid=new ArrayList<String>(List.of("{}","[]","{"," ".repeat(4097),body()+" {}"));
         for(String q:List.of(""," ","x".repeat(501)," ".repeat(500)+"x"))invalid.add(body().put("question",q).toString());
+        invalid.add(body().put("trace",true).toString());invalid.add(body().put("diagnostics",true).toString());
         invalid.add(body().put("role","security").toString());invalid.add(body().put("search_mode","focused-v6").toString());invalid.add(body().put("question",42).toString());invalid.add(body().put("http_status",503).toString());
         invalid.add(body().toString().replace("\"question\":","\"question\":\"JWKS\",\"question\":"));
         invalid.add(body().put("key_rotation_enabled","true").toString());invalid.add(body().put("http_status",true).toString());
@@ -63,15 +76,24 @@ class SearchIntegrationTest {
             var r=request("platform",body().toString());assertEquals(503,r.statusCode());assertEquals("{\"detail\":\"Evidence store unavailable\"}",r.body());
         }finally{Files.writeString(path,saved);}
     }
+    String traced(String role){
+        return JdbcIntegrationTest.readers().read(role,c->{
+            var sources=EvidenceRepository.snapshot(c);var events=new ArrayList<Map<String,Object>>();
+            var ctx=new dev.runreviq.domain.SelectionContext(role,"identity-service","2.4.0","production",true,401);
+            var result=SearchRepository.search(c,sources,"intermittent 401 errors",ctx,null,mode().equals("focused-v6"),events::add);
+            var authorized=new HashSet<String>();sources.forEach(source->authorized.add(source.document().id()));OfflineTraceTest.checkReferences(events,authorized);
+            return StoredEvidence.JSON.writeValueAsString(Map.of("response",result,"trace",events));
+        });
+    }
     @Test void currentRevisionAclWithdrawalAndNoRestrictedLeak()throws Exception{
         var before=StoredEvidence.JSON.readTree(request("platform",body().toString()).body());assertEquals(2,before.get("passages").get(0).get("revision").asInt());
         try(var c=JdbcIntegrationTest.admin();var q=c.createStatement()){
             try{
                 q.execute("UPDATE opslens.documents SET allowed_roles=ARRAY['security'] WHERE id='RB-042'");
-                var hidden=request("platform",body().toString());assertEquals(200,hidden.statusCode());assertFalse(hidden.body().contains("RB-042"));assertFalse(hidden.body().contains("Current café"));
+                var hidden=request("platform",body().toString());assertEquals(200,hidden.statusCode());assertFalse(hidden.body().contains("RB-042"));assertFalse(hidden.body().contains("Current café"));assertFalse(traced("platform").contains("RB-042"));
                 q.execute("UPDATE opslens.documents SET allowed_roles=ARRAY['platform','security'] WHERE id='RB-042'");
                 q.execute("INSERT INTO opslens.document_withdrawals(document_id,revision,actor,reason) VALUES ('RB-042',2,'search-test','withdrawn')");
-                var withdrawn=request("platform",body().toString());assertEquals(200,withdrawn.statusCode());assertFalse(withdrawn.body().contains("RB-042"));
+                var withdrawn=request("platform",body().toString());assertEquals(200,withdrawn.statusCode());assertFalse(withdrawn.body().contains("RB-042"));assertFalse(traced("platform").contains("RB-042"));
             }finally{q.execute("DELETE FROM opslens.document_withdrawals WHERE document_id='RB-042' AND revision=2");q.execute("UPDATE opslens.documents SET allowed_roles=ARRAY['platform','security'] WHERE id='RB-042'");}
         }
         var injection=request("platform",body().put("question","NORTHSTAR-RESTRICTED-CANARY' | !:*); DROP TABLE opslens.documents; --").toString());
@@ -80,7 +102,7 @@ class SearchIntegrationTest {
     @Test void corruptVisibleSourceFailsClosedHiddenSourceIsNeverRead()throws Exception{
         try(var c=JdbcIntegrationTest.admin();var q=c.createStatement()){
             c.setAutoCommit(false);q.execute("INSERT INTO opslens.documents VALUES ('BROKEN-999',1,ARRAY['security'])");q.execute("INSERT INTO opslens.document_versions(document_id,revision,checksum,metadata,content) VALUES ('BROKEN-999',1,'bad','{}','private search source')");c.commit();
-            try{assertEquals(200,request("platform",body().toString()).statusCode());var r=request("security",body().toString());assertEquals(503,r.statusCode());assertEquals("{\"detail\":\"Evidence store unavailable\"}",r.body());}
+            try{assertEquals(200,request("platform",body().toString()).statusCode());assertFalse(traced("platform").contains("BROKEN-999"));assertThrows(EvidenceUnavailable.class,()->traced("security"));var r=request("security",body().toString());assertEquals(503,r.statusCode());assertEquals("{\"detail\":\"Evidence store unavailable\"}",r.body());}
             finally{q.execute("UPDATE opslens.documents SET allowed_roles=ARRAY[]::text[] WHERE id='BROKEN-999'");c.commit();}
         }
     }
