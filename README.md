@@ -172,3 +172,7 @@ This diagnostic does not improve ranking or establish semantic answer correctnes
 The [isolated retrieval trace report](docs/retrieval-trace-findings.md) now identifies
 precise rejection stages for the seven external eligible-evidence misses, with frozen
 response parity and no change to ranking or public API output.
+
+An [evaluator-only passage-scope experiment](docs/passage-scope-experiment.md) tests the
+smallest exclusion change suggested by those traces. It shows no retrieval gain on the
+frozen external pack and is not available as a live search mode.

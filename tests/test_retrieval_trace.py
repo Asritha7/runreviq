@@ -19,6 +19,12 @@ class TraceDiagnosisTests(unittest.TestCase):
         self.events[1]['decision']='exact_terms'
         self.assertEqual(first_failure(self.p,self.events)['stage'],'exact_terms')
 
+    def test_passage_scope_is_distinct_from_global_and_coverage(self):
+        self.events[1]['decision']='passage_excluded_terms'
+        self.assertEqual(first_failure(self.p,self.events)['stage'],'passage_excluded_terms')
+        self.events[1]['decision']='eligible'
+        self.assertEqual(first_failure(self.p,self.events)['stage'],'document_coverage')
+
     def test_global_exclusion_precedes_coverage(self):
         self.events[2].update(excluded=True,trigger_terms=['synthetic'])
         self.assertEqual(first_failure(self.p,self.events)['stage'],'excluded_sentence_terms')

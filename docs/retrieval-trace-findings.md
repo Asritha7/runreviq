@@ -135,3 +135,10 @@ externally declared, not independently verified.
 
 These checks establish behavior preservation for the exercised cases; they are not a
 claim that all possible retrieval queries or semantic judgments are correct.
+
+## Follow-up experiment
+
+The [passage-scope experiment](passage-scope-experiment.md) tests the suggested small
+change without modifying live modes. It exposes a subsequent coverage failure in F04
+and yields no external-pack retrieval gain. The original trace findings above remain
+historical baseline results, not rewritten candidate results.
