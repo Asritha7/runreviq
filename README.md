@@ -168,3 +168,7 @@ The backend now supports optional [reviewed evidence profiles](docs/reviewed-evi
 Frozen external evaluation outputs can now be diagnosed offline with provenance checks;
 see [failure boundaries and next steps](docs/runtime-acceptance.md#frozen-output-diagnosis-30-october-2026).
 This diagnostic does not improve ranking or establish semantic answer correctness.
+
+The [isolated retrieval trace report](docs/retrieval-trace-findings.md) now identifies
+precise rejection stages for the seven external eligible-evidence misses, with frozen
+response parity and no change to ranking or public API output.

@@ -177,3 +177,12 @@ The original first-run files and archives remain unchanged.
    support as separate capabilities; a retrieval improvement cannot certify either.
 
 No algorithm, approval state, live runtime or default mode changed during diagnosis.
+
+## Precise retrieval-gate diagnosis
+
+The [isolated trace milestone](retrieval-trace-findings.md) reproduces all seven
+eligible-evidence misses: six questions fail document coverage and one hits a global
+excluded-sentence veto. Full traced responses equal the original frozen results.
+Metadata/context review and prose-only contradiction failures remain separate. The
+linked report documents raw event evidence, isolation, reproduction and a narrowly
+scoped next experiment; no retrieval improvement is implemented in this milestone.

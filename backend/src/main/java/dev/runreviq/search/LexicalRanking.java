@@ -1,6 +1,8 @@
 package dev.runreviq.search;
 
 import java.util.*;
+import java.util.function.Consumer;
+import static dev.runreviq.search.RetrievalTrace.*;
 import java.util.regex.Pattern;
 
 /** Port of the reviewed-v5 lexical rules. Scores are never answer confidence. */
@@ -48,6 +50,10 @@ public final class LexicalRanking {
     }
     /** Optional precision candidate. Eligibility and citation construction remain outside ranking. */
     public static List<Map<String,Object>> rank(List<Map<String,Object>> candidates,List<String> queryTerms,List<List<String>> bodies,List<List<String>> contexts,List<List<String>> policies,double floor,List<List<String>> groups,int limit,String question,List<String> headings){
+        return rank(candidates,queryTerms,bodies,contexts,policies,floor,groups,limit,question,headings,null);
+    }
+    public static List<Map<String,Object>> rank(List<Map<String,Object>> candidates,List<String> queryTerms,List<List<String>> bodies,List<List<String>> contexts,List<List<String>> policies,double floor,List<List<String>> groups,int limit,String question,List<String> headings,Consumer<Map<String,Object>> trace){
+        if(trace!=null)emit(trace,"ranking_input","query_terms",queryTerms,"floor",floor,"body_floor",.15,"limit",limit,"clause_groups",groups,"focused",question!=null,"relative_floor",question!=null?.65:.40,"novelty_floor",question!=null?.45:.30,"candidates",candidates.stream().map(RetrievalTrace::key).toList());
         boolean focused=question!=null;
         var query=new TreeSet<>(queryTerms);if(query.isEmpty()||candidates.isEmpty())return List.of();
         var frequency=new HashMap<String,Integer>();var documentTerms=new HashMap<String,Set<String>>();
@@ -68,6 +74,8 @@ public final class LexicalRanking {
             var body=counts.get(i);var matched=intersection(query,body.keySet());var terms=documentTerms.get((String)candidates.get(i).get("document_id"));
             double coverage=weight(intersection(query,terms),weights)/total;
             for(var group:groups){var local=intersection(query,group);if(intersection(local,body.keySet()).size()>=2)coverage=Math.max(coverage,weight(intersection(local,terms),weights)/weight(local,weights));}
+            if(trace!=null)emit(trace,"coverage","passage",key(candidates.get(i)),"query_weights",weights,"matched_body_terms",matched,"body_terms",body.keySet(),"document_terms",terms,"coverage",coverage,"body_coverage",weight(matched,weights)/total,"floor",floor,"body_floor",.15,
+                "decision",coverage<floor?"document_coverage":weight(matched,weights)/total<.15?"body_coverage":"eligible");
             if(coverage<floor||weight(matched,weights)/total<.15)continue;
             double score=0;for(String t:new TreeSet<>(matched))score+=weights.get(t)*body.get(t)*2.2/(body.get(t)+1.2*(.25+.75*bodies.get(i).size()/average));
             score+=.60*weight(intersection(query,contexts.get(i)),weights);if(intersection(query,policies.get(i)).size()>=2)score*=1.25;
@@ -84,12 +92,16 @@ public final class LexicalRanking {
                 if(intentMatch)score*=2;
                 intentMatch=intentMatch&&anchorCoverage==1;
             }
+            if(trace!=null)emit(trace,"score","passage",key(candidates.get(i)),"score",score*coverage,"intent_match",intentMatch);
             scored.add(new Scored(score*coverage,i,candidates.get(i),intentMatch));
         }
         scored.sort(Comparator.comparingDouble(Scored::score).reversed().thenComparingInt(Scored::index));
         if(scored.isEmpty())return List.of();var selected=new ArrayList<Map<String,Object>>();var covered=new HashSet<String>();var intentDocuments=new HashSet<Object>();
-        for(var s:scored){var matched=intersection(query,counts.get(s.index).keySet());var fresh=new HashSet<>(matched);fresh.removeAll(covered);
+        int processed=0;
+        for(var s:scored){processed++;var matched=intersection(query,counts.get(s.index).keySet());var fresh=new HashSet<>(matched);fresh.removeAll(covered);
             if(s.score>=scored.getFirst().score*(focused?.65:.40)||(s.score>=scored.getFirst().score*(focused?.45:.30)&&!fresh.isEmpty())||(focused&&s.intentMatch&&!intentDocuments.contains(s.passage.get("document_id"))&&s.score>=scored.getFirst().score*.30)){selected.add(s.passage);covered.addAll(matched);if(s.intentMatch)intentDocuments.add(s.passage.get("document_id"));}if(selected.size()==limit)break;
-        }return selected;
+        }
+        if(trace!=null)for(int i=0;i<scored.size();i++){var s=scored.get(i);emit(trace,"selection","passage",key(s.passage),"rank",i+1,"score",s.score,"best_score",scored.getFirst().score,"limit",limit,"decision",selected.contains(s.passage)?"selected":i>=processed?"top_k":"relative_score");}
+        return selected;
     }
 }

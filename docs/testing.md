@@ -214,3 +214,12 @@ See [runtime acceptance](runtime-acceptance.md#frozen-output-diagnosis-30-octobe
 for usage and limitations. Synthetic tests cover mismatched fingerprints/artifacts,
 metadata blocks and the distinction between retrieving conflict evidence and detecting
 conflict. The external packs and diagnosis remain local-only.
+
+`SearchIntegrationTest` now compares traced and HTTP responses across the frozen parity
+cases in both modes, checks repeat determinism, and exercises trace behavior after ACL
+revocation, withdrawal and source corruption. `RetrievalTraceTest` covers immutable
+observations, score/coverage decisions, top-K and bundle exclusions. The test-only
+`OfflineTraceTest` replays external requests on a generated database through restricted
+readers; it is not packaged in the application. Python tests verify first-decisive-stage
+classification and separate metadata/conflict outcomes. See
+[trace reproduction and findings](retrieval-trace-findings.md).
