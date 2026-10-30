@@ -51,7 +51,18 @@ class SearchIntegrationTest {
                 SearchRepository.search(connection,sources,question,inferred,selection.httpStatus(),mode().equals("focused-v6"),repeat::add);
                 assertTrue(actual.equals(StoredEvidence.JSON.readTree(StoredEvidence.JSON.writeValueAsString(observed))),"Trace changed HTTP response");
                 assertTrue(trace.equals(repeat),"Nondeterministic trace");
-                var authorized=new HashSet<String>();sources.forEach(s->authorized.add(s.document().id()));OfflineTraceTest.checkReferences(trace,authorized);
+                var candidateTrace=new ArrayList<Map<String,Object>>();
+                var candidate=SearchRepository.search(connection,sources,question,inferred,selection.httpStatus(),false,candidateTrace::add,true);
+                for(String field:List.of("applicable_documents","uncertain_documents","conflicts","conflict_details","questions","review_items","http_status_context","http_status_source"))
+                    assertEquals(observed.get(field),candidate.get(field),field);
+                if(Set.of("conflict","needs_context_or_review").contains(observed.get("status"))){assertEquals(observed.get("status"),candidate.get("status"));assertTrue(((List<?>)candidate.get("passages")).isEmpty());}
+                for(var hit:(List<Map<String,Object>>)candidate.get("passages")){
+                    var source=sources.stream().filter(src->src.document().id().equals(hit.get("document_id"))).findFirst().orElseThrow();
+                    var lines=StoredEvidence.lines(source.content());
+                    assertEquals(String.join("\n",lines.subList((Integer)hit.get("start_line")-1,(Integer)hit.get("end_line"))),hit.get("quote"));
+                    assertEquals(PythonJson.sha256(source.content()),hit.get("source_sha256"));
+                }
+                var authorized=new HashSet<String>();sources.forEach(s->authorized.add(s.document().id()));OfflineTraceTest.checkReferences(trace,authorized);OfflineTraceTest.checkReferences(candidateTrace,authorized);
                 return null;
             });
             assertEquals("no-store",r.headers().firstValue("cache-control").orElseThrow());assertTrue(actual.get("passages").size()<=5);
@@ -80,7 +91,7 @@ class SearchIntegrationTest {
         return JdbcIntegrationTest.readers().read(role,c->{
             var sources=EvidenceRepository.snapshot(c);var events=new ArrayList<Map<String,Object>>();
             var ctx=new dev.runreviq.domain.SelectionContext(role,"identity-service","2.4.0","production",true,401);
-            var result=SearchRepository.search(c,sources,"intermittent 401 errors",ctx,null,mode().equals("focused-v6"),events::add);
+            var result=SearchRepository.search(c,sources,"intermittent 401 errors",ctx,null,false,events::add,true);
             var authorized=new HashSet<String>();sources.forEach(source->authorized.add(source.document().id()));OfflineTraceTest.checkReferences(events,authorized);
             return StoredEvidence.JSON.writeValueAsString(Map.of("response",result,"trace",events));
         });

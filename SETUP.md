@@ -351,3 +351,7 @@ For a disposable, read-only Java trace replay of those same outputs, use
 `--output` directory. It requires PostgreSQL and Java/Maven; it does not start or modify
 the working web application. Keep traces private. See
 [isolated trace instructions](docs/retrieval-trace-findings.md#reproduction-and-isolation).
+
+Add `--passage-scope-experiment` to the offline trace command to compare the isolated
+candidate alongside both frozen baselines. It cannot be selected through the API or
+server search-mode configuration. See [results and limits](docs/passage-scope-experiment.md).

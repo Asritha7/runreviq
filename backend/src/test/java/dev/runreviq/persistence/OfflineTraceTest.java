@@ -24,15 +24,23 @@ class OfflineTraceTest {
             var context=new SelectionContext(role,n.get("service").asString(),n.get("software_version").asString(),n.get("environment").asString(),
                 n.hasNonNull("key_rotation_enabled")?n.get("key_rotation_enabled").asBoolean():null,n.hasNonNull("http_status")?n.get("http_status").asInt():null);
             String question=item.get("question").asString();boolean focused=item.get("mode").asString().equals("focused-v6");
+            boolean candidate=item.get("mode").asString().equals("passage-scope-v1");
             var request=SearchRepository.context(question,context);
             output.add(readers.read(role,c->{
                 var sources=EvidenceRepository.snapshot(c);var trace=new ArrayList<Map<String,Object>>();var repeat=new ArrayList<Map<String,Object>>();
-                var plain=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused);
-                var observed=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,trace::add);
-                var again=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,repeat::add);
+                var plain=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,null,candidate);
+                var observed=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,trace::add,candidate);
+                var again=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,repeat::add,candidate);
                 assertTrue(plain.equals(observed)&&plain.equals(again),"Instrumentation changed response");
                 assertTrue(trace.equals(repeat),"Nondeterministic trace");
-                assertTrue(StoredEvidence.JSON.readTree(StoredEvidence.JSON.writeValueAsString(plain)).equals(item.get("frozen_response")),"Frozen response changed");
+                var actual=StoredEvidence.JSON.readTree(StoredEvidence.JSON.writeValueAsString(plain));
+                if(!candidate)assertTrue(actual.equals(item.get("frozen_response")),"Frozen response changed");
+                else {
+                    for(String field:List.of("applicable_documents","uncertain_documents","conflicts","conflict_details","questions","review_items","http_status_context","http_status_source"))
+                        assertTrue(actual.get(field).equals(item.get("frozen_response").get(field)),"Experiment changed applicability boundary");
+                    if(Set.of("conflict","needs_context_or_review").contains(item.get("frozen_response").get("status").asString()))
+                        assertTrue(actual.get("status").equals(item.get("frozen_response").get("status"))&&actual.get("passages").isEmpty(),"Experiment bypassed context/conflict block");
+                }
                 var authorized=new HashSet<String>();sources.forEach(s->authorized.add(s.document().id()));
                 checkReferences(trace,authorized);
                 try(var q=c.createStatement();var r=q.executeQuery("SHOW transaction_read_only")){r.next();assertEquals("on",r.getString(1));}

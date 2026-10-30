@@ -223,3 +223,11 @@ observations, score/coverage decisions, top-K and bundle exclusions. The test-on
 readers; it is not packaged in the application. Python tests verify first-decisive-stage
 classification and separate metadata/conflict outcomes. See
 [trace reproduction and findings](retrieval-trace-findings.md).
+
+`PassageScopeExperimentTest` adds four synthetic scope-mechanism checks to
+`scripts/test_java_search.py`. Search integration also checks candidate applicability,
+context/conflict boundaries, citation integrity, revocation and withdrawal. The
+`--passage-scope-experiment` offline replay adds per-case evidence measurements and full
+response comparisons while retaining exact frozen checks for both existing modes.
+See the [experiment report](passage-scope-experiment.md); this candidate has no demonstrated
+external-pack retrieval gain and is not wired to the running application.
