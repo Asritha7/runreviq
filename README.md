@@ -176,3 +176,8 @@ response parity and no change to ranking or public API output.
 An [evaluator-only passage-scope experiment](docs/passage-scope-experiment.md) tests the
 smallest exclusion change suggested by those traces. It shows no retrieval gain on the
 frozen external pack and is not available as a live search mode.
+
+An [isolated retrieval-generalization experiment](docs/retrieval-generalization-design.md)
+compares both baselines with relaxed lexical admission. [Development results](docs/retrieval-generalization-results.md)
+show improved recall but lower precision and a synthetic wrong-procedure false positive.
+The default remains unchanged; embeddings are a future optional arm, not implemented.

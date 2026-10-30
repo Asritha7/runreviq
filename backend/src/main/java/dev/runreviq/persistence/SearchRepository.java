@@ -41,9 +41,14 @@ final class SearchRepository {
     /** Isolated evaluator experiment only; not wired to runtime configuration or HTTP. */
     @SuppressWarnings("unchecked")
     static Map<String,Object> search(Connection c,List<EvidenceRepository.Source> sources,String question,SelectionContext context,Integer explicit,boolean focused,Consumer<Map<String,Object>> trace,boolean passageScoped)throws Exception{
+        return search(c,sources,question,context,explicit,focused,trace,passageScoped,false);
+    }
+    @SuppressWarnings("unchecked")
+    static Map<String,Object> search(Connection c,List<EvidenceRepository.Source> sources,String question,SelectionContext context,Integer explicit,boolean focused,Consumer<Map<String,Object>> trace,boolean passageScoped,boolean relaxed)throws Exception{
+        if(relaxed&&(focused||passageScoped))throw new IllegalArgumentException("Experiment arms must remain separate");
         if(trace!=null)emit(trace,"authorized_snapshot","documents",sources.stream().map(s->Map.of("document_id",s.document().id(),"revision",s.document().revision(),"source_sha256",PythonJson.sha256(s.content()))).toList());
         var result=new LinkedHashMap<>(new ApplicabilitySelector().select(sources.stream().map(EvidenceRepository.Source::document).toList(),context));
-        result.put("passages",List.of());result.put("retrieval_method",passageScoped?"experimental_passage_scope_v1":focused?"postgres_english_focused_v6":"postgres_english_reviewed_v5");result.put("http_status_context",context.httpStatus());result.put("http_status_source",explicit!=null?"provided":context.httpStatus()!=null?"question":"unknown");
+        result.put("passages",List.of());result.put("retrieval_method",relaxed?"experimental_relaxed_lexical_v1":passageScoped?"experimental_passage_scope_v1":focused?"postgres_english_focused_v6":"postgres_english_reviewed_v5");result.put("http_status_context",context.httpStatus());result.put("http_status_source",explicit!=null?"provided":context.httpStatus()!=null?"question":"unknown");
         if(trace!=null)emit(trace,"applicability","status",result.get("status"),"applicable_documents",result.get("applicable_documents"),"recommended_documents",result.get("recommended_documents"),"uncertain_documents",result.get("uncertain_documents"));
         if(!result.get("status").equals("selected"))return result;
         var recommended=(List<String>)result.get("recommended_documents");var candidates=new ArrayList<Map<String,Object>>();var byId=new HashMap<String,EvidenceRepository.Source>();
@@ -87,7 +92,7 @@ final class SearchRepository {
             if(matching.contains(p.get("document_id"))&&(!codeFree.contains(p.get("document_id"))||intersection(substantive,terms.get(i*4)).size()>=2)&&!localExcluded){rankable.add(p);bodies.add(terms.get(i*4));contexts.add(terms.get(i*4+1));policies.add(terms.get(i*4+3));rankHeadings.add(headings.get(i));}}
         boolean reviewed=candidates.stream().anyMatch(p->Boolean.TRUE.equals(p.get("role_reviewed")));
         if(trace!=null)emit(trace,"exclusion_gate","excluded",excluded&&!passageScoped,"scope",passageScoped?"passage":"global","trigger_terms",intersection(normalized,mentioned));
-        var hits=excluded&&!passageScoped?List.<Map<String,Object>>of():rank(rankable,rankingQuery,bodies,contexts,policies,contains("\\b(?:commands?|sql|every|universal|exactly)\\b",question)?.50:.35,groups,reviewed?20:5,focused?question:null,rankHeadings,trace);
+        var hits=excluded&&!passageScoped?List.<Map<String,Object>>of():rank(rankable,rankingQuery,bodies,contexts,policies,contains("\\b(?:commands?|sql|every|universal|exactly)\\b",question)?.50:.35,groups,reviewed?20:5,focused?question:null,rankHeadings,trace,relaxed);
         var beforeAssembly=trace==null?List.<Map<String,Object>>of():hits.stream().map(RetrievalTrace::key).toList();
         if(reviewed)hits=Passages.bundle(hits,trace);
         if(trace!=null)emit(trace,"assembly","reviewed_bundle",reviewed,"input",beforeAssembly,"output",hits.stream().map(RetrievalTrace::key).toList());

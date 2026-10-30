@@ -100,7 +100,7 @@ def main():
             private(directory/'auth.json', [dict(subject=f'test-{r}',role=r,token=r+'-test-'+'x'*40) for r in ('platform','security','intern')])
             private(directory/'google.json',dict(client_id='offline-client',client_secret='offline-test-secret',allowed_subjects={'test-subject':'platform'}))
             environment = dict(os.environ,RUNREVIQ_JDBC_TEST_DIR=str(directory),RUNREVIQ_JDBC_TEST_DATABASE=name,RUNREVIQ_JDBC_SEARCH_MODE=args.search_mode)
-            result = subprocess.run([str(ROOT/'backend/mvnw'),'-f',str(ROOT/'backend/pom.xml'),'-B','-ntp','-Dtest=SearchIntegrationTest,SearchGoogleIntegrationTest,PassageScopeExperimentTest','test'],cwd=ROOT,env=environment)
+            result = subprocess.run([str(ROOT/'backend/mvnw'),'-f',str(ROOT/'backend/pom.xml'),'-B','-ntp','-Dtest=SearchIntegrationTest,SearchGoogleIntegrationTest,PassageScopeExperimentTest,RelaxedLexicalExperimentTest','test'],cwd=ROOT,env=environment)
             if result.returncode:
                 raise SystemExit(result.returncode)
     finally:

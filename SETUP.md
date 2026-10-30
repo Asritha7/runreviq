@@ -355,3 +355,8 @@ the working web application. Keep traces private. See
 Add `--passage-scope-experiment` to the offline trace command to compare the isolated
 candidate alongside both frozen baselines. It cannot be selected through the API or
 server search-mode configuration. See [results and limits](docs/passage-scope-experiment.md).
+
+Alternatively, use `--generalization-experiment` to compare relaxed lexical admission
+with both frozen baselines. The two experiment flags are mutually exclusive. No model
+download or live configuration change is required. Keep packs and raw reports private;
+see [design and reproduction](docs/retrieval-generalization-design.md).

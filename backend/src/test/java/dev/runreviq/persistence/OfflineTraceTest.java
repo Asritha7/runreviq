@@ -25,16 +25,17 @@ class OfflineTraceTest {
                 n.hasNonNull("key_rotation_enabled")?n.get("key_rotation_enabled").asBoolean():null,n.hasNonNull("http_status")?n.get("http_status").asInt():null);
             String question=item.get("question").asString();boolean focused=item.get("mode").asString().equals("focused-v6");
             boolean candidate=item.get("mode").asString().equals("passage-scope-v1");
+            boolean relaxed=item.get("mode").asString().equals("relaxed-lexical-v1");
             var request=SearchRepository.context(question,context);
-            output.add(readers.read(role,c->{
+            var row=readers.read(role,c->{
                 var sources=EvidenceRepository.snapshot(c);var trace=new ArrayList<Map<String,Object>>();var repeat=new ArrayList<Map<String,Object>>();
-                var plain=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,null,candidate);
-                var observed=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,trace::add,candidate);
-                var again=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,repeat::add,candidate);
+                var plain=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,null,candidate,relaxed);
+                var observed=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,trace::add,candidate,relaxed);
+                var again=SearchRepository.search(c,sources,question,request,context.httpStatus(),focused,repeat::add,candidate,relaxed);
                 assertTrue(plain.equals(observed)&&plain.equals(again),"Instrumentation changed response");
                 assertTrue(trace.equals(repeat),"Nondeterministic trace");
                 var actual=StoredEvidence.JSON.readTree(StoredEvidence.JSON.writeValueAsString(plain));
-                if(!candidate)assertTrue(actual.equals(item.get("frozen_response")),"Frozen response changed");
+                if(!candidate&&!relaxed)assertTrue(actual.equals(item.get("frozen_response")),"Frozen response changed");
                 else {
                     for(String field:List.of("applicable_documents","uncertain_documents","conflicts","conflict_details","questions","review_items","http_status_context","http_status_source"))
                         assertTrue(actual.get(field).equals(item.get("frozen_response").get(field)),"Experiment changed applicability boundary");
@@ -45,7 +46,16 @@ class OfflineTraceTest {
                 checkReferences(trace,authorized);
                 try(var q=c.createStatement();var r=q.executeQuery("SHOW transaction_read_only")){r.next();assertEquals("on",r.getString(1));}
                 return Map.<String,Object>of("id",item.get("id").asString(),"mode",item.get("mode").asString(),"response",plain,"events",trace);
-            }));
+            });
+            var timings=new ArrayList<Double>();
+            for(int sample=-1;sample<5;sample++){
+                long started=System.nanoTime();
+                var timed=readers.read(role,c->SearchRepository.search(c,EvidenceRepository.snapshot(c),question,request,context.httpStatus(),focused,null,candidate,relaxed));
+                double elapsed=(System.nanoTime()-started)/1_000_000.0;
+                assertTrue(timed.equals(row.get("response")),"Timed response differs");
+                if(sample>=0)timings.add(elapsed);
+            }
+            var measured=new LinkedHashMap<String,Object>(row);measured.put("repository_latency_ms",timings);output.add(measured);
         }
         Path target=dir.resolve("traces.json");
         Files.createFile(target,PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rw-------")));

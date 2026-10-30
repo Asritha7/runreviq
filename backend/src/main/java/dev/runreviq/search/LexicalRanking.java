@@ -53,7 +53,11 @@ public final class LexicalRanking {
         return rank(candidates,queryTerms,bodies,contexts,policies,floor,groups,limit,question,headings,null);
     }
     public static List<Map<String,Object>> rank(List<Map<String,Object>> candidates,List<String> queryTerms,List<List<String>> bodies,List<List<String>> contexts,List<List<String>> policies,double floor,List<List<String>> groups,int limit,String question,List<String> headings,Consumer<Map<String,Object>> trace){
-        if(trace!=null)emit(trace,"ranking_input","query_terms",queryTerms,"floor",floor,"body_floor",.15,"limit",limit,"clause_groups",groups,"focused",question!=null,"relative_floor",question!=null?.65:.40,"novelty_floor",question!=null?.45:.30,"candidates",candidates.stream().map(RetrievalTrace::key).toList());
+        return rank(candidates,queryTerms,bodies,contexts,policies,floor,groups,limit,question,headings,trace,false);
+    }
+    /** Evaluator-only broad candidate generation; eligibility is resolved upstream. */
+    public static List<Map<String,Object>> rank(List<Map<String,Object>> candidates,List<String> queryTerms,List<List<String>> bodies,List<List<String>> contexts,List<List<String>> policies,double floor,List<List<String>> groups,int limit,String question,List<String> headings,Consumer<Map<String,Object>> trace,boolean relaxed){
+        if(trace!=null)emit(trace,"ranking_input","query_terms",queryTerms,"floor",floor,"body_floor",.15,"relaxed_generation",relaxed,"minimum_body_terms",1,"limit",limit,"clause_groups",groups,"focused",question!=null,"relative_floor",question!=null?.65:.40,"novelty_floor",question!=null?.45:.30,"candidates",candidates.stream().map(RetrievalTrace::key).toList());
         boolean focused=question!=null;
         var query=new TreeSet<>(queryTerms);if(query.isEmpty()||candidates.isEmpty())return List.of();
         var frequency=new HashMap<String,Integer>();var documentTerms=new HashMap<String,Set<String>>();
@@ -75,8 +79,8 @@ public final class LexicalRanking {
             double coverage=weight(intersection(query,terms),weights)/total;
             for(var group:groups){var local=intersection(query,group);if(intersection(local,body.keySet()).size()>=2)coverage=Math.max(coverage,weight(intersection(local,terms),weights)/weight(local,weights));}
             if(trace!=null)emit(trace,"coverage","passage",key(candidates.get(i)),"query_weights",weights,"matched_body_terms",matched,"body_terms",body.keySet(),"document_terms",terms,"coverage",coverage,"body_coverage",weight(matched,weights)/total,"floor",floor,"body_floor",.15,
-                "decision",coverage<floor?"document_coverage":weight(matched,weights)/total<.15?"body_coverage":"eligible");
-            if(coverage<floor||weight(matched,weights)/total<.15)continue;
+                "decision",relaxed?(matched.isEmpty()?"no_body_match":"eligible"):coverage<floor?"document_coverage":weight(matched,weights)/total<.15?"body_coverage":"eligible","ratio_gates_enforced",!relaxed);
+            if(relaxed?matched.isEmpty():coverage<floor||weight(matched,weights)/total<.15)continue;
             double score=0;for(String t:new TreeSet<>(matched))score+=weights.get(t)*body.get(t)*2.2/(body.get(t)+1.2*(.25+.75*bodies.get(i).size()/average));
             score+=.60*weight(intersection(query,contexts.get(i)),weights);if(intersection(query,policies.get(i)).size()>=2)score*=1.25;
             boolean intentMatch=false;
