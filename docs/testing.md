@@ -231,3 +231,10 @@ context/conflict boundaries, citation integrity, revocation and withdrawal. The
 response comparisons while retaining exact frozen checks for both existing modes.
 See the [experiment report](passage-scope-experiment.md); this candidate has no demonstrated
 external-pack retrieval gain and is not wired to the running application.
+
+`RelaxedLexicalExperimentTest` adds positive, zero-overlap, exact-identifier and deliberate
+wrong-procedure controls. Both experimental arms retain integration coverage for eligibility,
+citation integrity, ACL revocation, withdrawal and corrupt sources. Metric tests separate
+policy blocks, forbidden labels and unadjudicated extras. The generalization replay checks
+both frozen responses, deterministic traces, timed-response parity and historical file
+hashes. See [design](retrieval-generalization-design.md) and [results](retrieval-generalization-results.md).

@@ -8,6 +8,7 @@ class RetrievalTraceTest {
     static Map<String,Object> passage(int number,String quote){return new LinkedHashMap<>(Map.of("document_id","TEST-"+number,"revision",1,"start_line",2,"end_line",2,"quote",quote,"evidence_role","procedure"));}
     @Test void experimentalScopeCannotBeConfiguredInLiveRepository(){
         assertThrows(IllegalArgumentException.class,()->new dev.runreviq.persistence.EvidenceRepository(null,"passage-scope-v1"));
+        assertThrows(IllegalArgumentException.class,()->new dev.runreviq.persistence.EvidenceRepository(null,"relaxed-lexical-v1"));
     }
     @Test void scoresRejectionsAndTopKPreserveRanking(){
         var candidates=List.of(passage(1,"alpha beta"),passage(2,"alpha beta"),passage(3,"unrelated"));
