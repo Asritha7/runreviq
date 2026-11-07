@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "dataset_id": "REPLACE_WITH_NEW_PRIVATE_DATASET_ID",
+  "provenance": {
+    "author_type": "unknown",
+    "author": "REPLACE_WITH_TRUTHFUL_AUTHOR_IDENTITY",
+    "prior_exposure": "unknown",
+    "independence_declaration": "REPLACE_WITH_AUTHOR_AND_REVIEWER_INVOLVEMENT_DETAILS",
+    "source_metadata_review": "pending"
+  },
+  "coverage": {
+    "REPLACE_WRONG_PROCEDURE_CASE_ID": ["wrong_procedure"],
+    "REPLACE_CONFLICT_CASE_ID": ["prose_conflict"],
+    "REPLACE_MISSING_CONTEXT_CASE_ID": ["incomplete_context"],
+    "REPLACE_PROHIBITION_CASE_ID": ["useful_prohibition"],
+    "REPLACE_LIVE_STATE_CASE_ID": ["monitoring_vs_live_state"],
+    "REPLACE_KEYWORD_DISTRACTOR_CASE_ID": ["shared_keyword_distractor"],
+    "REPLACE_ROLE_BOUNDARY_CASE_ID": ["authorization"],
+    "REPLACE_APPLICABILITY_CASE_ID": ["applicability"]
+  },
+  "acceptance": {
+    "required_evidence_recall_min": 1.0,
+    "adjudicated_precision_lower_bound_min": 1.0,
+    "task_mismatch_rate_max": 0.0,
+    "inappropriate_abstention_rate_max": 0.0,
+    "unauthorized_disclosures_max": 0,
+    "citation_integrity_failure_max": 0,
+    "policy_eligibility_violations_max": 0,
+    "human_review_required": true,
+    "unresolved_judgments_max": 0,
+    "rationale": "Proposed conservative diagnostic gates: all required evidence delivered, no adjudicated nonrelevant returned evidence or task mismatch, no inappropriate evidence abstention. These engineering targets are not statistically calibrated or production-release criteria. Confirm or revise rate targets before freezing and before observing results; retain negative findings."
+  }
+}

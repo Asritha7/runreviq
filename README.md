@@ -185,3 +185,8 @@ The default remains unchanged; embeddings are a future optional arm, not impleme
 The [private adjudication workflow](docs/retrieval-adjudication.md) prepares role-specific,
 mode-blinded review packets from frozen returned evidence. Actual labels remain pending
 until a reviewer is available; it does not change retrieval or claim independent validation.
+
+A [separate evaluation protocol](docs/hard-negative-evaluation.md) now freezes private
+coverage, provenance, criteria and input/code hashes before comparison. It checks exact
+question reuse but cannot certify unseen data or independence. A new external set and
+independent human judgments remain pending; no retrieval method is changed.

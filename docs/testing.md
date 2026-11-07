@@ -243,3 +243,9 @@ hashes. See [design](retrieval-generalization-design.md) and [results](retrieval
 hash bindings, pending-label rejection, uncertainty accounting, wrong-procedure counts,
 and exclusive owner-only output creation. It uses synthetic evidence and reviewer identities;
 no private questions or actual judgments enter tests. See [adjudication](retrieval-adjudication.md).
+
+`tests/test_evaluation_freeze.py` uses synthetic adapter fixtures to test protocol coverage,
+predeclared safety/rate gates, exact known-question overlap, conservative provenance status,
+input/code binding, receipt tampering, source hashes, exclusive private writes and symlinks.
+It does not supply unseen cases or independent human judgments. See the
+[separate evaluation protocol](hard-negative-evaluation.md).
