@@ -360,3 +360,9 @@ Alternatively, use `--generalization-experiment` to compare relaxed lexical admi
 with both frozen baselines. The two experiment flags are mutually exclusive. No model
 download or live configuration change is required. Keep packs and raw reports private;
 see [design and reproduction](docs/retrieval-generalization-design.md).
+
+To prepare private human review of frozen returned evidence, use
+`scripts/adjudicate_retrieval.py prepare` with `--report`, `--gold`, `--role` and a new
+`--output` directory. No running database or model is needed. See the
+[reviewer workflow and access limitations](docs/retrieval-adjudication.md) before sharing
+any packet; the role option is a filter, not an authorization grant.

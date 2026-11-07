@@ -238,3 +238,8 @@ citation integrity, ACL revocation, withdrawal and corrupt sources. Metric tests
 policy blocks, forbidden labels and unadjudicated extras. The generalization replay checks
 both frozen responses, deterministic traces, timed-response parity and historical file
 hashes. See [design](retrieval-generalization-design.md) and [results](retrieval-generalization-results.md).
+
+`tests/test_retrieval_adjudication.py` checks offline review packet isolation, blinding,
+hash bindings, pending-label rejection, uncertainty accounting, wrong-procedure counts,
+and exclusive owner-only output creation. It uses synthetic evidence and reviewer identities;
+no private questions or actual judgments enter tests. See [adjudication](retrieval-adjudication.md).

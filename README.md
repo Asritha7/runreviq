@@ -181,3 +181,7 @@ An [isolated retrieval-generalization experiment](docs/retrieval-generalization-
 compares both baselines with relaxed lexical admission. [Development results](docs/retrieval-generalization-results.md)
 show improved recall but lower precision and a synthetic wrong-procedure false positive.
 The default remains unchanged; embeddings are a future optional arm, not implemented.
+
+The [private adjudication workflow](docs/retrieval-adjudication.md) prepares role-specific,
+mode-blinded review packets from frozen returned evidence. Actual labels remain pending
+until a reviewer is available; it does not change retrieval or claim independent validation.
