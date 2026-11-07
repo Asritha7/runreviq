@@ -112,7 +112,8 @@ metadata. A source reviewer must acknowledge these limits before executing the s
 ```
 
 Repeat `--known-gold` for **all** earlier private sets. Built-in repository questions are
-also checked by the existing adapter. Comparison normalizes case and whitespace only;
+also checked by the existing adapter. The receipt pins the built-in JSON/Markdown inventory,
+so adding, removing or changing a file used in that overlap check requires a new freeze. Comparison normalizes case and whitespace only;
 paraphrase/semantic duplicates require human checking. AI/mixed/unknown authorship, known
 exposure or exact overlap yield `development_only`. Human authorship with no declared
 exposure and no detected overlap yields only `reserved_claim_unverified`. Independence

@@ -41,6 +41,12 @@ def code_hashes():
             if p.is_file() and '__pycache__' not in p.parts and (p.suffix in ('.py','.java','.js','.css','.html','.properties','.json','.xml','.sql','.toml','.lock') or p.name == 'mvnw')}
 
 
+def overlap_corpus_hashes():
+    # Match the adapter's two recursive scans, including file additions/removals.
+    return {str(p.relative_to(ROOT)): sha(p) for suffix in ('*.json', '*.md')
+            for p in sorted((ROOT/'datasets').rglob(suffix))}
+
+
 def validate_protocol(protocol, key):
     require(set(protocol) == {'schema_version','dataset_id','provenance','coverage','acceptance'}, 'Invalid protocol fields')
     require(type(protocol['schema_version']) is int and protocol['schema_version'] == 1, 'Unsupported schema')
@@ -85,6 +91,7 @@ def freeze(sources, gold, protocol_path, known_gold, output):
         inputs.append(sources/name)
     require(all(p.is_file() and not p.is_symlink() for p in inputs), 'Inputs must be regular non-symlink files')
     before = {str(p.resolve()): sha(p) for p in inputs}
+    overlap_corpus = overlap_corpus_hashes()
     with tempfile.TemporaryDirectory(prefix='runreviq-freeze-') as temp:
         catalog, key, adapter = load_pack(sources, gold, Path(temp))
     validate_protocol(protocol, key)
@@ -118,7 +125,7 @@ def freeze(sources, gold, protocol_path, known_gold, output):
     if provenance['prior_exposure'] != 'none_declared': reasons.append('prior_exposure_or_unknown')
     if overlap or adapter['exact_question_overlap']: reasons.append('known_question_overlap')
     result = dict(schema_version=1, created_at_utc=datetime.now(timezone.utc).isoformat(), protocol=protocol, protocol_file=str(protocol_path.resolve()), input_hashes=before, code_hashes=code_hashes(),
-        modes=MODES, adapter=adapter, exact_known_question_overlap_hashes=overlap,
+        overlap_corpus_hashes=overlap_corpus, modes=MODES, adapter=adapter, exact_known_question_overlap_hashes=overlap,
         holdout_status='development_only' if reasons else 'reserved_claim_unverified',
         holdout_reasons=reasons, independence='not_verified', semantic_overlap='not_verified',
         readiness='blocked_pending_authorized_independent_human_review',
@@ -126,6 +133,7 @@ def freeze(sources, gold, protocol_path, known_gold, output):
                     'Hashes detect changes, not authorship, semantic duplication, current ACLs or truthful labels.',
                     'This receipt does not run retrieval or decide acceptance; no runtime promotion.'])
     require(all(sha(Path(p)) == h for p,h in before.items()), 'Inputs changed during freeze')
+    require(overlap_corpus_hashes() == overlap_corpus, 'Built-in overlap corpus changed during freeze')
     result['receipt_sha256'] = hashlib.sha256(json.dumps(result,sort_keys=True,allow_nan=False).encode()).hexdigest()
     private_write(output, result)
     return result
@@ -140,6 +148,7 @@ def verify(receipt):
     require(all(sha(Path(p)) == h for p,h in value['input_hashes'].items()), 'Frozen input changed')
     require(value['protocol_file'] in value['input_hashes'], 'Unbound protocol file')
     require(json.loads(Path(value['protocol_file']).read_text()) == value['protocol'], 'Receipt criteria differ from frozen protocol')
+    require(overlap_corpus_hashes() == value['overlap_corpus_hashes'], 'Built-in overlap corpus changed')
     require(code_hashes() == value['code_hashes'], 'Pinned implementation changed')
     return value
 

@@ -132,3 +132,16 @@ class EvaluationFreezeTests(unittest.TestCase):
             self.write(self.gold,key)
             with self.subTest(field=field),self.assertRaises(ValueError):self.run_freeze()
             self.assertFalse(self.output.exists())
+
+    def test_builtin_overlap_corpus_change_invalidates_receipt(self):
+        (self.root/'pyproject.toml').write_text('# synthetic project configuration')
+        datasets=self.root/'datasets';datasets.mkdir()
+        source=datasets/'prior.md';source.write_text('Prior synthetic passage')
+        with patch('scripts.freeze_evaluation.ROOT',self.root), patch('scripts.evaluate_external_pack.ROOT',self.root):
+            self.run_freeze()
+            verify(self.output)
+            source.write_text('Modified prior synthetic passage')
+            with self.assertRaisesRegex(ValueError,'overlap corpus changed'):verify(self.output)
+            source.write_text('Prior synthetic passage')
+            self.write(datasets/'new.json',{'question':'Synthetic freeze-only query?'})
+            with self.assertRaisesRegex(ValueError,'overlap corpus changed'):verify(self.output)
