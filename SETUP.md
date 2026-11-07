@@ -366,3 +366,8 @@ To prepare private human review of frozen returned evidence, use
 `--output` directory. No running database or model is needed. See the
 [reviewer workflow and access limitations](docs/retrieval-adjudication.md) before sharing
 any packet; the role option is a filter, not an authorization grant.
+
+For a separately authored evaluation set, use `scripts/freeze_evaluation.py freeze` before
+running the existing evaluators, then `verify` before and after replay. Follow the
+[protocol and planning template](docs/hard-negative-evaluation.md); keep the receipt, gold
+and reviewer records private. This command performs no database or runtime operations.

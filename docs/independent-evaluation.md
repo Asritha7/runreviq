@@ -62,3 +62,9 @@ Do not claim improved quality simply because this import workflow passes its tes
 ## Supplied ten-scenario baseline
 
 The user subsequently supplied ten synthetic scenarios with their own source passages. Because those passages are absent from the built-in corpora, they use a separate [isolated scenario runner](../datasets/external-validation/README.md), not `--questions` against unrelated sources. See the [executed baseline and limitations](external-validation-results.md). The proposed independence is attributed to the submitter; adapter metadata assumptions still require human review.
+
+For a separate source corpus and hard-negative/reserved-question study after PR #41, use
+the [protocol-freezing process](hard-negative-evaluation.md). It binds predeclared criteria,
+coverage and provenance to exact inputs and code, without certifying independence or
+semantic novelty. Retain disputed human labels and their rationales; unresolved judgments
+block an accepted conclusion rather than being silently forced into passing labels.
